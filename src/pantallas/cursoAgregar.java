@@ -150,7 +150,6 @@ public class cursoAgregar extends javax.swing.JFrame {
     JOptionPane.showMessageDialog(null, "✅ Datos del Curso ingresados correctamente ✅", "Alert", JOptionPane.INFORMATION_MESSAGE);
   }//GEN-LAST:event_agregarCursoBtnActionPerformed
 
-  
   private void evaluarNumero(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_evaluarNumero
     try {
       int codigoUsuario = Integer.parseInt(codigoInput.getText());

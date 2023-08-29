@@ -92,7 +92,6 @@ public class Login extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   
-  
   private void entrarCuentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarCuentaButtonActionPerformed
     String user = userInput.getText();
     String password = passwordInput.getText();
@@ -154,20 +153,6 @@ public class Login extends javax.swing.JFrame {
     });
   }
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton entrarCuentaButton;
   private javax.swing.JTextField passwordInput;

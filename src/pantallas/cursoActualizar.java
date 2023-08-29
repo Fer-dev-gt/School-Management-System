@@ -147,6 +147,7 @@ public class cursoActualizar extends javax.swing.JFrame {
     return false;
   }
    
+  
   public void manejarCodigoNoEncontrado(int codigoUsuario) {
     JOptionPane.showMessageDialog(null, "❌ El Curso con código: "+ codigoUsuario +" NO esta registrado, ingrese otro ❌", "Alert", JOptionPane.INFORMATION_MESSAGE);
     codigoInput.setText("");

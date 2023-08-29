@@ -174,7 +174,6 @@ public class profesorActualizar extends javax.swing.JFrame {
   }//GEN-LAST:event_actualizarProfesorBtnActionPerformed
 
   
-  
   public static boolean actualizarRegistro(int codigoUsuario, String nombreUsuario, String apellidoUsuario, String correoUsuario, String generoUsuario, String passwordUsuario) {
     for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
       if (Administrador.arrayProfesores.get(i).getCodigo() == codigoUsuario) {
