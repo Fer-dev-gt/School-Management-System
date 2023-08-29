@@ -44,6 +44,12 @@ public class cursoAgregar extends javax.swing.JFrame {
       }
     });
 
+    creditosInput.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusLost(java.awt.event.FocusEvent evt) {
+        evaluarNumeroCreditos(evt);
+      }
+    });
+
     agregarCursoBtn.setText("Agregar");
     agregarCursoBtn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -133,10 +139,15 @@ public class cursoAgregar extends javax.swing.JFrame {
     int creditos = Integer.parseInt(creditosInput.getText());
     String profesor = profesorInput.getText();
 
-    System.out.println("Tamaño anterior del ArrayList es: " + Administrador.arrayCursos.size());
+    System.out.println("Tamaño anterior del ArrayList Cursos es: " + Administrador.arrayCursos.size());
     Curso nuevoCurso = new Curso(codigoCurso, nombreCurso, creditos, profesor);
     Administrador.arrayCursos.add( nuevoCurso);
-    System.out.println("Tamaño actual del ArrayList es: " + Administrador.arrayCursos.size());
+    System.out.println("Tamaño actual del ArrayList Cursos es: " + Administrador.arrayCursos.size());
+    
+    
+    this.clearInputs();
+    this.dispose();
+    JOptionPane.showMessageDialog(null, "✅ Datos del Curso ingresados correctamente ✅", "Alert", JOptionPane.INFORMATION_MESSAGE);
   }//GEN-LAST:event_agregarCursoBtnActionPerformed
 
   
@@ -148,12 +159,20 @@ public class cursoAgregar extends javax.swing.JFrame {
       JOptionPane.showMessageDialog(null, "Ingrese un numero!", "Alert", JOptionPane.INFORMATION_MESSAGE);
     }
   }//GEN-LAST:event_evaluarNumero
-
   
   private void cerrarAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarAgregarActionPerformed
     this.clearInputs();
     this.dispose();
   }//GEN-LAST:event_cerrarAgregarActionPerformed
+
+  private void evaluarNumeroCreditos(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_evaluarNumeroCreditos
+    try {
+      int codigoUsuario = Integer.parseInt(creditosInput.getText());
+    } catch(java.lang.NumberFormatException e) {
+      creditosInput.setText("");
+      JOptionPane.showMessageDialog(null, "Ingrese un numero para los creditos!", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }//GEN-LAST:event_evaluarNumeroCreditos
 
   
   // Funciones auxiliares

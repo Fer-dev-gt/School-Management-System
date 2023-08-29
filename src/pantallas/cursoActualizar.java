@@ -1,5 +1,10 @@
 package pantallas;
 
+import clases.Administrador;
+import clases.Curso;
+import javax.swing.JOptionPane;
+import static pantallas.cursoAgregar.checkearCodigoRepetido;
+
 public class cursoActualizar extends javax.swing.JFrame {
 
   public cursoActualizar() {
@@ -20,6 +25,7 @@ public class cursoActualizar extends javax.swing.JFrame {
     creditosInput = new javax.swing.JTextField();
     profesorInput = new javax.swing.JTextField();
     agregarCursoBtn = new javax.swing.JButton();
+    cerrarAgregar = new javax.swing.JButton();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -33,16 +39,17 @@ public class cursoActualizar extends javax.swing.JFrame {
 
     jLabel6.setText("ACTUALIZAR NUEVO CURSO");
 
-    profesorInput.addActionListener(new java.awt.event.ActionListener() {
-      public void actionPerformed(java.awt.event.ActionEvent evt) {
-        profesorInputActionPerformed(evt);
-      }
-    });
-
     agregarCursoBtn.setText("Actualizar");
     agregarCursoBtn.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
-        agregarCursoBtnActionPerformed(evt);
+        actualizarCursoBtnActionPerformed(evt);
+      }
+    });
+
+    cerrarAgregar.setText("Cerrar");
+    cerrarAgregar.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cerrarAgregarActionPerformed(evt);
       }
     });
 
@@ -59,14 +66,17 @@ public class cursoActualizar extends javax.swing.JFrame {
           .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addComponent(agregarCursoBtn)
           .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
             .addComponent(codigoInput)
             .addComponent(nombreInput)
             .addComponent(creditosInput)
             .addComponent(profesorInput, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(199, 199, 199))
+            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(agregarCursoBtn)
+            .addGap(88, 88, 88)
+            .addComponent(cerrarAgregar)))
+        .addGap(159, 159, 159))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,21 +100,85 @@ public class cursoActualizar extends javax.swing.JFrame {
           .addComponent(profesorInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel4))
         .addGap(53, 53, 53)
-        .addComponent(agregarCursoBtn)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(agregarCursoBtn)
+          .addComponent(cerrarAgregar))
         .addGap(38, 38, 38))
     );
 
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  private void profesorInputActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_profesorInputActionPerformed
+  
+  private void actualizarCursoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarCursoBtnActionPerformed
+    int codigoCurso = Integer.parseInt(codigoInput.getText());
+    boolean codeIsFound = checkearCodigoRepetido(codigoCurso);
+    if(!codeIsFound) {
+      manejarCodigoNoEncontrado(codigoCurso);
+      return;
+    }
+    
+    String nombreCurso = nombreInput.getText();
+    int creditos = Integer.parseInt(creditosInput.getText());
+    String profesorCurso = profesorInput.getText();
+    
+    boolean dataUpdated = actualizarCurso(codigoCurso, nombreCurso, creditos, profesorCurso);
+    if(dataUpdated) {
+      manejarDatosActualizados(codigoCurso);
+      this.clearInputs();
+      this.dispose();
+    }
+  }//GEN-LAST:event_actualizarCursoBtnActionPerformed
 
-  }//GEN-LAST:event_profesorInputActionPerformed
+  private void cerrarAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarAgregarActionPerformed
+    this.clearInputs();
+    this.dispose();
+  }//GEN-LAST:event_cerrarAgregarActionPerformed
 
-  private void agregarCursoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agregarCursoBtnActionPerformed
-    // TODO add your handling code here:
-  }//GEN-LAST:event_agregarCursoBtnActionPerformed
-
+  
+  public static boolean actualizarCurso(int codigoCurso, String nombreCurso, int creditos, String profesorCurso) {
+    for (int i = 0; i < Administrador.arrayCursos.size(); i++) {
+      if (Administrador.arrayCursos.get(i).getCodigo() == codigoCurso) {
+        Curso nuevoCurso = new Curso(codigoCurso, nombreCurso, creditos, profesorCurso);
+        Administrador.arrayCursos.set(i, nuevoCurso);
+        return true;
+      }
+    }
+    return false;
+  }
+   
+  public void manejarCodigoNoEncontrado(int codigoUsuario) {
+    JOptionPane.showMessageDialog(null, "❌ El Curso con código: "+ codigoUsuario +" NO esta registrado, ingrese otro ❌", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    codigoInput.setText("");
+  }
+  
+  
+  public void manejarDatosActualizados(int codigoUsuario) {
+    JOptionPane.showMessageDialog(null, "✅ El Curso con código: "+ codigoUsuario +" fue actualizado ✅", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    clearInputs();
+  }
+  
+  
+  public void clearInputs() {
+    codigoInput.setText("");
+    nombreInput.setText("");
+    creditosInput.setText("");
+    profesorInput.setText("");
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   public static void main(String args[]) {
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
     try {
@@ -132,6 +206,7 @@ public class cursoActualizar extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton agregarCursoBtn;
+  private javax.swing.JButton cerrarAgregar;
   private javax.swing.JTextField codigoInput;
   private javax.swing.JTextField creditosInput;
   private javax.swing.JLabel jLabel1;

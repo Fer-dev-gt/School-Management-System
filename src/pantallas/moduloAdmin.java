@@ -29,7 +29,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     crearBtn1 = new javax.swing.JButton();
     actualizarBtn1 = new javax.swing.JButton();
     exportarPDFBtn1 = new javax.swing.JButton();
-    eliminarBtn1 = new javax.swing.JButton();
+    eliminarProfesorBtn = new javax.swing.JButton();
     jScrollPane2 = new javax.swing.JScrollPane();
     tablaProfesores = new javax.swing.JTable();
     refrescarTablaProfesores = new javax.swing.JButton();
@@ -38,7 +38,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     crearBtn2 = new javax.swing.JButton();
     actualizarBtn2 = new javax.swing.JButton();
     exportarPDFBtn2 = new javax.swing.JButton();
-    eliminarBtn2 = new javax.swing.JButton();
+    eliminarCursoBtn = new javax.swing.JButton();
     jScrollPane3 = new javax.swing.JScrollPane();
     tablaCursos = new javax.swing.JTable();
     refrescarTablaCursos = new javax.swing.JButton();
@@ -74,7 +74,12 @@ public class moduloAdmin extends javax.swing.JFrame {
 
     exportarPDFBtn1.setText("Exportar Listado a PDF");
 
-    eliminarBtn1.setText("Eliminar");
+    eliminarProfesorBtn.setText("Eliminar");
+    eliminarProfesorBtn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        eliminarProfesorBtnActionPerformed(evt);
+      }
+    });
 
     tablaProfesores.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -120,7 +125,7 @@ public class moduloAdmin extends javax.swing.JFrame {
             .addGap(58, 58, 58)
             .addGroup(panelProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(cargaMasivaBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(eliminarBtn1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+              .addComponent(eliminarProfesorBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
           .addGroup(panelProfesoresLayout.createSequentialGroup()
             .addGap(65, 65, 65)
             .addComponent(exportarPDFBtn1)))
@@ -142,7 +147,7 @@ public class moduloAdmin extends javax.swing.JFrame {
             .addGap(27, 27, 27)
             .addGroup(panelProfesoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(actualizarBtn1)
-              .addComponent(eliminarBtn1))
+              .addComponent(eliminarProfesorBtn))
             .addGap(33, 33, 33)
             .addComponent(exportarPDFBtn1))
           .addGroup(panelProfesoresLayout.createSequentialGroup()
@@ -173,7 +178,12 @@ public class moduloAdmin extends javax.swing.JFrame {
 
     exportarPDFBtn2.setText("Exportar Listado a PDF");
 
-    eliminarBtn2.setText("Eliminar");
+    eliminarCursoBtn.setText("Eliminar");
+    eliminarCursoBtn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        eliminarCursoBtnActionPerformed(evt);
+      }
+    });
 
     tablaCursos.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -219,7 +229,7 @@ public class moduloAdmin extends javax.swing.JFrame {
             .addGap(58, 58, 58)
             .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(cargaMasivaBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
-              .addComponent(eliminarBtn2, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
+              .addComponent(eliminarCursoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
           .addGroup(panelCursosLayout.createSequentialGroup()
             .addGap(65, 65, 65)
             .addComponent(exportarPDFBtn2)))
@@ -241,7 +251,7 @@ public class moduloAdmin extends javax.swing.JFrame {
             .addGap(27, 27, 27)
             .addGroup(panelCursosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(actualizarBtn2)
-              .addComponent(eliminarBtn2))
+              .addComponent(eliminarCursoBtn))
             .addGap(33, 33, 33)
             .addComponent(exportarPDFBtn2))
           .addGroup(panelCursosLayout.createSequentialGroup()
@@ -404,6 +414,40 @@ public class moduloAdmin extends javax.swing.JFrame {
      mostrarListadoCursos();
   }//GEN-LAST:event_refrescarTablaCursosActionPerformed
 
+  private void eliminarProfesorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarProfesorBtnActionPerformed
+    int selectedRow = tablaProfesores.getSelectedRow();                                                       // Get the selected row index from the JTable
+    
+    if (selectedRow >= 0) {                                                                                   // Check if a row is selected
+      int codigoUsuario = (int) tablaProfesores.getValueAt(selectedRow, 0);                        // Get the value of the "Código" column from the selected row
+      System.out.println("Selected Código: " + codigoUsuario);
+      boolean validCodeToDelete = profesorAgregar.checkearCodigoRepetido(codigoUsuario);
+      if(validCodeToDelete) {
+        int indexProfesorArray = encontrarIndexProfesorConCodigo(codigoUsuario);
+        Administrador.arrayProfesores.remove(indexProfesorArray);
+        mostrarListadoProfesores(); 
+      }
+    } else {
+      System.out.println("No row selected");
+    }
+  }//GEN-LAST:event_eliminarProfesorBtnActionPerformed
+
+  private void eliminarCursoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCursoBtnActionPerformed
+    int selectedRow = tablaCursos.getSelectedRow();                                                       // Get the selected row index from the JTable
+    
+    if (selectedRow >= 0) {                                                                                   // Check if a row is selected
+      int codigoCurso = (int) tablaCursos.getValueAt(selectedRow, 0);                        // Get the value of the "Código" column from the selected row
+      System.out.println("Selected Código: " + codigoCurso);
+      boolean validCodeToDelete = cursoAgregar.checkearCodigoRepetido(codigoCurso);
+      if(validCodeToDelete) {
+        int indexCursoArray = encontrarIndexCursoConCodigo(codigoCurso);
+        Administrador.arrayCursos.remove(indexCursoArray);
+        mostrarListadoCursos();
+      }
+    } else {
+      System.out.println("No row selected");
+    }
+  }//GEN-LAST:event_eliminarCursoBtnActionPerformed
+
   // Funciones para actualizar Tablas
   public void mostrarListadoProfesores() {
     DefaultTableModel model = new DefaultTableModel();                                  // Create a DefaultTableModel with column names
@@ -465,7 +509,21 @@ public class moduloAdmin extends javax.swing.JFrame {
   }
   
   
+  private int encontrarIndexProfesorConCodigo(int codigoUsuario) {
+    for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
+      Profesor profesor = Administrador.arrayProfesores.get(i);
+      if (profesor.getCodigo() == codigoUsuario) return i;                        // Return the index if codigo matches
+    }
+    return -1;                                                                    // Return -1 if no matching codigo is found
+  }
   
+  private int encontrarIndexCursoConCodigo(int codigoCurso) {
+    for (int i = 0; i < Administrador.arrayCursos.size(); i++) {
+      Curso curso = Administrador.arrayCursos.get(i);
+      if (curso.getCodigo() == codigoCurso) return i;
+    }
+    return -1;                                                                    
+  }
   
   
   
@@ -508,8 +566,8 @@ public class moduloAdmin extends javax.swing.JFrame {
   private javax.swing.JButton cerrarSesion;
   private javax.swing.JButton crearBtn1;
   private javax.swing.JButton crearBtn2;
-  private javax.swing.JButton eliminarBtn1;
-  private javax.swing.JButton eliminarBtn2;
+  private javax.swing.JButton eliminarCursoBtn;
+  private javax.swing.JButton eliminarProfesorBtn;
   private javax.swing.JButton exportarPDFBtn1;
   private javax.swing.JButton exportarPDFBtn2;
   private javax.swing.JButton exportarPDFBtn3;

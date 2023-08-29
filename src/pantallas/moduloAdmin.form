@@ -100,7 +100,7 @@
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cargaMasivaBtn1" min="-2" pref="115" max="-2" attributes="0"/>
-                                  <Component id="eliminarBtn1" min="-2" pref="115" max="-2" attributes="0"/>
+                                  <Component id="eliminarProfesorBtn" min="-2" pref="115" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -130,7 +130,7 @@
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="actualizarBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="eliminarBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="eliminarProfesorBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="exportarPDFBtn1" min="-2" max="-2" attributes="0"/>
@@ -174,10 +174,13 @@
                 <Property name="text" type="java.lang.String" value="Exportar Listado a PDF"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="eliminarBtn1">
+            <Component class="javax.swing.JButton" name="eliminarProfesorBtn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarProfesorBtnActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane2">
               <AuxValues>
@@ -236,7 +239,7 @@
                               <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="cargaMasivaBtn2" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
-                                  <Component id="eliminarBtn2" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                                  <Component id="eliminarCursoBtn" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -266,7 +269,7 @@
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="actualizarBtn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="eliminarBtn2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="eliminarCursoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                               <Component id="exportarPDFBtn2" min="-2" max="-2" attributes="0"/>
@@ -310,10 +313,13 @@
                 <Property name="text" type="java.lang.String" value="Exportar Listado a PDF"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="eliminarBtn2">
+            <Component class="javax.swing.JButton" name="eliminarCursoBtn">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Eliminar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="eliminarCursoBtnActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane3">
               <AuxValues>
