@@ -25,6 +25,7 @@ public class cursoAgregar extends javax.swing.JFrame {
     profesorInput = new javax.swing.JTextField();
     agregarCursoBtn = new javax.swing.JButton();
     cerrarAgregar = new javax.swing.JButton();
+    auxiliarAlumnos = new javax.swing.JTextField();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -90,6 +91,10 @@ public class cursoAgregar extends javax.swing.JFrame {
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(cerrarAgregar)
             .addGap(122, 122, 122))))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(auxiliarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(187, 187, 187))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -116,11 +121,13 @@ public class cursoAgregar extends javax.swing.JFrame {
           .addGroup(layout.createSequentialGroup()
             .addGap(53, 53, 53)
             .addComponent(agregarCursoBtn)
-            .addContainerGap(141, Short.MAX_VALUE))
-          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE))
+          .addGroup(layout.createSequentialGroup()
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(cerrarAgregar)
-            .addGap(126, 126, 126))))
+            .addComponent(cerrarAgregar)))
+        .addGap(18, 18, 18)
+        .addComponent(auxiliarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(85, 85, 85))
     );
 
     pack();
@@ -144,6 +151,7 @@ public class cursoAgregar extends javax.swing.JFrame {
     Administrador.arrayCursos.add( nuevoCurso);
     System.out.println("Tamaño actual del ArrayList Cursos es: " + Administrador.arrayCursos.size());
     
+    nuevoCurso.setAlumnos(Integer.parseInt(auxiliarAlumnos.getText()));
     
     this.clearInputs();
     this.dispose();
@@ -235,6 +243,7 @@ public class cursoAgregar extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton agregarCursoBtn;
+  private javax.swing.JTextField auxiliarAlumnos;
   private javax.swing.JButton cerrarAgregar;
   private javax.swing.JTextField codigoInput;
   private javax.swing.JTextField creditosInput;

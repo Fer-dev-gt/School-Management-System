@@ -133,7 +133,7 @@ public class PlantillaPDF {
         tabla.addCell(String.valueOf(curso.getCodigo()));
         tabla.addCell(curso.getNombre());
         tabla.addCell(String.valueOf(curso.getCreditos()));
-        tabla.addCell(curso.getAlumnos());
+        tabla.addCell(String.valueOf(curso.getAlumnos()));
         tabla.addCell(curso.getProfesor());
       }
       

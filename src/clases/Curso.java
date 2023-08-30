@@ -4,11 +4,11 @@ public class Curso {
   private int codigo;
   private String nombre;
   private int creditos;
-  private String Alumnos;
+  private int Alumnos;
   private String Profesor;
 
   
-  public Curso(int codigo, String nombre, int creditos, String Alumnos, String Profesor) {
+  public Curso(int codigo, String nombre, int creditos, int Alumnos, String Profesor) {
     this.codigo = codigo;
     this.nombre = nombre;
     this.creditos = creditos;
@@ -47,11 +47,11 @@ public class Curso {
     this.creditos = creditos;
   }
 
-  public String getAlumnos() {
+  public int getAlumnos() {
     return Alumnos;
   }
 
-  public void setAlumnos(String Alumnos) {
+  public void setAlumnos(int Alumnos) {
     this.Alumnos = Alumnos;
   }
 

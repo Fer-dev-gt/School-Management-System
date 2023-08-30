@@ -11,6 +11,7 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.File;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -660,24 +661,40 @@ public class moduloAdmin extends javax.swing.JFrame {
   
   
   public void actualizarGraficaBarrasCursos() {
-    
-    
-    
-    
     DefaultCategoryDataset datos = new DefaultCategoryDataset();
-    datos.setValue(10,"Alumnos","Curso 1");
-    datos.setValue(20,"Alumnos","Curso 2");
-    datos.setValue(30,"Alumnos","Curso 3");
+    bubbleSort(Administrador.arrayCursos);
+    int cursosConAlumnos = 0;
     
-    JFreeChart graficaBarras = ChartFactory.createBarChart3D(
-    "Top 3 Cursos con más estudiantes",
-            "Alumnos por Cursos",
+    for (Curso curso : Administrador.arrayCursos) {  
+      if(curso.getAlumnos() > 0){
+        cursosConAlumnos++;
+      }
+    }
+    
+    System.out.println("Cursos con alumnos: " + cursosConAlumnos);
+    
+    if(cursosConAlumnos == 1) datos.setValue(Administrador.arrayCursos.get(0).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(0).getNombre());
+    if(cursosConAlumnos == 2) {
+      datos.setValue(Administrador.arrayCursos.get(0).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(0).getNombre());
+      datos.setValue(Administrador.arrayCursos.get(1).getAlumnos(),"Alumnos","Curso 2");
+    }
+    if(cursosConAlumnos >= 3) {
+      datos.setValue(Administrador.arrayCursos.get(0).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(0).getNombre());
+      datos.setValue(Administrador.arrayCursos.get(1).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(1).getNombre());
+      datos.setValue(Administrador.arrayCursos.get(2).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(2).getNombre());
+    }
+    
+    
+    JFreeChart graficaBarras = ChartFactory.createBarChart3D("Top 3 Cursos con más estudiantes",
+            "Alumnos por Curso",
             "# Estudiantes",
             datos,
             PlotOrientation.VERTICAL,
             true,
             true,
             false);
+    
+    if (panelCursosGrafica.getComponentCount() > 0) panelCursosGrafica.remove(0); 
     
     ChartPanel panel = new ChartPanel(graficaBarras);
     panel.setMouseWheelEnabled(true);
@@ -724,6 +741,21 @@ public class moduloAdmin extends javax.swing.JFrame {
     pack();
     repaint();
   }
+  
+  
+  public static void bubbleSort(ArrayList<Curso> cursos) {
+    int n = cursos.size();
+    for (int i = 0; i < n - 1; i++) {
+      for (int j = 0; j < n - i - 1; j++) {
+        if (cursos.get(j).getAlumnos() < cursos.get(j + 1).getAlumnos()) {
+          // Swap cursos[j] and cursos[j+1]
+          Curso temp = cursos.get(j);
+          cursos.set(j, cursos.get(j + 1));
+          cursos.set(j + 1, temp);
+        }
+      }
+    }
+ }
   
   
   
