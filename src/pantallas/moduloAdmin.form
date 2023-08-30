@@ -106,7 +106,7 @@
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="exportarPDFBtn1" min="-2" max="-2" attributes="0"/>
+                              <Component id="exportarPDFProfesores" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="159" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -147,7 +147,7 @@
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="exportarPDFBtn1" min="-2" max="-2" attributes="0"/>
+                              <Component id="exportarPDFProfesores" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="panelProfesoresGrafica" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -184,10 +184,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarBtn1ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="exportarPDFBtn1">
+            <Component class="javax.swing.JButton" name="exportarPDFProfesores">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exportar Listado a PDF"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportarPDFProfesoresActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="eliminarProfesorBtn">
               <Properties>
@@ -291,7 +294,7 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="65" max="-2" attributes="0"/>
-                                      <Component id="exportarPDFBtn2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="exportarPDFCursos" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="77" max="-2" attributes="0"/>
@@ -328,7 +331,7 @@
                                   <Component id="eliminarCursoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                              <Component id="exportarPDFBtn2" min="-2" max="-2" attributes="0"/>
+                              <Component id="exportarPDFCursos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="panelCursosGrafica" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -366,10 +369,13 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarBtn2ActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="exportarPDFBtn2">
+            <Component class="javax.swing.JButton" name="exportarPDFCursos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exportar Listado a PDF"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportarPDFCursosActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="eliminarCursoBtn">
               <Properties>

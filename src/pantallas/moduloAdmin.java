@@ -3,10 +3,17 @@ package pantallas;
 import clases.Administrador;
 import clases.Alumno;
 import clases.Curso;
+import clases.PlantillaPDF;
 import clases.Profesor;
+import com.itextpdf.text.DocumentException;
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.io.File;
 import java.text.DecimalFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -37,7 +44,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     cargaMasivaBtn1 = new javax.swing.JButton();
     crearBtn1 = new javax.swing.JButton();
     actualizarBtn1 = new javax.swing.JButton();
-    exportarPDFBtn1 = new javax.swing.JButton();
+    exportarPDFProfesores = new javax.swing.JButton();
     eliminarProfesorBtn = new javax.swing.JButton();
     jScrollPane2 = new javax.swing.JScrollPane();
     tablaProfesores = new javax.swing.JTable();
@@ -48,7 +55,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     cargaMasivaBtn2 = new javax.swing.JButton();
     crearBtn2 = new javax.swing.JButton();
     actualizarBtn2 = new javax.swing.JButton();
-    exportarPDFBtn2 = new javax.swing.JButton();
+    exportarPDFCursos = new javax.swing.JButton();
     eliminarCursoBtn = new javax.swing.JButton();
     jScrollPane3 = new javax.swing.JScrollPane();
     tablaCursos = new javax.swing.JTable();
@@ -85,7 +92,12 @@ public class moduloAdmin extends javax.swing.JFrame {
       }
     });
 
-    exportarPDFBtn1.setText("Exportar Listado a PDF");
+    exportarPDFProfesores.setText("Exportar Listado a PDF");
+    exportarPDFProfesores.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exportarPDFProfesoresActionPerformed(evt);
+      }
+    });
 
     eliminarProfesorBtn.setText("Eliminar");
     eliminarProfesorBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -162,7 +174,7 @@ public class moduloAdmin extends javax.swing.JFrame {
             .addGap(0, 95, Short.MAX_VALUE))
           .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelProfesoresLayout.createSequentialGroup()
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(exportarPDFBtn1)
+            .addComponent(exportarPDFProfesores)
             .addGap(159, 159, 159))
           .addGroup(panelProfesoresLayout.createSequentialGroup()
             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -193,7 +205,7 @@ public class moduloAdmin extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(actualizarBtn1)))
             .addGap(18, 18, 18)
-            .addComponent(exportarPDFBtn1)
+            .addComponent(exportarPDFProfesores)
             .addGap(18, 18, 18)
             .addComponent(panelProfesoresGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         .addGap(18, 18, 18)
@@ -221,7 +233,12 @@ public class moduloAdmin extends javax.swing.JFrame {
       }
     });
 
-    exportarPDFBtn2.setText("Exportar Listado a PDF");
+    exportarPDFCursos.setText("Exportar Listado a PDF");
+    exportarPDFCursos.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exportarPDFCursosActionPerformed(evt);
+      }
+    });
 
     eliminarCursoBtn.setText("Eliminar");
     eliminarCursoBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -299,7 +316,7 @@ public class moduloAdmin extends javax.swing.JFrame {
                   .addComponent(eliminarCursoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)))
               .addGroup(panelCursosLayout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addComponent(exportarPDFBtn2)))
+                .addComponent(exportarPDFCursos)))
             .addGap(77, 77, 77))
           .addGroup(panelCursosLayout.createSequentialGroup()
             .addGap(26, 26, 26)
@@ -326,7 +343,7 @@ public class moduloAdmin extends javax.swing.JFrame {
               .addComponent(actualizarBtn2)
               .addComponent(eliminarCursoBtn))
             .addGap(33, 33, 33)
-            .addComponent(exportarPDFBtn2)
+            .addComponent(exportarPDFCursos)
             .addGap(18, 18, 18)
             .addComponent(panelCursosGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -531,6 +548,38 @@ public class moduloAdmin extends javax.swing.JFrame {
     actualizarGraficaPastelProfesores();
   }//GEN-LAST:event_graficaProfesoresBtnActionPerformed
 
+  private void exportarPDFProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarPDFProfesoresActionPerformed
+    PlantillaPDF miPlantilla = new PlantillaPDF("Fernando", "Jose", "20/20/20");
+    try {
+      miPlantilla.crearPlantillaProfesores();
+    } catch (DocumentException ex) {
+      Logger.getLogger(moduloAdmin.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    try{
+      File path = new File("Lista de Profesores.pdf");
+      Desktop.getDesktop().open(path);
+    }catch (Exception ex){
+      JOptionPane.showMessageDialog(null, ex, "Atención", 2);
+    }
+  }//GEN-LAST:event_exportarPDFProfesoresActionPerformed
+
+  private void exportarPDFCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarPDFCursosActionPerformed
+    PlantillaPDF miPlantilla = new PlantillaPDF("Fernando", "Jose", "20/20/20");
+    try {
+      miPlantilla.crearPlantillaCursos();
+    } catch (DocumentException ex) {
+      Logger.getLogger(moduloAdmin.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    try{
+      File path = new File("Lista de Cursos.pdf");
+      Desktop.getDesktop().open(path);
+    }catch (Exception ex){
+      JOptionPane.showMessageDialog(null, ex, "Atención", 2);
+    }
+  }//GEN-LAST:event_exportarPDFCursosActionPerformed
+
   // Funciones para actualizar Tablas
   public void mostrarListadoProfesores() {
     DefaultTableModel model = new DefaultTableModel();                                  // Create a DefaultTableModel with column names
@@ -711,9 +760,9 @@ public class moduloAdmin extends javax.swing.JFrame {
   private javax.swing.JButton crearBtn2;
   private javax.swing.JButton eliminarCursoBtn;
   private javax.swing.JButton eliminarProfesorBtn;
-  private javax.swing.JButton exportarPDFBtn1;
-  private javax.swing.JButton exportarPDFBtn2;
   private javax.swing.JButton exportarPDFBtn3;
+  private javax.swing.JButton exportarPDFCursos;
+  private javax.swing.JButton exportarPDFProfesores;
   private javax.swing.JButton graficaCursosBtn;
   private javax.swing.JButton graficaProfesoresBtn;
   private javax.swing.JLabel jLabel1;
