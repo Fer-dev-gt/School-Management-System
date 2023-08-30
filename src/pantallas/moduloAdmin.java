@@ -660,13 +660,17 @@ public class moduloAdmin extends javax.swing.JFrame {
   
   
   public void actualizarGraficaBarrasCursos() {
+    
+    
+    
+    
     DefaultCategoryDataset datos = new DefaultCategoryDataset();
-    datos.setValue(10,"Alumnos","Fernando");
-    datos.setValue(20,"Alumnos","Jose");
-    datos.setValue(30,"Alumnos","Marcos");
+    datos.setValue(10,"Alumnos","Curso 1");
+    datos.setValue(20,"Alumnos","Curso 2");
+    datos.setValue(30,"Alumnos","Curso 3");
     
     JFreeChart graficaBarras = ChartFactory.createBarChart3D(
-    "Cursos con más estudiantes",
+    "Top 3 Cursos con más estudiantes",
             "Alumnos por Cursos",
             "# Estudiantes",
             datos,
