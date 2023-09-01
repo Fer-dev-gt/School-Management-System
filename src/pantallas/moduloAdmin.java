@@ -22,6 +22,11 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import com.itextpdf.text.DocumentException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class moduloAdmin extends javax.swing.JFrame {
   profesorAgregar agregarProfesorPantalla = new profesorAgregar();
@@ -78,6 +83,11 @@ public class moduloAdmin extends javax.swing.JFrame {
     panelesAdmin.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
     cargaMasivaProfesores.setText("Carga Masiva");
+    cargaMasivaProfesores.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cargaMasivaProfesoresActionPerformed(evt);
+      }
+    });
 
     crearNuevoProfesor.setText("Crear");
     crearNuevoProfesor.addActionListener(new java.awt.event.ActionListener() {
@@ -581,6 +591,47 @@ public class moduloAdmin extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_exportarPDFCursosActionPerformed
 
+  private void cargaMasivaProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargaMasivaProfesoresActionPerformed
+    JFileChooser lectorDeArchivos = new JFileChooser();
+    FileNameExtensionFilter filtroArchivo = new FileNameExtensionFilter(".csv", "csv");
+    lectorDeArchivos.setFileFilter(filtroArchivo);
+    int respuestaFileChooser = lectorDeArchivos.showOpenDialog(this);                                        // Abre el menú del dialogo para subir archivos y guarda la respuesta si es archivo valido
+    
+    if (respuestaFileChooser == JFileChooser.APPROVE_OPTION) {
+      String ruta = lectorDeArchivos.getSelectedFile().getAbsolutePath();
+      
+      try {
+        BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
+        String line;
+        mybufferReader.readLine();                                                                                  // Saltamos la primera linea donde esta los nombres de las columnas
+        while ((line = mybufferReader.readLine()) != null) {
+          String[] data = line.split(",");
+          if (data.length == 5) {
+            int codigo = Integer.parseInt(data[0]);
+            String nombre = data[1];
+            String apellido = data[2];
+            String correo = data[3];
+            String genero = data[4];
+            
+            Profesor profesor = new Profesor(codigo, nombre, apellido, correo, genero, "1234");             // Se coloca contraseña por defecto "1234"
+            Administrador.arrayProfesores.add(profesor);
+          }
+        }
+        
+        mybufferReader.close();
+        mostrarListadoProfesores();                                                                                 // Refresh the JTable with updated data
+        
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
+      } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
+      } catch (NumberFormatException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error de formato en el archivo CSV ❌");
+      }
+    }
+  }//GEN-LAST:event_cargaMasivaProfesoresActionPerformed
+
   // Funciones para actualizar Tablas
   public void mostrarListadoProfesores() {
     DefaultTableModel model = new DefaultTableModel();                                  // Create a DefaultTableModel with column names
@@ -714,8 +765,8 @@ public class moduloAdmin extends javax.swing.JFrame {
     int countFemenino = 0;
     
     for (Profesor profesor : Administrador.arrayProfesores) {
-      if (profesor.getGenero().equals("Masculino")) countMasculino++; 
-      if (profesor.getGenero().equals("Femenino")) countFemenino++;
+      if (profesor.getGenero().equals("m")) countMasculino++; 
+      if (profesor.getGenero().equals("f")) countFemenino++;
     }
     
     double percentMasculino = (double) countMasculino / totalProfesores * 100;

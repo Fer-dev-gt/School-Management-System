@@ -47,7 +47,7 @@ public class profesorAgregar extends javax.swing.JFrame {
       }
     });
 
-    generoInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+    generoInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "m", "f" }));
 
     agregarProfesorBtn.setText("Agregar");
     agregarProfesorBtn.addActionListener(new java.awt.event.ActionListener() {
