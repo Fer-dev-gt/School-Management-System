@@ -1,7 +1,8 @@
 package pantallas;
 
 public class moduloProfesores extends javax.swing.JFrame {
-
+  profesorActualizarLoggedIn agregarProfesorPantallaLoggedIn = new profesorActualizarLoggedIn();
+  
   public moduloProfesores() {
     initComponents();
   }
@@ -10,14 +11,19 @@ public class moduloProfesores extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    jButton1 = new javax.swing.JButton();
+    actualizarDatosProfesorActual = new javax.swing.JButton();
     jLabel1 = new javax.swing.JLabel();
     cerrarSesion = new javax.swing.JButton();
     jLabel2 = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-    jButton1.setText("Actualizar Datos");
+    actualizarDatosProfesorActual.setText("Actualizar Datos");
+    actualizarDatosProfesorActual.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        actualizarDatosProfesorActualActionPerformed(evt);
+      }
+    });
 
     jLabel1.setText("CURSOS ASIGNADOS");
 
@@ -39,7 +45,7 @@ public class moduloProfesores extends javax.swing.JFrame {
         .addGap(49, 49, 49)
         .addComponent(jLabel1)
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(jButton1)
+        .addComponent(actualizarDatosProfesorActual)
         .addGap(63, 63, 63))
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -59,7 +65,7 @@ public class moduloProfesores extends javax.swing.JFrame {
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel1)
-          .addComponent(jButton1))
+          .addComponent(actualizarDatosProfesorActual))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE)
         .addComponent(cerrarSesion)
         .addGap(53, 53, 53))
@@ -74,6 +80,25 @@ public class moduloProfesores extends javax.swing.JFrame {
     login.setVisible(true);
   }//GEN-LAST:event_cerrarSesionActionPerformed
 
+  private void actualizarDatosProfesorActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosProfesorActualActionPerformed
+    this.agregarProfesorPantallaLoggedIn.setVisible(true);
+  }//GEN-LAST:event_actualizarDatosProfesorActualActionPerformed
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   public static void main(String args[]) {
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
     try {
@@ -100,8 +125,8 @@ public class moduloProfesores extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JButton actualizarDatosProfesorActual;
   private javax.swing.JButton cerrarSesion;
-  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
   // End of variables declaration//GEN-END:variables

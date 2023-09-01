@@ -151,7 +151,7 @@ public class cursoAgregar extends javax.swing.JFrame {
     Administrador.arrayCursos.add( nuevoCurso);
     System.out.println("Tamaño actual del ArrayList Cursos es: " + Administrador.arrayCursos.size());
     
-    nuevoCurso.setAlumnos(Integer.parseInt(auxiliarAlumnos.getText()));
+    nuevoCurso.setAlumnos(Integer.parseInt(auxiliarAlumnos.getText()));     // Eliminar esto despues
     
     this.clearInputs();
     this.dispose();

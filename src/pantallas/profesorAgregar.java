@@ -188,12 +188,11 @@ public class profesorAgregar extends javax.swing.JFrame {
     this.dispose();
   }//GEN-LAST:event_cerrarAgregarActionPerformed
 
+  
   // Funciones auxiliares
   public static boolean checkearCodigoRepetido(int codigoUsuario) {
     for (Profesor profesor : Administrador.arrayProfesores) {
-      if (profesor.getCodigo() == codigoUsuario) {
-        return true;                                                            // Se encontro un codigo repetidos en el List
-      }
+      if (profesor.getCodigo() == codigoUsuario) return true;                   // Se encontro un codigo repetidos en el List      
     }
     return false;                                                               // El codigo no esta registrado en el List
   }

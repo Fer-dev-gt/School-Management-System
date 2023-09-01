@@ -94,12 +94,12 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="actualizarBtn1" min="-2" pref="115" max="-2" attributes="0"/>
-                                  <Component id="crearBtn1" min="-2" pref="115" max="-2" attributes="0"/>
+                                  <Component id="actualizarDatosProfesor" min="-2" pref="115" max="-2" attributes="0"/>
+                                  <Component id="crearNuevoProfesor" min="-2" pref="115" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="91" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="cargaMasivaBtn1" min="-2" pref="115" max="-2" attributes="0"/>
+                                  <Component id="cargaMasivaProfesores" min="-2" pref="115" max="-2" attributes="0"/>
                                   <Component id="eliminarProfesorBtn" min="-2" pref="115" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="0" pref="95" max="32767" attributes="0"/>
@@ -133,8 +133,8 @@
                           <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="crearBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="cargaMasivaBtn1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="crearNuevoProfesor" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cargaMasivaProfesores" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
@@ -143,7 +143,7 @@
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                      <Component id="actualizarBtn1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="actualizarDatosProfesor" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -163,25 +163,25 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="cargaMasivaBtn1">
+            <Component class="javax.swing.JButton" name="cargaMasivaProfesores">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Carga Masiva"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="crearBtn1">
+            <Component class="javax.swing.JButton" name="crearNuevoProfesor">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearBtn1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearNuevoProfesorActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="actualizarBtn1">
+            <Component class="javax.swing.JButton" name="actualizarDatosProfesor">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Actualizar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarBtn1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarDatosProfesorActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="exportarPDFProfesores">
@@ -283,12 +283,12 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
-                                          <Component id="crearBtn2" alignment="1" min="-2" pref="115" max="-2" attributes="0"/>
-                                          <Component id="actualizarBtn2" alignment="1" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <Component id="crearNuevoCurso" alignment="1" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <Component id="actualizarDatosCurso" alignment="1" min="-2" pref="115" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="cargaMasivaBtn2" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
+                                          <Component id="cargaMasivaCursos" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
                                           <Component id="eliminarCursoBtn" alignment="0" min="-2" pref="115" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -322,12 +322,12 @@
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="cargaMasivaBtn2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="crearBtn2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="cargaMasivaCursos" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="crearNuevoCurso" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="actualizarBtn2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="actualizarDatosCurso" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="eliminarCursoBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
@@ -348,25 +348,25 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="cargaMasivaBtn2">
+            <Component class="javax.swing.JButton" name="cargaMasivaCursos">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Carga Masiva"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="crearBtn2">
+            <Component class="javax.swing.JButton" name="crearNuevoCurso">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Crear"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearBtn2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="crearNuevoCursoActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="actualizarBtn2">
+            <Component class="javax.swing.JButton" name="actualizarDatosCurso">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Actualizar"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarBtn2ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="actualizarDatosCursoActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JButton" name="exportarPDFCursos">
@@ -469,8 +469,8 @@
                       <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="216" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="exportarPDFBtn3" max="32767" attributes="0"/>
-                          <Component id="cargaMasivaBtn3" max="32767" attributes="0"/>
+                          <Component id="exportarPDFEstudiantes" max="32767" attributes="0"/>
+                          <Component id="cargaMasivaEstudiantes" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="121" max="-2" attributes="0"/>
                   </Group>
@@ -487,9 +487,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="181" max="-2" attributes="0"/>
-                              <Component id="cargaMasivaBtn3" min="-2" max="-2" attributes="0"/>
+                              <Component id="cargaMasivaEstudiantes" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                              <Component id="exportarPDFBtn3" min="-2" max="-2" attributes="0"/>
+                              <Component id="exportarPDFEstudiantes" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
@@ -504,12 +504,12 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="cargaMasivaBtn3">
+            <Component class="javax.swing.JButton" name="cargaMasivaEstudiantes">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Carga Masiva"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="exportarPDFBtn3">
+            <Component class="javax.swing.JButton" name="exportarPDFEstudiantes">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Exportar Listado a PDF"/>
               </Properties>
