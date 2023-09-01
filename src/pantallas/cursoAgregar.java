@@ -185,9 +185,7 @@ public class cursoAgregar extends javax.swing.JFrame {
   // Funciones auxiliares
   public static boolean checkearCodigoRepetido(int codigoCurso) {
     for (Curso curso : Administrador.arrayCursos) {
-      if (curso.getCodigo() == codigoCurso) {
-        return true;                                                            
-      }
+      if (curso.getCodigo() == codigoCurso) return true;                                                            
     }
     return false;                                                               
   }

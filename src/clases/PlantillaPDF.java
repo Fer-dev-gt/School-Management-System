@@ -22,6 +22,7 @@ public class PlantillaPDF {
   FileOutputStream archivo;
   Paragraph titulo;
   
+  
   public PlantillaPDF(String nombre, String apellido, String fecha) {
     this.nombre = nombre;
     this.apellido = apellido;
@@ -89,6 +90,66 @@ public class PlantillaPDF {
       System.err.println(e.getMessage());
     }
   }
+  
+  
+  public void crearPlantillaAlumnos() throws DocumentException {
+    try {
+      archivo = new FileOutputStream("Lista de Alumnos.pdf");
+      PdfWriter.getInstance(documento, archivo);
+      documento.open();
+      titulo.setAlignment(1);
+      
+      documento.add(titulo);
+      documento.add(new Paragraph("Nombre: " + nombre));
+      documento.add(new Paragraph("Apellido: " + apellido));
+      documento.add(Chunk.NEWLINE);
+      
+      documento.add(Chunk.NEWLINE);
+      
+      documento.add(new Paragraph("Fecha: " + fecha));
+      documento.add(Chunk.NEWLINE);
+      
+      
+      PdfPTable tabla = new PdfPTable(5);
+      tabla.setWidthPercentage(100);
+      
+      PdfPCell codigo = new PdfPCell(new Phrase("codigo"));
+      codigo.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell nombre = new PdfPCell(new Phrase("nombre"));
+      nombre.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell apellido = new PdfPCell(new Phrase("apellido"));
+      apellido.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell correo = new PdfPCell(new Phrase("correo"));
+      correo.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell genero = new PdfPCell(new Phrase("genero"));
+      genero.setBackgroundColor(BaseColor.ORANGE);
+      
+      tabla.addCell(codigo);
+      tabla.addCell(nombre);
+      tabla.addCell(apellido);
+      tabla.addCell(correo);
+      tabla.addCell(genero);
+      
+      for(Alumno alumno : Administrador.arrayAlumnos){
+        tabla.addCell(String.valueOf(alumno.getCodigo()));
+        tabla.addCell(alumno.getNombre());
+        tabla.addCell(alumno.getApellido());
+        tabla.addCell(alumno.getCorreo());
+        tabla.addCell(alumno.getGenero());
+      }
+      
+      documento.add(tabla);
+      documento.add(Chunk.NEWLINE);
+      documento.add(new Paragraph("Archivo guardado como 'Lista de Alumnos.pdf'"));
+      documento.close();
+      System.out.println("Archivo creado exitosamente");
+      
+      
+    }catch(FileNotFoundException | DocumentException e){
+      System.err.println(e.getMessage());
+    }
+  }
+  
   
   public void crearPlantillaCursos() throws DocumentException {
     try {

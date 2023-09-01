@@ -74,6 +74,8 @@ public class moduloAdmin extends javax.swing.JFrame {
     jScrollPane4 = new javax.swing.JScrollPane();
     tablaAlumnos = new javax.swing.JTable();
     refrescarTablaAlumnos = new javax.swing.JButton();
+    panelEstudiantesGrafica = new javax.swing.JPanel();
+    graficaAlumnosBtn = new javax.swing.JButton();
     cerrarSesion = new javax.swing.JButton();
     jLabel1 = new javax.swing.JLabel();
 
@@ -229,6 +231,11 @@ public class moduloAdmin extends javax.swing.JFrame {
     panelesAdmin.addTab("Profesores", panelProfesores);
 
     cargaMasivaCursos.setText("Carga Masiva");
+    cargaMasivaCursos.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cargaMasivaCursosActionPerformed(evt);
+      }
+    });
 
     crearNuevoCurso.setText("Crear");
     crearNuevoCurso.addActionListener(new java.awt.event.ActionListener() {
@@ -370,8 +377,18 @@ public class moduloAdmin extends javax.swing.JFrame {
     panelAlumnos.setForeground(new java.awt.Color(60, 63, 65));
 
     cargaMasivaEstudiantes.setText("Carga Masiva");
+    cargaMasivaEstudiantes.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        cargaMasivaEstudiantesActionPerformed(evt);
+      }
+    });
 
     exportarPDFEstudiantes.setText("Exportar Listado a PDF");
+    exportarPDFEstudiantes.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        exportarPDFEstudiantesActionPerformed(evt);
+      }
+    });
 
     tablaAlumnos.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
@@ -401,6 +418,26 @@ public class moduloAdmin extends javax.swing.JFrame {
       }
     });
 
+    panelEstudiantesGrafica.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+    javax.swing.GroupLayout panelEstudiantesGraficaLayout = new javax.swing.GroupLayout(panelEstudiantesGrafica);
+    panelEstudiantesGrafica.setLayout(panelEstudiantesGraficaLayout);
+    panelEstudiantesGraficaLayout.setHorizontalGroup(
+      panelEstudiantesGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 466, Short.MAX_VALUE)
+    );
+    panelEstudiantesGraficaLayout.setVerticalGroup(
+      panelEstudiantesGraficaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 244, Short.MAX_VALUE)
+    );
+
+    graficaAlumnosBtn.setText("Mostrar gráfica de pastel");
+    graficaAlumnosBtn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        graficaAlumnosBtnActionPerformed(evt);
+      }
+    });
+
     javax.swing.GroupLayout panelAlumnosLayout = new javax.swing.GroupLayout(panelAlumnos);
     panelAlumnos.setLayout(panelAlumnosLayout);
     panelAlumnosLayout.setHorizontalGroup(
@@ -408,30 +445,41 @@ public class moduloAdmin extends javax.swing.JFrame {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlumnosLayout.createSequentialGroup()
         .addGap(61, 61, 61)
         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 216, Short.MAX_VALUE)
-        .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-          .addComponent(exportarPDFEstudiantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-          .addComponent(cargaMasivaEstudiantes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        .addGap(121, 121, 121))
+        .addGap(18, 18, 18)
+        .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(panelAlumnosLayout.createSequentialGroup()
+            .addComponent(panelEstudiantesGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addContainerGap(16, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelAlumnosLayout.createSequentialGroup()
+            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(cargaMasivaEstudiantes, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(exportarPDFEstudiantes))
+            .addGap(154, 154, 154))))
       .addGroup(panelAlumnosLayout.createSequentialGroup()
         .addGap(185, 185, 185)
         .addComponent(refrescarTablaAlumnos)
-        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(graficaAlumnosBtn)
+        .addGap(147, 147, 147))
     );
     panelAlumnosLayout.setVerticalGroup(
       panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(panelAlumnosLayout.createSequentialGroup()
+        .addGap(34, 34, 34)
         .addGroup(panelAlumnosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(panelAlumnosLayout.createSequentialGroup()
-            .addGap(181, 181, 181)
-            .addComponent(cargaMasivaEstudiantes)
-            .addGap(43, 43, 43)
-            .addComponent(exportarPDFEstudiantes))
+            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(26, 26, 26)
+            .addComponent(refrescarTablaAlumnos))
           .addGroup(panelAlumnosLayout.createSequentialGroup()
-            .addGap(34, 34, 34)
-            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-        .addGap(26, 26, 26)
-        .addComponent(refrescarTablaAlumnos)
+            .addComponent(cargaMasivaEstudiantes)
+            .addGap(31, 31, 31)
+            .addComponent(exportarPDFEstudiantes)
+            .addGap(69, 69, 69)
+            .addComponent(panelEstudiantesGrafica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(44, 44, 44)
+            .addComponent(graficaAlumnosBtn)))
         .addContainerGap(28, Short.MAX_VALUE))
     );
 
@@ -622,6 +670,7 @@ public class moduloAdmin extends javax.swing.JFrame {
         
         mybufferReader.close();
         mostrarListadoProfesores();                                                                                 // Refresh the JTable with updated data
+        actualizarGraficaPastelProfesores();
         
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
       } catch (IOException e) {
@@ -634,12 +683,120 @@ public class moduloAdmin extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_cargaMasivaProfesoresActionPerformed
 
+  private void cargaMasivaEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargaMasivaEstudiantesActionPerformed
+    JFileChooser lectorDeArchivos = new JFileChooser();
+    FileNameExtensionFilter filtroArchivo = new FileNameExtensionFilter(".csv", "csv");
+    lectorDeArchivos.setFileFilter(filtroArchivo);
+    int respuestaFileChooser = lectorDeArchivos.showOpenDialog(this);                                        // Abre el menú del dialogo para subir archivos y guarda la respuesta si es archivo valido
+    
+    if (respuestaFileChooser == JFileChooser.APPROVE_OPTION) {
+      String ruta = lectorDeArchivos.getSelectedFile().getAbsolutePath();
+      
+      try {
+        BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
+        String line;
+        mybufferReader.readLine();                                                                                  // Saltamos la primera linea donde esta los nombres de las columnas
+        while ((line = mybufferReader.readLine()) != null) {                                                        // Primero guardamos el valor de linea actual del csv al ejecutar lo que esta adentro de parentesis y luego validamos si la linea es igual a 'null'
+          String[] data = line.split(",");                                                                     // Usamos el método 'split(,)' para crear un Array con los valores de cada columna que estan separador por comas
+          if (data.length == 5) {
+            int codigo = Integer.parseInt(data[0]);
+            String nombre = data[1];
+            String apellido = data[2];
+            String correo = data[3];
+            String genero = data[4];
+            
+            Alumno alumno = new Alumno(codigo, nombre, apellido, correo, genero, "1234");             // Se coloca contraseña por defecto "1234"
+            Administrador.arrayAlumnos.add(alumno);
+          } else {
+            JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 5 columnas exactas ❌");
+          }
+        }
+        
+        mybufferReader.close();
+        mostrarListadoAlumnos();                                                                                    // Refresh the JTable with updated data
+        actualizarGraficaPastelAlumnos();
+        
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
+      } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
+      } catch (NumberFormatException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error de formato en el archivo CSV ❌");
+      }
+    }
+  }//GEN-LAST:event_cargaMasivaEstudiantesActionPerformed
+
+  private void graficaAlumnosBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_graficaAlumnosBtnActionPerformed
+    actualizarGraficaPastelAlumnos();
+  }//GEN-LAST:event_graficaAlumnosBtnActionPerformed
+
+  private void exportarPDFEstudiantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportarPDFEstudiantesActionPerformed
+    PlantillaPDF miPlantilla = new PlantillaPDF("Fernando", "Jose", "20/20/20");
+    try {
+      miPlantilla.crearPlantillaAlumnos();
+    } catch (DocumentException ex) {
+      Logger.getLogger(moduloAdmin.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    try{
+      File path = new File("Lista de Alumnos.pdf");
+      Desktop.getDesktop().open(path);
+    }catch (Exception ex){
+      JOptionPane.showMessageDialog(null, ex, "Atención", 2);
+    }
+  }//GEN-LAST:event_exportarPDFEstudiantesActionPerformed
+
+  private void cargaMasivaCursosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargaMasivaCursosActionPerformed
+    JFileChooser lectorDeArchivos = new JFileChooser();
+    FileNameExtensionFilter filtroArchivo = new FileNameExtensionFilter(".csv", "csv");
+    lectorDeArchivos.setFileFilter(filtroArchivo);
+    int respuestaFileChooser = lectorDeArchivos.showOpenDialog(this);                                        // Abre el menú del dialogo para subir archivos y guarda la respuesta si es archivo valido
+    
+    if (respuestaFileChooser == JFileChooser.APPROVE_OPTION) {
+      String ruta = lectorDeArchivos.getSelectedFile().getAbsolutePath();
+      
+      try {
+        BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
+        String line;
+        mybufferReader.readLine();                                                                                  // Saltamos la primera linea donde esta los nombres de las columnas
+        while ((line = mybufferReader.readLine()) != null) {                                                        // Primero guardamos el valor de linea actual del csv al ejecutar lo que esta adentro de parentesis y luego validamos si la linea es igual a 'null'
+          String[] data = line.split(",");                                                                     // Usamos el método 'split(,)' para crear un Array con los valores de cada columna que estan separador por comas
+          if (data.length == 4) {
+            int codigo = Integer.parseInt(data[0]);
+            String nombre = data[1];
+            int creditos =  Integer.parseInt(data[2]);
+            String profesor = data[3];
+            
+            Curso curso = new Curso(codigo, nombre, creditos, profesor);             
+            Administrador.arrayCursos.add(curso);
+          } else {
+            JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 4 columnas exactas ❌");
+          }
+        }
+        
+        mybufferReader.close();
+        mostrarListadoCursos();                                                                                    // Refresh the JTable with updated data
+        actualizarGraficaBarrasCursos();
+        
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
+      } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
+      } catch (NumberFormatException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error de formato en el archivo CSV ❌");
+      }
+    }
+  }//GEN-LAST:event_cargaMasivaCursosActionPerformed
+
+  
   // Funciones para actualizar Tablas
   public void mostrarListadoProfesores() {
-    DefaultTableModel model = new DefaultTableModel();                                  // Create a DefaultTableModel with column names
+    DefaultTableModel model = new DefaultTableModel();                                  
     model.setColumnIdentifiers(new String[] {"Código", "Nombre", "Apellido", "Correo", "Género"});
     
-    for (Profesor profesor : Administrador.arrayProfesores) {                           // Loop through the arrayProfesores and add data to the table model
+    for (Profesor profesor : Administrador.arrayProfesores) {                                         // Iteramos a traves del Array de Profesores y creamos un objeto con los datos de los profesores y los agregamos a la tabla
       Object[] rowData = new Object[] {
         profesor.getCodigo(),
         profesor.getNombre(),
@@ -650,7 +807,7 @@ public class moduloAdmin extends javax.swing.JFrame {
       model.addRow(rowData);
     }
     
-    tablaProfesores.setModel(model);                                    // Set the table model to the tablaProfesores
+    tablaProfesores.setModel(model);                                                          // Agregamos el model a la tabla de profesores
     System.out.println("Se actualizaron las filas de Profesores");
   }
   
@@ -698,9 +855,9 @@ public class moduloAdmin extends javax.swing.JFrame {
   private int encontrarIndexProfesorConCodigo(int codigoUsuario) {
     for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
       Profesor profesor = Administrador.arrayProfesores.get(i);
-      if (profesor.getCodigo() == codigoUsuario) return i;                        // Return the index if codigo matches
+      if (profesor.getCodigo() == codigoUsuario) return i;                        // Regresa el index del profesor que encontró e hizo match
     }
-    return -1;                                                                    // Return -1 if no matching codigo is found
+    return -1;                                                                    // Si retorna -1 es porque no encontro al profesor
   }
   
   
@@ -729,7 +886,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     if(cursosConAlumnos == 1) datos.setValue(Administrador.arrayCursos.get(0).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(0).getNombre());
     if(cursosConAlumnos == 2) {
       datos.setValue(Administrador.arrayCursos.get(0).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(0).getNombre());
-      datos.setValue(Administrador.arrayCursos.get(1).getAlumnos(),"Alumnos","Curso 2");
+      datos.setValue(Administrador.arrayCursos.get(1).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(1).getNombre());
     }
     if(cursosConAlumnos >= 3) {
       datos.setValue(Administrador.arrayCursos.get(0).getAlumnos(),"Alumnos",Administrador.arrayCursos.get(0).getNombre());
@@ -779,7 +936,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     String formattedPercentFemenino = decimalFormat.format(percentFemenino);
     
     pieDataset.setValue("Masculino " + formattedPercentMasculino + "%", countMasculino);
-    pieDataset.setValue("Femenino " +formattedPercentFemenino + "%", countFemenino);
+    pieDataset.setValue("Femenino " + formattedPercentFemenino + "%", countFemenino);
     
     JFreeChart graficaPie = ChartFactory.createPieChart("Género de Profesores", pieDataset, true, true, true);
     
@@ -790,6 +947,42 @@ public class moduloAdmin extends javax.swing.JFrame {
     panel.setPreferredSize(new Dimension(400,270));
     panelProfesoresGrafica.setLayout(new BorderLayout());
     panelProfesoresGrafica.add(panel, BorderLayout.NORTH);
+    System.out.println("Gráfica actualizada");
+    pack();
+    repaint();
+  }
+  
+  
+  public void actualizarGraficaPastelAlumnos(){
+    DefaultPieDataset pieDataset = new DefaultPieDataset();
+    int totalAlumnos = Administrador.arrayAlumnos.size();
+    int countMasculino = 0;
+    int countFemenino = 0;
+    
+    for (Alumno alumno : Administrador.arrayAlumnos) {
+      if (alumno.getGenero().equals("m")) countMasculino++; 
+      if (alumno.getGenero().equals("f")) countFemenino++;
+    }
+    
+    double percentMasculino = (double) countMasculino / totalAlumnos * 100;
+    double percentFemenino = (double) countFemenino / totalAlumnos * 100;
+    DecimalFormat decimalFormat = new DecimalFormat("0.00");
+
+    String formattedPercentMasculino = decimalFormat.format(percentMasculino);
+    String formattedPercentFemenino = decimalFormat.format(percentFemenino);
+    
+    pieDataset.setValue("Masculino " + formattedPercentMasculino + "%", countMasculino);
+    pieDataset.setValue("Femenino " + formattedPercentFemenino + "%", countFemenino);
+    
+    JFreeChart graficaPie = ChartFactory.createPieChart("Género de Alumnos", pieDataset, true, true, true);
+    
+    if (panelEstudiantesGrafica.getComponentCount() > 0) panelEstudiantesGrafica.remove(0);                                   // Remove the old chart panel
+        
+    ChartPanel panel = new ChartPanel(graficaPie);
+    panel.setMouseWheelEnabled(true);
+    panel.setPreferredSize(new Dimension(400,270));
+    panelEstudiantesGrafica.setLayout(new BorderLayout());
+    panelEstudiantesGrafica.add(panel, BorderLayout.NORTH);
     System.out.println("Gráfica actualizada");
     pack();
     repaint();
@@ -852,6 +1045,7 @@ public class moduloAdmin extends javax.swing.JFrame {
   private javax.swing.JButton exportarPDFCursos;
   private javax.swing.JButton exportarPDFEstudiantes;
   private javax.swing.JButton exportarPDFProfesores;
+  private javax.swing.JButton graficaAlumnosBtn;
   private javax.swing.JButton graficaCursosBtn;
   private javax.swing.JButton graficaProfesoresBtn;
   private javax.swing.JLabel jLabel1;
@@ -861,6 +1055,7 @@ public class moduloAdmin extends javax.swing.JFrame {
   private javax.swing.JPanel panelAlumnos;
   private javax.swing.JPanel panelCursos;
   private javax.swing.JPanel panelCursosGrafica;
+  private javax.swing.JPanel panelEstudiantesGrafica;
   private javax.swing.JPanel panelProfesores;
   private javax.swing.JPanel panelProfesoresGrafica;
   private javax.swing.JTabbedPane panelesAdmin;

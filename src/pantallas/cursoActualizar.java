@@ -139,7 +139,8 @@ public class cursoActualizar extends javax.swing.JFrame {
   public static boolean actualizarCurso(int codigoCurso, String nombreCurso, int creditos, String profesorCurso) {
     for (int i = 0; i < Administrador.arrayCursos.size(); i++) {
       if (Administrador.arrayCursos.get(i).getCodigo() == codigoCurso) {
-        Curso nuevoCurso = new Curso(codigoCurso, nombreCurso, creditos, profesorCurso);
+        int alumnos = Administrador.arrayCursos.get(i).getAlumnos();                                      // Guardamos el valor de los alumnos actuales para no perder este dato
+        Curso nuevoCurso = new Curso(codigoCurso, nombreCurso, creditos, alumnos,profesorCurso);
         Administrador.arrayCursos.set(i, nuevoCurso);
         return true;
       }
