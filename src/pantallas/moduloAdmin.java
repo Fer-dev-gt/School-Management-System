@@ -604,8 +604,8 @@ public class moduloAdmin extends javax.swing.JFrame {
         BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
         String line;
         mybufferReader.readLine();                                                                                  // Saltamos la primera linea donde esta los nombres de las columnas
-        while ((line = mybufferReader.readLine()) != null) {
-          String[] data = line.split(",");
+        while ((line = mybufferReader.readLine()) != null) {                                                        // Primero guardamos el valor de linea actual del csv al ejecutar lo que esta adentro de parentesis y luego validamos si la linea es igual a 'null'
+          String[] data = line.split(",");                                                                     // Usamos el método 'split(,)' para crear un Array con los valores de cada columna que estan separador por comas
           if (data.length == 5) {
             int codigo = Integer.parseInt(data[0]);
             String nombre = data[1];
@@ -615,6 +615,8 @@ public class moduloAdmin extends javax.swing.JFrame {
             
             Profesor profesor = new Profesor(codigo, nombre, apellido, correo, genero, "1234");             // Se coloca contraseña por defecto "1234"
             Administrador.arrayProfesores.add(profesor);
+          } else {
+            JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 5 columnas exactas ❌");
           }
         }
         
