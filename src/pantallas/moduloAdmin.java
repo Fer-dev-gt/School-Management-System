@@ -541,10 +541,12 @@ public class moduloAdmin extends javax.swing.JFrame {
 
   private void crearNuevoCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearNuevoCursoActionPerformed
     this.agregarCursoPantalla.setVisible(true);
+    this.agregarCursoPantalla.actualizarComboBoxProfesores();
   }//GEN-LAST:event_crearNuevoCursoActionPerformed
 
   private void actualizarDatosCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosCursoActionPerformed
     this.actualizarCursoPantalla.setVisible(true);
+    this.actualizarCursoPantalla.actualizarComboBoxProfesores();
   }//GEN-LAST:event_actualizarDatosCursoActionPerformed
 
   private void cerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionActionPerformed

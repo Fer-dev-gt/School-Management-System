@@ -2,6 +2,7 @@ package pantallas;
 
 import clases.Administrador;
 import clases.Curso;
+import clases.Profesor;
 import javax.swing.JOptionPane;
 import static pantallas.cursoAgregar.checkearCodigoRepetido;
 
@@ -9,6 +10,7 @@ public class cursoActualizar extends javax.swing.JFrame {
 
   public cursoActualizar() {
     initComponents();
+    actualizarComboBoxProfesores();
   }
 
   @SuppressWarnings("unchecked")
@@ -23,9 +25,9 @@ public class cursoActualizar extends javax.swing.JFrame {
     codigoInput = new javax.swing.JTextField();
     nombreInput = new javax.swing.JTextField();
     creditosInput = new javax.swing.JTextField();
-    profesorInput = new javax.swing.JTextField();
     agregarCursoBtn = new javax.swing.JButton();
     cerrarAgregar = new javax.swing.JButton();
+    cambiarProfesorComboBox = new javax.swing.JComboBox<>();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -38,6 +40,18 @@ public class cursoActualizar extends javax.swing.JFrame {
     jLabel1.setText("Código");
 
     jLabel6.setText("ACTUALIZAR NUEVO CURSO");
+
+    codigoInput.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusLost(java.awt.event.FocusEvent evt) {
+        codigoInputFocusLost(evt);
+      }
+    });
+
+    creditosInput.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusLost(java.awt.event.FocusEvent evt) {
+        creditosInputFocusLost(evt);
+      }
+    });
 
     agregarCursoBtn.setText("Actualizar");
     agregarCursoBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -64,24 +78,31 @@ public class cursoActualizar extends javax.swing.JFrame {
           .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+        .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-            .addComponent(codigoInput)
-            .addComponent(nombreInput)
-            .addComponent(creditosInput)
-            .addComponent(profesorInput, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
           .addGroup(layout.createSequentialGroup()
-            .addComponent(agregarCursoBtn)
-            .addGap(88, 88, 88)
-            .addComponent(cerrarAgregar)))
-        .addGap(159, 159, 159))
+            .addGap(0, 3, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addGroup(layout.createSequentialGroup()
+                .addComponent(agregarCursoBtn)
+                .addGap(88, 88, 88)
+                .addComponent(cerrarAgregar)
+                .addGap(159, 159, 159))
+              .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                  .addComponent(codigoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                  .addComponent(nombreInput)
+                  .addComponent(creditosInput)
+                  .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(49, 49, 49))))
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(cambiarProfesorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addContainerGap(50, Short.MAX_VALUE)
+        .addContainerGap(53, Short.MAX_VALUE)
         .addComponent(jLabel6)
         .addGap(43, 43, 43)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -96,10 +117,10 @@ public class cursoActualizar extends javax.swing.JFrame {
           .addComponent(creditosInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel3))
         .addGap(18, 18, 18)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(profesorInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel4))
-        .addGap(53, 53, 53)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addComponent(jLabel4)
+          .addComponent(cambiarProfesorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(50, 50, 50)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(agregarCursoBtn)
           .addComponent(cerrarAgregar))
@@ -109,7 +130,7 @@ public class cursoActualizar extends javax.swing.JFrame {
     pack();
   }// </editor-fold>//GEN-END:initComponents
 
-  
+  // Funciones de Eventos
   private void actualizarCursoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarCursoBtnActionPerformed
     int codigoCurso = Integer.parseInt(codigoInput.getText());
     boolean codeIsFound = checkearCodigoRepetido(codigoCurso);
@@ -120,7 +141,7 @@ public class cursoActualizar extends javax.swing.JFrame {
     
     String nombreCurso = nombreInput.getText();
     int creditos = Integer.parseInt(creditosInput.getText());
-    String profesorCurso = profesorInput.getText();
+    String profesorCurso = cambiarProfesorComboBox.getSelectedItem().toString();
     
     boolean dataUpdated = actualizarCurso(codigoCurso, nombreCurso, creditos, profesorCurso);
     if(dataUpdated) {
@@ -135,7 +156,26 @@ public class cursoActualizar extends javax.swing.JFrame {
     this.dispose();
   }//GEN-LAST:event_cerrarAgregarActionPerformed
 
+  private void codigoInputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codigoInputFocusLost
+    try {
+      int codigoCurso = Integer.parseInt(codigoInput.getText());
+    } catch(java.lang.NumberFormatException e) {
+      codigoInput.setText("");
+      JOptionPane.showMessageDialog(null, "Ingrese un numero!", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }//GEN-LAST:event_codigoInputFocusLost
+
+  private void creditosInputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_creditosInputFocusLost
+    try {
+      int creditosCurso = Integer.parseInt(creditosInput.getText());
+    } catch(java.lang.NumberFormatException e) {
+      creditosInput.setText("");
+      JOptionPane.showMessageDialog(null, "Ingrese un numero!", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }//GEN-LAST:event_creditosInputFocusLost
+
   
+  // Funciones auxiliares
   public static boolean actualizarCurso(int codigoCurso, String nombreCurso, int creditos, String profesorCurso) {
     for (int i = 0; i < Administrador.arrayCursos.size(); i++) {
       if (Administrador.arrayCursos.get(i).getCodigo() == codigoCurso) {
@@ -165,8 +205,16 @@ public class cursoActualizar extends javax.swing.JFrame {
     codigoInput.setText("");
     nombreInput.setText("");
     creditosInput.setText("");
-    profesorInput.setText("");
   }
+  
+  
+  public void actualizarComboBoxProfesores() {
+    cambiarProfesorComboBox.removeAllItems();
+    for (Profesor profesor : Administrador.arrayProfesores) {
+      cambiarProfesorComboBox.addItem(profesor.getNombre());
+    }
+  }
+  
   
   
   
@@ -208,6 +256,7 @@ public class cursoActualizar extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton agregarCursoBtn;
+  private javax.swing.JComboBox<String> cambiarProfesorComboBox;
   private javax.swing.JButton cerrarAgregar;
   private javax.swing.JTextField codigoInput;
   private javax.swing.JTextField creditosInput;
@@ -217,6 +266,5 @@ public class cursoActualizar extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel6;
   private javax.swing.JTextField nombreInput;
-  private javax.swing.JTextField profesorInput;
   // End of variables declaration//GEN-END:variables
 }

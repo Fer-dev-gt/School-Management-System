@@ -2,12 +2,14 @@ package pantallas;
 
 import clases.Administrador;
 import clases.Curso;
+import clases.Profesor;
 import javax.swing.JOptionPane;
 
 public class cursoAgregar extends javax.swing.JFrame {
 
   public cursoAgregar() {
     initComponents();
+    actualizarComboBoxProfesores();
   }
 
   @SuppressWarnings("unchecked")
@@ -22,10 +24,10 @@ public class cursoAgregar extends javax.swing.JFrame {
     codigoInput = new javax.swing.JTextField();
     nombreCursoInput = new javax.swing.JTextField();
     creditosInput = new javax.swing.JTextField();
-    profesorInput = new javax.swing.JTextField();
     agregarCursoBtn = new javax.swing.JButton();
     cerrarAgregar = new javax.swing.JButton();
     auxiliarAlumnos = new javax.swing.JTextField();
+    listaDeProfesores = new javax.swing.JComboBox<>();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -69,7 +71,7 @@ public class cursoAgregar extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+      .addGroup(layout.createSequentialGroup()
         .addGap(150, 150, 150)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -77,24 +79,26 @@ public class cursoAgregar extends javax.swing.JFrame {
           .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addComponent(auxiliarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGap(0, 0, Short.MAX_VALUE))
+          .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(listaDeProfesores, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(agregarCursoBtn))
+            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
           .addGroup(layout.createSequentialGroup()
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-              .addComponent(codigoInput)
+              .addComponent(codigoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
               .addComponent(nombreCursoInput)
               .addComponent(creditosInput)
-              .addComponent(profesorInput, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGap(202, 202, 202))
-          .addGroup(layout.createSequentialGroup()
-            .addComponent(agregarCursoBtn)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(cerrarAgregar)
-            .addGap(122, 122, 122))))
+            .addGap(49, 202, Short.MAX_VALUE))))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(auxiliarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, 206, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(187, 187, 187))
+        .addComponent(cerrarAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(37, 37, 37))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,19 +119,15 @@ public class cursoAgregar extends javax.swing.JFrame {
           .addComponent(jLabel3))
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(profesorInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addComponent(jLabel4))
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(53, 53, 53)
-            .addComponent(agregarCursoBtn)
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE))
-          .addGroup(layout.createSequentialGroup()
-            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(cerrarAgregar)))
-        .addGap(18, 18, 18)
+          .addComponent(jLabel4)
+          .addComponent(listaDeProfesores, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+        .addGap(31, 31, 31)
+        .addComponent(agregarCursoBtn)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
         .addComponent(auxiliarAlumnos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(85, 85, 85))
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+        .addComponent(cerrarAgregar)
+        .addGap(32, 32, 32))
     );
 
     pack();
@@ -144,7 +144,7 @@ public class cursoAgregar extends javax.swing.JFrame {
     
     String nombreCurso = nombreCursoInput.getText();
     int creditos = Integer.parseInt(creditosInput.getText());
-    String profesor = profesorInput.getText();
+    String profesor = listaDeProfesores.getSelectedItem().toString();
 
     System.out.println("Tamaño anterior del ArrayList Cursos es: " + Administrador.arrayCursos.size());
     Curso nuevoCurso = new Curso(codigoCurso, nombreCurso, creditos, profesor);
@@ -201,7 +201,13 @@ public class cursoAgregar extends javax.swing.JFrame {
     codigoInput.setText("");
     nombreCursoInput.setText("");
     creditosInput.setText("");
-    profesorInput.setText("");
+  }
+  
+  public void actualizarComboBoxProfesores() {
+    listaDeProfesores.removeAllItems();
+    for (Profesor profesor : Administrador.arrayProfesores) {
+      listaDeProfesores.addItem(profesor.getNombre());
+    }
   }
   
   
@@ -250,7 +256,7 @@ public class cursoAgregar extends javax.swing.JFrame {
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel6;
+  private javax.swing.JComboBox<String> listaDeProfesores;
   private javax.swing.JTextField nombreCursoInput;
-  private javax.swing.JTextField profesorInput;
   // End of variables declaration//GEN-END:variables
 }

@@ -47,7 +47,13 @@ public class profesorActualizar extends javax.swing.JFrame {
 
     Contraseña.setText("Contraseña");
 
-    generoInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+    codigoInput.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusLost(java.awt.event.FocusEvent evt) {
+        codigoInputFocusLost(evt);
+      }
+    });
+
+    generoInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "m", "f" }));
 
     actualizarProfesorBtn.setText("Actualizar");
     actualizarProfesorBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -172,6 +178,15 @@ public class profesorActualizar extends javax.swing.JFrame {
       this.dispose();
     }
   }//GEN-LAST:event_actualizarProfesorBtnActionPerformed
+
+  private void codigoInputFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_codigoInputFocusLost
+    try {
+      int codigoCurso = Integer.parseInt(codigoInput.getText());
+    } catch(java.lang.NumberFormatException e) {
+      codigoInput.setText("");
+      JOptionPane.showMessageDialog(null, "Ingrese un numero!", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }//GEN-LAST:event_codigoInputFocusLost
 
   
   public static boolean actualizarRegistro(int codigoUsuario, String nombreUsuario, String apellidoUsuario, String correoUsuario, String generoUsuario, String passwordUsuario) {
