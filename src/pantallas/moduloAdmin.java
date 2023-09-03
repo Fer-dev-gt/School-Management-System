@@ -795,6 +795,7 @@ public class moduloAdmin extends javax.swing.JFrame {
   
   // Funciones para actualizar Tablas
   public void mostrarListadoProfesores() {
+    tablaProfesores.setAutoCreateRowSorter(true); 
     DefaultTableModel model = new DefaultTableModel();                                  
     model.setColumnIdentifiers(new String[] {"Código", "Nombre", "Apellido", "Correo", "Género"});
     
@@ -815,6 +816,7 @@ public class moduloAdmin extends javax.swing.JFrame {
   
   
   public void mostrarListadoAlumnos() {
+    tablaAlumnos.setAutoCreateRowSorter(true); 
     DefaultTableModel model = new DefaultTableModel();                          
     model.setColumnIdentifiers(new String[] {"Código", "Nombre", "Apellido", "Correo", "Género"});
     
@@ -835,6 +837,7 @@ public class moduloAdmin extends javax.swing.JFrame {
   
   
   public void mostrarListadoCursos() {
+    tablaCursos.setAutoCreateRowSorter(true); 
     DefaultTableModel model = new DefaultTableModel();                          
     model.setColumnIdentifiers(new String[] {"Código", "Nombre", "Creditos", "Alumnos", "Profesor"});
     

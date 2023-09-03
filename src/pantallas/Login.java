@@ -13,6 +13,11 @@ public class Login extends javax.swing.JFrame {
   moduloAdmin pantallaAdministrador = new moduloAdmin();
   moduloProfesores pantallaProfesor = new moduloProfesores();
   moduloEstudiantes pantallaEstudiante = new moduloEstudiantes();
+  
+  public static int codigoUsuarioActualProfesor;
+  public static int indexActualProfesor;
+  public static int codigoUsuarioActualAlumno;
+  public static int indexActualAlumno;
 
   
   public Login() {
@@ -25,7 +30,7 @@ public class Login extends javax.swing.JFrame {
   private void initComponents() {
 
     entrarCuentaButton = new javax.swing.JButton();
-    userInput = new javax.swing.JTextField();
+    codigoUsuario = new javax.swing.JTextField();
     passwordInput = new javax.swing.JTextField();
     userLabel = new javax.swing.JLabel();
     passwordLabel = new javax.swing.JLabel();
@@ -60,7 +65,7 @@ public class Login extends javax.swing.JFrame {
               .addComponent(userLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(62, 62, 62)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-              .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+              .addComponent(codigoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
               .addComponent(passwordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
           .addGroup(layout.createSequentialGroup()
             .addGap(162, 162, 162)
@@ -77,7 +82,7 @@ public class Login extends javax.swing.JFrame {
         .addComponent(programLabel)
         .addGap(30, 30, 30)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-          .addComponent(userInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addComponent(codigoUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(userLabel))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -93,26 +98,71 @@ public class Login extends javax.swing.JFrame {
 
   
   private void entrarCuentaButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_entrarCuentaButtonActionPerformed
-    String user = userInput.getText();
+    String user = codigoUsuario.getText();
     String password = passwordInput.getText();
+    boolean existeUsuarioProfesor = false;
+    boolean existeUsuarioAlumno = false;
+    
+    try {
+      existeUsuarioProfesor = buscarUsarioProfesor(user, password);
+    } catch (NumberFormatException e){
+      System.out.println("sigue");
+    }
+    
+    try {
+      existeUsuarioAlumno = burcarUsarioAlumno(user, password);
+    } catch (NumberFormatException e){
+      System.out.println("sigue");
+    }
 
     if(this.admin.getUsuario().equals(user) && this.admin.getPassword().equals(password)){
       this.pantallaAdministrador.setVisible(true);
       this.dispose();
-    } else if(this.profesor.getUsuario().equals(user) && this.profesor.getPassword().equals(password)){  
+    } else if((this.profesor.getUsuario().equals(user) && this.profesor.getPassword().equals(password)) || existeUsuarioProfesor){  
       this.pantallaProfesor.setVisible(true);
       this.dispose();
-    } else if(this.alumno.getUsuario().equals(user) && this.alumno.getPassword().equals(password)){  
+    } else if((this.alumno.getUsuario().equals(user) && this.alumno.getPassword().equals(password)) || existeUsuarioAlumno){  
       this.pantallaEstudiante.setVisible(true);
       this.dispose();
     }else{
-      userInput.setText("");
+      codigoUsuario.setText("");
       passwordInput.setText("");
       JOptionPane.showMessageDialog(null, "Las credenciales son incorrectas!", "Alert", JOptionPane.INFORMATION_MESSAGE);
     }
 
   }//GEN-LAST:event_entrarCuentaButtonActionPerformed
 
+  
+  public boolean buscarUsarioProfesor(String userString, String password){
+    int userInt = Integer.parseInt(userString);
+    
+    for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
+      if (Administrador.arrayProfesores.get(i).getCodigo() == userInt && Administrador.arrayProfesores.get(i).getPassword().equals(password)){
+        System.out.println("Usario encontrado: " + userInt);
+        System.out.println("Nombre de usuario profesor actual: " + Administrador.arrayProfesores.get(i).getNombre());
+        codigoUsuarioActualProfesor = userInt;
+        indexActualProfesor = i;
+        return true;
+      } 
+    }
+    return false;
+  }
+  
+  
+  public boolean burcarUsarioAlumno(String userString, String password){
+    int userInt = Integer.parseInt(userString);
+    
+    for (int i = 0; i < Administrador.arrayAlumnos.size(); i++) {
+      if (Administrador.arrayAlumnos.get(i).getCodigo() == userInt && Administrador.arrayAlumnos.get(i).getPassword().equals(password)){
+        System.out.println("Usario encontrado: " + userInt);
+        System.out.println("Nombre de usuario alumno actual: " + Administrador.arrayAlumnos.get(i).getNombre());
+        codigoUsuarioActualAlumno = userInt;
+        indexActualAlumno = i;
+        return true;
+      } 
+    }
+    return false;
+  }
   
   
   
@@ -154,11 +204,11 @@ public class Login extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
+  private javax.swing.JTextField codigoUsuario;
   private javax.swing.JButton entrarCuentaButton;
   private javax.swing.JTextField passwordInput;
   private javax.swing.JLabel passwordLabel;
   private javax.swing.JLabel programLabel;
-  private javax.swing.JTextField userInput;
   private javax.swing.JLabel userLabel;
   // End of variables declaration//GEN-END:variables
 }

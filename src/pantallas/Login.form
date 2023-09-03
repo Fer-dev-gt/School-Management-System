@@ -33,7 +33,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="62" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
-                          <Component id="userInput" min="-2" pref="167" max="-2" attributes="0"/>
+                          <Component id="codigoUsuario" min="-2" pref="167" max="-2" attributes="0"/>
                           <Component id="passwordInput" min="-2" pref="167" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -57,7 +57,7 @@
               <Component id="programLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="userInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="codigoUsuario" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="userLabel" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -81,7 +81,7 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="entrarCuentaButtonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="userInput">
+    <Component class="javax.swing.JTextField" name="codigoUsuario">
     </Component>
     <Component class="javax.swing.JTextField" name="passwordInput">
     </Component>
