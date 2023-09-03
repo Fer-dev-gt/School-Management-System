@@ -206,7 +206,7 @@ public class cursoAgregar extends javax.swing.JFrame {
   public void actualizarComboBoxProfesores() {
     listaDeProfesores.removeAllItems();
     for (Profesor profesor : Administrador.arrayProfesores) {
-      listaDeProfesores.addItem(profesor.getNombre());
+      listaDeProfesores.addItem(profesor.getNombre()+ " " + profesor.getApellido());
     }
   }
   

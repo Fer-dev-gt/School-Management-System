@@ -211,7 +211,7 @@ public class cursoActualizar extends javax.swing.JFrame {
   public void actualizarComboBoxProfesores() {
     cambiarProfesorComboBox.removeAllItems();
     for (Profesor profesor : Administrador.arrayProfesores) {
-      cambiarProfesorComboBox.addItem(profesor.getNombre());
+      cambiarProfesorComboBox.addItem(profesor.getNombre()+ " " + profesor.getApellido());
     }
   }
   
