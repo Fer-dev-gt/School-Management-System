@@ -104,13 +104,13 @@ public class Login extends javax.swing.JFrame {
     boolean existeUsuarioAlumno = false;
     
     try {
-      existeUsuarioProfesor = buscarUsarioProfesor(user, password);
+      existeUsuarioProfesor = buscarUsuarioProfesor(user, password);
     } catch (NumberFormatException e){
       System.out.println("sigue");
     }
     
     try {
-      existeUsuarioAlumno = burcarUsarioAlumno(user, password);
+      existeUsuarioAlumno = burcarUsuarioAlumno(user, password);
     } catch (NumberFormatException e){
       System.out.println("sigue");
     }
@@ -133,7 +133,7 @@ public class Login extends javax.swing.JFrame {
   }//GEN-LAST:event_entrarCuentaButtonActionPerformed
 
   
-  public boolean buscarUsarioProfesor(String userString, String password){
+  public boolean buscarUsuarioProfesor(String userString, String password){
     int userInt = Integer.parseInt(userString);
     
     for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
@@ -149,7 +149,7 @@ public class Login extends javax.swing.JFrame {
   }
   
   
-  public boolean burcarUsarioAlumno(String userString, String password){
+  public boolean burcarUsuarioAlumno(String userString, String password){
     int userInt = Integer.parseInt(userString);
     
     for (int i = 0; i < Administrador.arrayAlumnos.size(); i++) {
