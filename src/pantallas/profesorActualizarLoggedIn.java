@@ -1,17 +1,23 @@
 package pantallas;
+import clases.Administrador;
+import clases.Profesor;
+import javax.swing.JOptionPane;
+import static pantallas.Login.indexActualProfesor;
 
 public class profesorActualizarLoggedIn extends javax.swing.JFrame {
   
 
   public profesorActualizarLoggedIn() {
     initComponents();
+    nombreProfesorLabel.setText("ACTUALIZAR DATOS PROFESOR: " + Administrador.arrayProfesores.get(indexActualProfesor).getNombre());
+    codigoProfesorActual.setText("Codigo Profesor: " + Administrador.arrayProfesores.get(indexActualProfesor).getCodigo());
   }
 
   @SuppressWarnings("unchecked")
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
-    jLabel6 = new javax.swing.JLabel();
+    nombreProfesorLabel = new javax.swing.JLabel();
     Contraseña = new javax.swing.JLabel();
     nombreInput = new javax.swing.JTextField();
     apellidoInput = new javax.swing.JTextField();
@@ -24,10 +30,11 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
     jLabel4 = new javax.swing.JLabel();
     cerrarActualizar = new javax.swing.JButton();
     jLabel5 = new javax.swing.JLabel();
+    codigoProfesorActual = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-    jLabel6.setText("ACTUALIZAR DATOS PROFESOR LOGGED-IN");
+    nombreProfesorLabel.setText("ACTUALIZAR DATOS PROFESOR LOGGED-IN");
 
     Contraseña.setText("Contraseña");
 
@@ -35,7 +42,7 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
 
     jLabel3.setText("Apellido");
 
-    generoInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+    generoInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "m", "f" }));
 
     actualizarProfesorBtn.setText("Actualizar");
     actualizarProfesorBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -54,6 +61,8 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
     });
 
     jLabel5.setText("Género");
+
+    codigoProfesorActual.setText("Codigo Profesor:");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -84,21 +93,25 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
                     .addComponent(correoInput, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(nombreInput, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))))))
           .addGroup(layout.createSequentialGroup()
-            .addGap(161, 161, 161)
-            .addComponent(jLabel6))
-          .addGroup(layout.createSequentialGroup()
             .addGap(163, 163, 163)
             .addComponent(actualizarProfesorBtn)
             .addGap(101, 101, 101)
-            .addComponent(cerrarActualizar)))
+            .addComponent(cerrarActualizar))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(145, 145, 145)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+              .addComponent(nombreProfesorLabel)
+              .addComponent(codigoProfesorActual, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))))
         .addContainerGap(105, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addGap(44, 44, 44)
-        .addComponent(jLabel6)
-        .addGap(42, 42, 42)
+        .addGap(21, 21, 21)
+        .addComponent(nombreProfesorLabel)
+        .addGap(18, 18, 18)
+        .addComponent(codigoProfesorActual)
+        .addGap(30, 30, 30)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(nombreInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
           .addComponent(jLabel2))
@@ -129,25 +142,19 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
   }// </editor-fold>//GEN-END:initComponents
 
   private void actualizarProfesorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarProfesorBtnActionPerformed
-    /*int codigoUsuario = Integer.parseInt(codigoInput.getText());
-    boolean codeIsFound = checkearCodigoRepetido(codigoUsuario);
-    if(!codeIsFound) {
-      manejarCodigoNoEncontrado(codigoUsuario);
-      return;
-    }
-
+    int codigoProfesor = Administrador.arrayProfesores.get(indexActualProfesor).getCodigo();
     String nombreUsuario = nombreInput.getText();
     String apellidoUsuario = apellidoInput.getText();
     String correoUsuario = correoInput.getText();
     String generoUsuario = generoInput.getSelectedItem().toString();
     String passwordUsuario = passwordInput.getText();
-
-    boolean dataUpdated = actualizarRegistro(codigoUsuario, nombreUsuario, apellidoUsuario, correoUsuario, generoUsuario, passwordUsuario);
+    
+    boolean dataUpdated = actualizarRegistro(codigoProfesor, nombreUsuario, apellidoUsuario, correoUsuario, generoUsuario, passwordUsuario);
     if(dataUpdated) {
-      manejarDatosActualizados(codigoUsuario);
+      manejarDatosActualizados(codigoProfesor);
       this.clearInputs();
       this.dispose();
-    }*/
+    }
   }//GEN-LAST:event_actualizarProfesorBtnActionPerformed
 
   private void cerrarActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarActualizarActionPerformed
@@ -158,7 +165,28 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
   
   
   
+  public static boolean actualizarRegistro(int codigoProfesor, String nombreUsuario, String apellidoUsuario, String correoUsuario, String generoUsuario, String passwordUsuario) {
+    for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
+      if (Administrador.arrayProfesores.get(i).getCodigo() == codigoProfesor) {
+        Profesor nuevoProfesor = new Profesor(codigoProfesor, nombreUsuario, apellidoUsuario, correoUsuario, generoUsuario, passwordUsuario);
+        Administrador.arrayProfesores.set(i, nuevoProfesor);
+        return true;
+      }
+    }
+    return false;
+  }
   
+  public void clearInputs() {
+    nombreInput.setText("");
+    apellidoInput.setText("");
+    correoInput.setText("");
+    passwordInput.setText("");
+  }
+  
+  public void manejarDatosActualizados(int codigoUsuario) {
+    JOptionPane.showMessageDialog(null, "✅ El Profesor con código: "+ codigoUsuario +" fue actualizado ✅", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    clearInputs();
+  }
   
   
   
@@ -193,14 +221,15 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
   private javax.swing.JButton actualizarProfesorBtn;
   private javax.swing.JTextField apellidoInput;
   private javax.swing.JButton cerrarActualizar;
+  private javax.swing.JLabel codigoProfesorActual;
   private javax.swing.JTextField correoInput;
   private javax.swing.JComboBox<String> generoInput;
   private javax.swing.JLabel jLabel2;
   private javax.swing.JLabel jLabel3;
   private javax.swing.JLabel jLabel4;
   private javax.swing.JLabel jLabel5;
-  private javax.swing.JLabel jLabel6;
   private javax.swing.JTextField nombreInput;
+  private javax.swing.JLabel nombreProfesorLabel;
   private javax.swing.JTextField passwordInput;
   // End of variables declaration//GEN-END:variables
 }

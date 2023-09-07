@@ -11,9 +11,8 @@ public class Login extends javax.swing.JFrame {
   Alumno alumno = new Alumno("c", "c");
   
   moduloAdmin pantallaAdministrador = new moduloAdmin();
-  moduloProfesores pantallaProfesor = new moduloProfesores();
-  moduloProfesores profesor2;
-  moduloEstudiantes pantallaEstudiante = new moduloEstudiantes();
+  moduloProfesores pantallaProfesor;
+  moduloAlumnos pantallaEstudiante = new moduloAlumnos();
   
   public static int codigoUsuarioActualProfesor;
   public static int indexActualProfesor;
@@ -120,9 +119,8 @@ public class Login extends javax.swing.JFrame {
       this.pantallaAdministrador.setVisible(true);
       this.dispose();
     } else if((this.profesor.getUsuario().equals(user) && this.profesor.getPassword().equals(password)) || existeUsuarioProfesor){  
-      profesor2 = new moduloProfesores();
-      //this.pantallaProfesor.setVisible(true);
-      this.profesor2.setVisible(true);
+      pantallaProfesor = new moduloProfesores();
+      this.pantallaProfesor.setVisible(true);
       this.dispose();
     } else if((this.alumno.getUsuario().equals(user) && this.alumno.getPassword().equals(password)) || existeUsuarioAlumno){  
       this.pantallaEstudiante.setVisible(true);

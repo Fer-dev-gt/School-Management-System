@@ -3,21 +3,21 @@ package pantallas;
 import clases.Administrador;
 import clases.Curso;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import static pantallas.Login.indexActualProfesor;
 
 public class moduloProfesores extends javax.swing.JFrame {
-  profesorActualizarLoggedIn actualizarProfesorPantallaLoggedIn = new profesorActualizarLoggedIn();
+  profesorActualizarLoggedIn actualizarProfesorPantallaLoggedIn;
+  profesorAdministrarCurso administrarCursoPantalla;
   
   public moduloProfesores() {
     initComponents();
-    addClassButtons();
+    agregarBotonesProfesor();
   }
   
   
-  private void addClassButtons() {                                                // Check if the professor teaches this class
+  private void agregarBotonesProfesor() {                                                
     int posicionX = 100;
     for (Curso curso : Administrador.arrayCursos) {
       if (curso.getProfesor().equals(Administrador.arrayProfesores.get(indexActualProfesor).getNombre() + " " + Administrador.arrayProfesores.get(indexActualProfesor).getApellido())) { // Replace with the actual professor's name
@@ -27,13 +27,20 @@ public class moduloProfesores extends javax.swing.JFrame {
         botonDeCurso.setBounds(posicionX,100,100,50);
         botonDeCurso.setText(curso.getNombre());
         
-        botonDeCurso.addActionListener(new ActionListener() {
-          public void actionPerformed(ActionEvent evt) {
-            System.out.println("Curso: " + curso.getNombre());
-          }});
+        botonDeCurso.addActionListener((ActionEvent evt) -> {
+          System.out.println("Curso: " + curso.getNombre());
+          /*if (administrarCursoPantalla == null) {
+            administrarCursoPantalla = new profesorAdministrarCurso(curso.getNombre());
+            this.administrarCursoPantalla.setVisible(true);
+          } else {
+            this.administrarCursoPantalla.setVisible(true);
+          }*/
+          administrarCursoPantalla = new profesorAdministrarCurso(curso.getNombre());
+          this.administrarCursoPantalla.setVisible(true);
+        });
         
         JLabel alumnosLabel = new JLabel(String.valueOf(curso.getAlumnos() + " Alumnos"));
-        alumnosLabel.setBounds(posicionX + 20,145,100,50);
+        alumnosLabel.setBounds(posicionX + 15,140,100,50);
         
         panelBotones.add(botonDeCurso);
         panelBotones.add(alumnosLabel);
@@ -140,6 +147,7 @@ public class moduloProfesores extends javax.swing.JFrame {
   }//GEN-LAST:event_cerrarSesionActionPerformed
 
   private void actualizarDatosProfesorActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosProfesorActualActionPerformed
+    actualizarProfesorPantallaLoggedIn = new profesorActualizarLoggedIn();
     this.actualizarProfesorPantallaLoggedIn.setVisible(true);
   }//GEN-LAST:event_actualizarDatosProfesorActualActionPerformed
 

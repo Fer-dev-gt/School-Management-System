@@ -38,6 +38,8 @@ public class moduloAdmin extends javax.swing.JFrame {
   public moduloAdmin() {
     initComponents();
     mostrarListadoProfesores();
+    mostrarListadoAlumnos();
+    mostrarListadoCursos();
   }
 
   
