@@ -12,6 +12,7 @@ public class Login extends javax.swing.JFrame {
   
   moduloAdmin pantallaAdministrador = new moduloAdmin();
   moduloProfesores pantallaProfesor = new moduloProfesores();
+  moduloProfesores profesor2;
   moduloEstudiantes pantallaEstudiante = new moduloEstudiantes();
   
   public static int codigoUsuarioActualProfesor;
@@ -119,7 +120,9 @@ public class Login extends javax.swing.JFrame {
       this.pantallaAdministrador.setVisible(true);
       this.dispose();
     } else if((this.profesor.getUsuario().equals(user) && this.profesor.getPassword().equals(password)) || existeUsuarioProfesor){  
-      this.pantallaProfesor.setVisible(true);
+      profesor2 = new moduloProfesores();
+      //this.pantallaProfesor.setVisible(true);
+      this.profesor2.setVisible(true);
       this.dispose();
     } else if((this.alumno.getUsuario().equals(user) && this.alumno.getPassword().equals(password)) || existeUsuarioAlumno){  
       this.pantallaEstudiante.setVisible(true);
@@ -138,7 +141,7 @@ public class Login extends javax.swing.JFrame {
     
     for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
       if (Administrador.arrayProfesores.get(i).getCodigo() == userInt && Administrador.arrayProfesores.get(i).getPassword().equals(password)){
-        System.out.println("Usario encontrado: " + userInt);
+        System.out.println("Usuario encontrado: " + userInt);
         System.out.println("Nombre de usuario profesor actual: " + Administrador.arrayProfesores.get(i).getNombre());
         codigoUsuarioActualProfesor = userInt;
         indexActualProfesor = i;

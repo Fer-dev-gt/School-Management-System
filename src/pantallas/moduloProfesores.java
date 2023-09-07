@@ -1,10 +1,49 @@
 package pantallas;
 
+import clases.Administrador;
+import clases.Curso;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import static pantallas.Login.indexActualProfesor;
+
 public class moduloProfesores extends javax.swing.JFrame {
-  profesorActualizarLoggedIn agregarProfesorPantallaLoggedIn = new profesorActualizarLoggedIn();
+  profesorActualizarLoggedIn actualizarProfesorPantallaLoggedIn = new profesorActualizarLoggedIn();
   
   public moduloProfesores() {
     initComponents();
+    addClassButtons();
+  }
+  
+  
+  private void addClassButtons() {                                                // Check if the professor teaches this class
+    int posicionX = 100;
+    for (Curso curso : Administrador.arrayCursos) {
+      if (curso.getProfesor().equals(Administrador.arrayProfesores.get(indexActualProfesor).getNombre() + " " + Administrador.arrayProfesores.get(indexActualProfesor).getApellido())) { // Replace with the actual professor's name
+        System.out.println("Boton agregado para clase: " + curso.getNombre());
+        
+        JButton botonDeCurso = new JButton(curso.getNombre());
+        botonDeCurso.setBounds(posicionX,100,100,50);
+        botonDeCurso.setText(curso.getNombre());
+        
+        botonDeCurso.addActionListener(new ActionListener() {
+          public void actionPerformed(ActionEvent evt) {
+            System.out.println("Curso: " + curso.getNombre());
+          }});
+        
+        JLabel alumnosLabel = new JLabel(String.valueOf(curso.getAlumnos() + " Alumnos"));
+        alumnosLabel.setBounds(posicionX + 20,145,100,50);
+        
+        panelBotones.add(botonDeCurso);
+        panelBotones.add(alumnosLabel);
+        posicionX += 100;
+      } else {
+        System.out.println("Nooooooooo");
+      }
+    }
+    panelBotones.revalidate();
+    panelBotones.repaint();
   }
 
   @SuppressWarnings("unchecked")
@@ -15,6 +54,7 @@ public class moduloProfesores extends javax.swing.JFrame {
     jLabel1 = new javax.swing.JLabel();
     cerrarSesion = new javax.swing.JButton();
     jLabel2 = new javax.swing.JLabel();
+    panelBotones = new javax.swing.JPanel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -37,25 +77,42 @@ public class moduloProfesores extends javax.swing.JFrame {
     jLabel2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
     jLabel2.setText("MODULO PROFESOR");
 
+    panelBotones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+    javax.swing.GroupLayout panelBotonesLayout = new javax.swing.GroupLayout(panelBotones);
+    panelBotones.setLayout(panelBotonesLayout);
+    panelBotonesLayout.setHorizontalGroup(
+      panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 0, Short.MAX_VALUE)
+    );
+    panelBotonesLayout.setVerticalGroup(
+      panelBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGap(0, 289, Short.MAX_VALUE)
+    );
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addGap(229, 229, 229)
+        .addComponent(jLabel2)
+        .addContainerGap(260, Short.MAX_VALUE))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addGap(49, 49, 49)
-        .addComponent(jLabel1)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(actualizarDatosProfesorActual)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(58, 58, 58)
+            .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+          .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+            .addGap(49, 49, 49)
+            .addComponent(jLabel1)
+            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(actualizarDatosProfesorActual)))
         .addGap(63, 63, 63))
       .addGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(283, 283, 283)
-            .addComponent(cerrarSesion))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(229, 229, 229)
-            .addComponent(jLabel2)))
-        .addContainerGap(260, Short.MAX_VALUE))
+        .addGap(283, 283, 283)
+        .addComponent(cerrarSesion)
+        .addGap(107, 304, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -66,7 +123,9 @@ public class moduloProfesores extends javax.swing.JFrame {
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel1)
           .addComponent(actualizarDatosProfesorActual))
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 325, Short.MAX_VALUE)
+        .addGap(18, 18, 18)
+        .addComponent(panelBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addGap(18, 18, 18)
         .addComponent(cerrarSesion)
         .addGap(53, 53, 53))
     );
@@ -81,7 +140,7 @@ public class moduloProfesores extends javax.swing.JFrame {
   }//GEN-LAST:event_cerrarSesionActionPerformed
 
   private void actualizarDatosProfesorActualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosProfesorActualActionPerformed
-    this.agregarProfesorPantallaLoggedIn.setVisible(true);
+    this.actualizarProfesorPantallaLoggedIn.setVisible(true);
   }//GEN-LAST:event_actualizarDatosProfesorActualActionPerformed
 
   
@@ -129,5 +188,6 @@ public class moduloProfesores extends javax.swing.JFrame {
   private javax.swing.JButton cerrarSesion;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JLabel jLabel2;
+  private javax.swing.JPanel panelBotones;
   // End of variables declaration//GEN-END:variables
 }
