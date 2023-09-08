@@ -29,7 +29,7 @@ public class moduloProfesores extends javax.swing.JFrame {
         
         botonDeCurso.addActionListener((ActionEvent evt) -> {
           System.out.println("Curso: " + curso.getNombre());
-          administrarCursoPantalla = new profesorAdministrarCurso(curso.getNombre());
+          administrarCursoPantalla = new profesorAdministrarCurso(curso.getNombre(), curso.getCodigo());
           this.administrarCursoPantalla.setVisible(true);
         });
         

@@ -1,5 +1,6 @@
 package pantallas;
 
+import clases.ActividadesCursoSeleccionado;
 import clases.Administrador;
 import clases.AlumnoCursoSeleccionado;
 import java.io.BufferedReader;
@@ -12,21 +13,24 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import static pantallas.moduloAdmin.persistenciaDatosCursos;
 
 public class profesorAdministrarCurso extends javax.swing.JFrame {
   public ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado = new ArrayList<>();
+  public ArrayList<ActividadesCursoSeleccionado> arrayActividadesCurso = new ArrayList<>();
   String nombreCursoArchivoBIN;
+  int codigoCursoActual;
   
   
-  public profesorAdministrarCurso(String nombreCurso) {
+  public profesorAdministrarCurso(String nombreCurso, int codigoCurso) {
     initComponents();
     mostrarListadoAlumnosCurso();
     recuperarAlumnos(nombreCurso);
     nombreCursoLabel.setText(nombreCurso);
     nombreCursoArchivoBIN = nombreCurso;
+    codigoCursoActual = codigoCurso;
   }
 
   private profesorAdministrarCurso() {
@@ -43,7 +47,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     jLabel4 = new javax.swing.JLabel();
     actividadDescripcion = new javax.swing.JTextField();
     actividadNombre = new javax.swing.JTextField();
-    ActividadPonderacion = new javax.swing.JTextField();
+    actividadPonderacion = new javax.swing.JTextField();
     jLabel5 = new javax.swing.JLabel();
     jLabel6 = new javax.swing.JLabel();
     jLabel7 = new javax.swing.JLabel();
@@ -82,6 +86,11 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     jLabel8.setText("Notas");
 
     crearActividadBtn.setText("Crear Actividad");
+    crearActividadBtn.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        crearActividadBtnActionPerformed(evt);
+      }
+    });
 
     CargaMasivaNotas.setText("Seleccionar archivo CSV");
 
@@ -176,7 +185,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
               .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ActividadPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(actividadPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE))
               .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                   .addGroup(layout.createSequentialGroup()
@@ -244,7 +253,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
-            .addComponent(ActividadPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(actividadPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
               .addComponent(CargaMasivaNotas)
@@ -290,9 +299,15 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
 
   private void refrescarTablaProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescarTablaProfesoresActionPerformed
     mostrarListadoAlumnosCurso();
+    mostrarListadoActividades();
   }//GEN-LAST:event_refrescarTablaProfesoresActionPerformed
 
   private void cargaMasivaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargaMasivaAlumnosActionPerformed
+    int indexCursoAlumnos = 0;
+    for (int i = 0; i < Administrador.arrayCursos.size(); i++) {
+      if (Administrador.arrayCursos.get(i).getCodigo() == codigoCursoActual)indexCursoAlumnos = i;
+    }
+    
     JFileChooser lectorDeArchivos = new JFileChooser();
     FileNameExtensionFilter filtroArchivo = new FileNameExtensionFilter(".csv", "csv");
     lectorDeArchivos.setFileFilter(filtroArchivo);
@@ -317,9 +332,17 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                 nombre = Administrador.arrayAlumnos.get(i).getNombre();
                 apellido = Administrador.arrayAlumnos.get(i).getApellido();
                 AlumnoCursoSeleccionado alumno = new AlumnoCursoSeleccionado(codigo, nombre, apellido, 0);       
+                
+                boolean isRepeated = checkearCodigoRepetidoAlumnoCursoSeleccionado(codigo);
+                if(isRepeated) {
+                  System.out.println("No se Registro dato repetido Carga Masiva");
+                  continue;
+                }
                 this.arrayAlumnosCursoSeleccionado.add(alumno);
+                Administrador.arrayCursos.get(indexCursoAlumnos).setAlumnos(Administrador.arrayCursos.get(indexCursoAlumnos).getAlumnos()+1);
               } 
             }
+            
           } else {
             JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 1 columna exactas ❌");
           }
@@ -328,6 +351,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         mybufferReader.close();
         mostrarListadoAlumnosCurso();     
         persistenciaDatosAlumnosCursoSeleccionado(nombreCursoArchivoBIN);
+        persistenciaDatosCursos();
         
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      
       } catch (IOException e) {
@@ -339,6 +363,18 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       }
     }
   }//GEN-LAST:event_cargaMasivaAlumnosActionPerformed
+
+  private void crearActividadBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_crearActividadBtnActionPerformed
+    String nombreActividad = actividadNombre.getText();
+    String descripcionActividad = actividadDescripcion.getText();
+    int ponderacionActividad = Integer.parseInt(actividadPonderacion.getText());
+    
+    ActividadesCursoSeleccionado nuevaActividad = new ActividadesCursoSeleccionado(nombreActividad, descripcionActividad, ponderacionActividad, 7);
+    arrayActividadesCurso.add(nuevaActividad);
+    
+    
+    mostrarListadoActividades();
+  }//GEN-LAST:event_crearActividadBtnActionPerformed
 
   
   
@@ -358,7 +394,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();                                  
     model.setColumnIdentifiers(new String[] {"Código", "Nombre", "Apellido", "Acciones"});
     
-    for (AlumnoCursoSeleccionado datosAlumnoCurso : arrayAlumnosCursoSeleccionado) {                                         // Iteramos a traves del Array de Profesores y creamos un objeto con los datos de los profesores y los agregamos a la tabla
+    for (AlumnoCursoSeleccionado datosAlumnoCurso : arrayAlumnosCursoSeleccionado) {                                         
       Object[] rowData = new Object[] {
         datosAlumnoCurso.getCodigo(),
         datosAlumnoCurso.getNombre(),
@@ -370,6 +406,26 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     
     tablaAlumnosInscritos.setModel(model);                                                          
     System.out.println("Se actualizaron las filas de Alumnos de este curso");
+  }
+  
+  
+  public void mostrarListadoActividades() {
+    tablaActividadesCurso.setAutoCreateRowSorter(true); 
+    DefaultTableModel model = new DefaultTableModel();                                  
+    model.setColumnIdentifiers(new String[] {"Código", "Decripción", "Ponderación", "Premedio"});
+    
+    for (ActividadesCursoSeleccionado actividad : arrayActividadesCurso) {                                         
+      Object[] rowData = new Object[] {
+        actividad.getNombre(),
+        actividad.getDescripcion(),
+        actividad.getPonderacion(),
+        actividad.getPromedio()
+      };
+      model.addRow(rowData);
+    }
+    
+    tablaActividadesCurso.setModel(model);                                                          
+    System.out.println("Se actualizaron las filas de Actividades de este curso");
   }
   
   
@@ -416,6 +472,24 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     return false;                                                               
   }
   
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   public static void main(String args[]) {
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
     try {
@@ -442,10 +516,10 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   }
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
-  private javax.swing.JTextField ActividadPonderacion;
   private javax.swing.JButton CargaMasivaNotas;
   private javax.swing.JTextField actividadDescripcion;
   private javax.swing.JTextField actividadNombre;
+  private javax.swing.JTextField actividadPonderacion;
   private javax.swing.JButton cargaMasivaAlumnos;
   private javax.swing.JButton cerrarVentana;
   private javax.swing.JButton crearActividadBtn;
