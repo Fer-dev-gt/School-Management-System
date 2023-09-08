@@ -3,23 +3,30 @@ package pantallas;
 import clases.Administrador;
 import clases.AlumnoCursoSeleccionado;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 public class profesorAdministrarCurso extends javax.swing.JFrame {
   public ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado = new ArrayList<>();
+  String nombreCursoArchivoBIN;
   
   
   public profesorAdministrarCurso(String nombreCurso) {
     initComponents();
     mostrarListadoAlumnosCurso();
+    recuperarAlumnos(nombreCurso);
     nombreCursoLabel.setText(nombreCurso);
-    
+    nombreCursoArchivoBIN = nombreCurso;
   }
 
   private profesorAdministrarCurso() {
@@ -109,6 +116,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         "Código", "Nombre", "Apellido", "Acciones"
       }
     ));
+    tablaAlumnosInscritos.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
     jScrollPane2.setViewportView(tablaAlumnosInscritos);
 
     jLabel10.setText("Acumulado:");
@@ -206,8 +214,8 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
           .addGap(33, 33, 33)
-          .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
-          .addContainerGap(533, Short.MAX_VALUE)))
+          .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+          .addContainerGap(432, Short.MAX_VALUE)))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -318,7 +326,8 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         }
         
         mybufferReader.close();
-        mostrarListadoAlumnosCurso();                                                                                    
+        mostrarListadoAlumnosCurso();     
+        persistenciaDatosAlumnosCursoSeleccionado(nombreCursoArchivoBIN);
         
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      
       } catch (IOException e) {
@@ -349,24 +358,63 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     DefaultTableModel model = new DefaultTableModel();                                  
     model.setColumnIdentifiers(new String[] {"Código", "Nombre", "Apellido", "Acciones"});
     
-    for (AlumnoCursoSeleccionado datosAlumnoCurso : this.arrayAlumnosCursoSeleccionado) {                                         // Iteramos a traves del Array de Profesores y creamos un objeto con los datos de los profesores y los agregamos a la tabla
+    for (AlumnoCursoSeleccionado datosAlumnoCurso : arrayAlumnosCursoSeleccionado) {                                         // Iteramos a traves del Array de Profesores y creamos un objeto con los datos de los profesores y los agregamos a la tabla
       Object[] rowData = new Object[] {
         datosAlumnoCurso.getCodigo(),
         datosAlumnoCurso.getNombre(),
-        datosAlumnoCurso.getApellido()
+        datosAlumnoCurso.getApellido(),
+        "Ver más Información"
       };
       model.addRow(rowData);
     }
     
-    tablaAlumnosInscritos.setModel(model);                                                          // Agregamos el model a la tabla de profesores
+    tablaAlumnosInscritos.setModel(model);                                                          
     System.out.println("Se actualizaron las filas de Alumnos de este curso");
   }
   
   
+  public void persistenciaDatosAlumnosCursoSeleccionado(String nombreCurso) throws IOException {
+    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+".bin");
+    ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
+    objectoOutput.writeObject(arrayAlumnosCursoSeleccionado);
+    archivoDeSalida.close();
+    objectoOutput.close();
+    System.out.println("Se hizo PERSISTENCIA de Datos Alumnos del Curso: " + nombreCurso);
+  }
   
   
+  public void recuperarAlumnos(String nombreCurso) {
+    try {
+      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+".bin");
+      ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
+      ArrayList<AlumnoCursoSeleccionado> alumnosCursoSeleccionadoDelArchivo = (ArrayList<AlumnoCursoSeleccionado>) objetoInput.readObject();
+      System.out.println("Se recuperaron: " + alumnosCursoSeleccionadoDelArchivo.size() + " registros de Alumnos del curso: " + nombreCurso);
+      
+      for (AlumnoCursoSeleccionado alumnoRegistro : alumnosCursoSeleccionadoDelArchivo) {
+        int codigoUsuario = alumnoRegistro.getCodigo();
+        boolean isRepeated = checkearCodigoRepetidoAlumnoCursoSeleccionado(codigoUsuario);
+        if(isRepeated) {
+          System.out.println("No se Registro dato repetido");
+          continue;
+        }
+        System.out.println(alumnoRegistro.getNombre());
+        arrayAlumnosCursoSeleccionado.add(alumnoRegistro);
+      }
+      
+      archivoBinario.close();
+      objetoInput.close();
+    } catch (IOException | ClassNotFoundException e) {
+      System.out.println("Error al recuperar alumnos: " + e.getMessage());
+    }
+  }
   
   
+  public boolean checkearCodigoRepetidoAlumnoCursoSeleccionado(int codigoUsuario) {
+    for (AlumnoCursoSeleccionado alumno : arrayAlumnosCursoSeleccionado) {
+      if (alumno.getCodigo() == codigoUsuario) return true;                     
+    }
+    return false;                                                               
+  }
   
   public static void main(String args[]) {
     //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

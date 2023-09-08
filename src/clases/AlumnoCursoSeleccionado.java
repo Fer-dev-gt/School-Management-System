@@ -1,6 +1,8 @@
 package clases;
 
-public class AlumnoCursoSeleccionado {
+import java.io.Serializable;
+
+public class AlumnoCursoSeleccionado implements Serializable{
   
   private int codigo;
   private String nombre;
