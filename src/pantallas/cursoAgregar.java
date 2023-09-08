@@ -200,12 +200,10 @@ public class cursoAgregar extends javax.swing.JFrame {
     return false;                                                               
   }
   
-  
   public void manejarCodigoRepetido(int codigoUsuario) {
     JOptionPane.showMessageDialog(null, "❌ El código: "+ codigoUsuario +" ya esta registrado, ingrese otro ❌", "Alert", JOptionPane.INFORMATION_MESSAGE);
     codigoInput.setText("");
   }
-  
   
   public void clearInputs() {
     codigoInput.setText("");

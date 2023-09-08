@@ -29,12 +29,6 @@ public class moduloProfesores extends javax.swing.JFrame {
         
         botonDeCurso.addActionListener((ActionEvent evt) -> {
           System.out.println("Curso: " + curso.getNombre());
-          /*if (administrarCursoPantalla == null) {
-            administrarCursoPantalla = new profesorAdministrarCurso(curso.getNombre());
-            this.administrarCursoPantalla.setVisible(true);
-          } else {
-            this.administrarCursoPantalla.setVisible(true);
-          }*/
           administrarCursoPantalla = new profesorAdministrarCurso(curso.getNombre());
           this.administrarCursoPantalla.setVisible(true);
         });
@@ -46,7 +40,7 @@ public class moduloProfesores extends javax.swing.JFrame {
         panelBotones.add(alumnosLabel);
         posicionX += 100;
       } else {
-        System.out.println("Nooooooooo");
+        System.out.println("Nooooo");
       }
     }
     panelBotones.revalidate();

@@ -37,6 +37,7 @@ public class moduloAdmin extends javax.swing.JFrame {
   cursoActualizar actualizarCursoPantalla = new cursoActualizar();
   
   
+  
   public moduloAdmin() {
     initComponents();
     mostrarListadoProfesores();

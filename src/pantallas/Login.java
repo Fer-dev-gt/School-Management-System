@@ -185,6 +185,12 @@ public class Login extends javax.swing.JFrame {
       System.out.println("Se recuperaron: " + profesoresDelArchivo.size() + " registros de Profesores");
       
       for (Profesor profesorRegistro : profesoresDelArchivo) {
+        int codigoUsuario = profesorRegistro.getCodigo();
+        boolean isRepeated = checkearCodigoRepetidoProfesor(codigoUsuario);
+        if(isRepeated) {
+          System.out.println("No se Registro dato repetido");
+          continue;
+        }
         System.out.println(profesorRegistro.getNombre());
         Administrador.arrayProfesores.add(profesorRegistro);
       }
@@ -205,6 +211,12 @@ public class Login extends javax.swing.JFrame {
       System.out.println("Se recuperaron: " + alumnosDelArchivo.size() + " registros de Alumnos");
       
       for (Alumno alumnoRegistro : alumnosDelArchivo) {
+        int codigoUsuario = alumnoRegistro.getCodigo();
+        boolean isRepeated = checkearCodigoRepetidoAlumno(codigoUsuario);
+        if(isRepeated) {
+          System.out.println("No se Registro dato repetido");
+          continue;
+        }
         System.out.println(alumnoRegistro.getNombre());
         Administrador.arrayAlumnos.add(alumnoRegistro);
       }
@@ -225,6 +237,12 @@ public class Login extends javax.swing.JFrame {
       System.out.println("Se recuperaron: " + cursosDelArchivo.size() + " registros de Cursos");
       
       for (Curso cursoRegistro : cursosDelArchivo) {
+        int codigoUsuario = cursoRegistro.getCodigo();
+        boolean isRepeated = checkearCodigoRepetidoCurso(codigoUsuario);
+        if(isRepeated) {
+          System.out.println("No se Registro dato repetido");
+          continue;
+        }
         System.out.println(cursoRegistro.getNombre());
         Administrador.arrayCursos.add(cursoRegistro);
       }
@@ -236,6 +254,30 @@ public class Login extends javax.swing.JFrame {
     }
   }
   
+  
+  
+  public static boolean checkearCodigoRepetidoProfesor(int codigoUsuario) {
+    for (Profesor profesor : Administrador.arrayProfesores) {
+      if (profesor.getCodigo() == codigoUsuario) return true;                     // Se encontro un codigo repetidos en el List      
+    }
+    return false;                                                               // El codigo no esta registrado en el List
+  }
+  
+  
+  public static boolean checkearCodigoRepetidoAlumno(int codigoUsuario) {
+    for (Alumno alumno : Administrador.arrayAlumnos) {
+      if (alumno.getCodigo() == codigoUsuario) return true;                     
+    }
+    return false;                                                               
+  }
+  
+  
+  public static boolean checkearCodigoRepetidoCurso(int codigoUsuario) {
+    for (Curso curso : Administrador.arrayCursos) {
+      if (curso.getCodigo() == codigoUsuario) return true;                     
+    }
+    return false;                                                               
+  }
   
   
   

@@ -206,12 +206,10 @@ public class profesorActualizar extends javax.swing.JFrame {
     return false;
   }
   
-  
   public void manejarCodigoNoEncontrado(int codigoUsuario) {
     JOptionPane.showMessageDialog(null, "❌ El usuario con código: "+ codigoUsuario +" NO esta registrado, ingrese otro ❌", "Alert", JOptionPane.INFORMATION_MESSAGE);
     codigoInput.setText("");
   }
-  
   
   public void manejarDatosActualizados(int codigoUsuario) {
     JOptionPane.showMessageDialog(null, "✅ El usuario con código: "+ codigoUsuario +" fue actualizado ✅", "Alert", JOptionPane.INFORMATION_MESSAGE);

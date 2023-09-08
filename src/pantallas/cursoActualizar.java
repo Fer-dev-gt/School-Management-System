@@ -197,25 +197,21 @@ public class cursoActualizar extends javax.swing.JFrame {
     return false;
   }
    
-  
   public void manejarCodigoNoEncontrado(int codigoUsuario) {
     JOptionPane.showMessageDialog(null, "❌ El Curso con código: "+ codigoUsuario +" NO esta registrado, ingrese otro ❌", "Alert", JOptionPane.INFORMATION_MESSAGE);
     codigoInput.setText("");
   }
-  
   
   public void manejarDatosActualizados(int codigoUsuario) {
     JOptionPane.showMessageDialog(null, "✅ El Curso con código: "+ codigoUsuario +" fue actualizado ✅", "Alert", JOptionPane.INFORMATION_MESSAGE);
     clearInputs();
   }
   
-  
   public void clearInputs() {
     codigoInput.setText("");
     nombreInput.setText("");
     creditosInput.setText("");
   }
-  
   
   public void actualizarComboBoxProfesores() {
     cambiarProfesorComboBox.removeAllItems();
