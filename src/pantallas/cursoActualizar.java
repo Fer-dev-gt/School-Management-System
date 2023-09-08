@@ -3,8 +3,12 @@ package pantallas;
 import clases.Administrador;
 import clases.Curso;
 import clases.Profesor;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import static pantallas.cursoAgregar.checkearCodigoRepetido;
+import static pantallas.moduloAdmin.persistenciaDatosCursos;
 
 public class cursoActualizar extends javax.swing.JFrame {
 
@@ -182,6 +186,11 @@ public class cursoActualizar extends javax.swing.JFrame {
         int alumnos = Administrador.arrayCursos.get(i).getAlumnos();                                      // Guardamos el valor de los alumnos actuales para no perder este dato
         Curso nuevoCurso = new Curso(codigoCurso, nombreCurso, creditos, alumnos,profesorCurso);
         Administrador.arrayCursos.set(i, nuevoCurso);
+        try {
+          persistenciaDatosCursos();
+        } catch (IOException ex) {
+          Logger.getLogger(cursoActualizar.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
       }
     }

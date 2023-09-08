@@ -3,7 +3,11 @@ package pantallas;
 import clases.Administrador;
 import clases.Curso;
 import clases.Profesor;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static pantallas.moduloAdmin.persistenciaDatosCursos;
 
 public class cursoAgregar extends javax.swing.JFrame {
 
@@ -152,6 +156,12 @@ public class cursoAgregar extends javax.swing.JFrame {
     System.out.println("Tamaño actual del ArrayList Cursos es: " + Administrador.arrayCursos.size());
     
     nuevoCurso.setAlumnos(Integer.parseInt(auxiliarAlumnos.getText()));     // Eliminar esto despues
+    
+    try {
+      persistenciaDatosCursos();
+    } catch (IOException ex) {
+      Logger.getLogger(cursoAgregar.class.getName()).log(Level.SEVERE, null, ex);
+    }
     
     this.clearInputs();
     this.dispose();

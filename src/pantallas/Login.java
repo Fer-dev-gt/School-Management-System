@@ -3,6 +3,7 @@ package pantallas;
 import clases.Administrador;
 import clases.Profesor;
 import clases.Alumno;
+import clases.Curso;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -29,6 +30,8 @@ public class Login extends javax.swing.JFrame {
   public Login() {
     initComponents();
     this.recuperarProfesores();
+    this.recuperarAlumnos();
+    this.recuperarCursos();
   }
 
   
@@ -172,54 +175,64 @@ public class Login extends javax.swing.JFrame {
     return false;
   }
   
+  
   // Función para recuperar Datos, Persistencia de Datos
-  public void recuperarAlumnos() {
+  public void recuperarProfesores() {
     try {
-      FileInputStream archivoBinario = new FileInputStream("alumnos.bin");
+      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/Registros_Profesores.bin");
       ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
-      ArrayList<Alumno> alumnosDelArchivo = (ArrayList<Alumno>) objetoInput.readObject();
+      ArrayList<Profesor> profesoresDelArchivo = (ArrayList<Profesor>) objetoInput.readObject();
+      System.out.println("Se recuperaron: " + profesoresDelArchivo.size() + " registros de Profesores");
       
-      for (Alumno alumnoRegistro : alumnosDelArchivo) {        
-        Administrador.arrayAlumnos.add( alumnoRegistro);
+      for (Profesor profesorRegistro : profesoresDelArchivo) {
+        System.out.println(profesorRegistro.getNombre());
+        Administrador.arrayProfesores.add(profesorRegistro);
       }
       
       archivoBinario.close();
       objetoInput.close();
-      System.out.println("Se RECUPARON los datos de los alumnos");
     } catch (IOException | ClassNotFoundException e) {
       System.out.println("Error al recuperar alumnos: " + e.getMessage());
     }
   }
   
   
-  public void recuperarProfesores() {
+  public void recuperarAlumnos() {
     try {
-      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/Registros_Profesores.bin");
+      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/Registros_Alumnos.bin");
       ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
-      ArrayList<Profesor> profesoresDelArchivo = (ArrayList<Profesor>) objetoInput.readObject();
-      System.out.println(profesoresDelArchivo.size());
-      System.out.println(profesoresDelArchivo.get(0).getNombre());
-      System.out.println(profesoresDelArchivo.get(0).getApellido());
-      System.out.println(profesoresDelArchivo.get(0).getNombre());
-      System.out.println(profesoresDelArchivo.get(0).getNombre());
+      ArrayList<Alumno> alumnosDelArchivo = (ArrayList<Alumno>) objetoInput.readObject();
+      System.out.println("Se recuperaron: " + alumnosDelArchivo.size() + " registros de Alumnos");
       
+      for (Alumno alumnoRegistro : alumnosDelArchivo) {
+        System.out.println(alumnoRegistro.getNombre());
+        Administrador.arrayAlumnos.add(alumnoRegistro);
+      }
       
       archivoBinario.close();
       objetoInput.close();
-      for (Profesor profesorRegistro : profesoresDelArchivo) {
-            Profesor profesor = new Profesor();
-            profesor.setCodigo(profesorRegistro.getCodigo());
-            profesor.setNombre(profesorRegistro.getNombre());
-            profesor.setApellido(profesorRegistro.getApellido());
-            profesor.setCorreo(profesorRegistro.getCorreo());
-            profesor.setGenero(profesorRegistro.getGenero());
-            
-            Administrador.arrayProfesores.add(profesor);
-        }
-      System.out.println("Se RECUPARON los datos de los profesores");
     } catch (IOException | ClassNotFoundException e) {
       System.out.println("Error al recuperar alumnos: " + e.getMessage());
-      e.printStackTrace();
+    }
+  }
+  
+  
+  public void recuperarCursos() {
+    try {
+      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/Registros_Cursos.bin");
+      ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
+      ArrayList<Curso> cursosDelArchivo = (ArrayList<Curso>) objetoInput.readObject();
+      System.out.println("Se recuperaron: " + cursosDelArchivo.size() + " registros de Cursos");
+      
+      for (Curso cursoRegistro : cursosDelArchivo) {
+        System.out.println(cursoRegistro.getNombre());
+        Administrador.arrayCursos.add(cursoRegistro);
+      }
+      
+      archivoBinario.close();
+      objetoInput.close();
+    } catch (IOException | ClassNotFoundException e) {
+      System.out.println("Error al recuperar Cursos: " + e.getMessage());
     }
   }
   

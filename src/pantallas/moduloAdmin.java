@@ -582,6 +582,11 @@ public class moduloAdmin extends javax.swing.JFrame {
         int indexProfesorArray = encontrarIndexProfesorConCodigo(codigoUsuario);
         Administrador.arrayProfesores.remove(indexProfesorArray);
         mostrarListadoProfesores(); 
+        try {  
+          persistenciaDatosProfesores();
+        } catch (IOException ex) {
+          Logger.getLogger(profesorAgregar.class.getName()).log(Level.SEVERE, null, ex);
+        }
       }
     } else {
       System.out.println("No row selected");
@@ -599,6 +604,11 @@ public class moduloAdmin extends javax.swing.JFrame {
         int indexCursoArray = encontrarIndexCursoConCodigo(codigoCurso);
         Administrador.arrayCursos.remove(indexCursoArray);
         mostrarListadoCursos();
+        try {  
+          persistenciaDatosCursos();
+        } catch (IOException ex) {
+          Logger.getLogger(profesorAgregar.class.getName()).log(Level.SEVERE, null, ex);
+        }
       }
     } else {
       System.out.println("No row selected");
@@ -677,7 +687,6 @@ public class moduloAdmin extends javax.swing.JFrame {
         mybufferReader.close();
         mostrarListadoProfesores();                                                                                 // Refresh the JTable with updated data
         actualizarGraficaPastelProfesores();
-        
         persistenciaDatosProfesores();
         
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
@@ -723,6 +732,7 @@ public class moduloAdmin extends javax.swing.JFrame {
         mybufferReader.close();
         mostrarListadoAlumnos();                                                                                    // Refresh the JTable with updated data
         actualizarGraficaPastelAlumnos();
+        persistenciaDatosAlumnos();
         
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
       } catch (IOException e) {
@@ -786,6 +796,7 @@ public class moduloAdmin extends javax.swing.JFrame {
         mybufferReader.close();
         mostrarListadoCursos();                                                                                    // Refresh the JTable with updated data
         actualizarGraficaBarrasCursos();
+        persistenciaDatosCursos();
         
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
       } catch (IOException e) {
@@ -1020,12 +1031,29 @@ public class moduloAdmin extends javax.swing.JFrame {
     FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/Registros_Profesores.bin");
     ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
     objectoOutput.writeObject(Administrador.arrayProfesores);
-    System.out.println(Administrador.arrayProfesores.get(0).getNombre());
-    System.out.println(Administrador.arrayProfesores.get(0).getApellido());
-    System.out.println(Administrador.arrayProfesores);
     archivoDeSalida.close();
     objectoOutput.close();
-    System.out.println("Se guardaron los datos de los profesores PERSISTENCIA ");
+    System.out.println("Se hizo PERSISTENCIA de Datos Profesores");
+  }
+  
+  
+  public static void persistenciaDatosAlumnos() throws IOException {
+    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/Registros_Alumnos.bin");
+    ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
+    objectoOutput.writeObject(Administrador.arrayAlumnos);
+    archivoDeSalida.close();
+    objectoOutput.close();
+    System.out.println("Se hizo PERSISTENCIA de Datos Alumnos");
+  }
+  
+  
+  public static void persistenciaDatosCursos() throws IOException {
+    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/Registros_Cursos.bin");
+    ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
+    objectoOutput.writeObject(Administrador.arrayCursos);
+    archivoDeSalida.close();
+    objectoOutput.close();
+    System.out.println("Se hizo PERSISTENCIA de Datos Cursos");
   }
   
   

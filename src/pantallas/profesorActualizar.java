@@ -1,7 +1,11 @@
 package pantallas;
 import clases.Administrador;
 import clases.Profesor;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static pantallas.moduloAdmin.persistenciaDatosProfesores;
 import static pantallas.profesorAgregar.checkearCodigoRepetido;
 
 
@@ -191,6 +195,11 @@ public class profesorActualizar extends javax.swing.JFrame {
       if (Administrador.arrayProfesores.get(i).getCodigo() == codigoUsuario) {
         Profesor nuevoProfesor = new Profesor(codigoUsuario, nombreUsuario, apellidoUsuario, correoUsuario, generoUsuario, passwordUsuario);
         Administrador.arrayProfesores.set(i, nuevoProfesor);
+        try {  
+          persistenciaDatosProfesores();
+        } catch (IOException ex) {
+          Logger.getLogger(profesorAgregar.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return true;
       }
     }
