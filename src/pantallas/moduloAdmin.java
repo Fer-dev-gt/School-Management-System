@@ -23,8 +23,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import com.itextpdf.text.DocumentException;
 import java.io.BufferedReader;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -676,6 +678,8 @@ public class moduloAdmin extends javax.swing.JFrame {
         mostrarListadoProfesores();                                                                                 // Refresh the JTable with updated data
         actualizarGraficaPastelProfesores();
         
+        persistenciaDatosProfesores();
+        
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
       } catch (IOException e) {
         e.printStackTrace();
@@ -1009,6 +1013,20 @@ public class moduloAdmin extends javax.swing.JFrame {
       }
     }
  }
+  
+  
+  // Persistencia de Datos
+  public static void persistenciaDatosProfesores() throws IOException {
+    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/Registros_Profesores.bin");
+    ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
+    objectoOutput.writeObject(Administrador.arrayProfesores);
+    System.out.println(Administrador.arrayProfesores.get(0).getNombre());
+    System.out.println(Administrador.arrayProfesores.get(0).getApellido());
+    System.out.println(Administrador.arrayProfesores);
+    archivoDeSalida.close();
+    objectoOutput.close();
+    System.out.println("Se guardaron los datos de los profesores PERSISTENCIA ");
+  }
   
   
   

@@ -1,7 +1,11 @@
 package pantallas;
 import clases.Administrador;
 import clases.Profesor;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static pantallas.moduloAdmin.persistenciaDatosProfesores;
 
 public class profesorAgregar extends javax.swing.JFrame {
 
@@ -163,17 +167,17 @@ public class profesorAgregar extends javax.swing.JFrame {
     String usuarioUsuario = "as";
     String passwordUsuario = passwordInput.getText();
 
-    System.out.println("El codigo de mi usuario es: " + codigoUsuario);
-    System.out.println("El nombre de mi usuario es: " + nombreUsuario);
-    System.out.println("El apellido de mi usuario es: " + apellidoUsuario);
-    System.out.println("El correo de mi usuario es: " + correoUsuario);
-    System.out.println("El genero de mi usuario es: " + generoUsuario);
-
     System.out.println("Tamaño anterior del ArrayList es: " + Administrador.arrayProfesores.size());
     Profesor nuevoAlumno = new Profesor(codigoUsuario,nombreUsuario,apellidoUsuario,correoUsuario,generoUsuario, usuarioUsuario, passwordUsuario);
     Administrador.arrayProfesores.add( nuevoAlumno);
     
     System.out.println("Tamaño actual del ArrayList es: " + Administrador.arrayProfesores.size());
+    
+    try {  
+      persistenciaDatosProfesores();
+    } catch (IOException ex) {
+      Logger.getLogger(profesorAgregar.class.getName()).log(Level.SEVERE, null, ex);
+    }
     
     for (Profesor profesor : Administrador.arrayProfesores) {
       System.out.println("ID: " + profesor.getCodigo() + ", Name: " + profesor.getNombre());

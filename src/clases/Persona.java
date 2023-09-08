@@ -32,7 +32,7 @@ public abstract class Persona {
     this.usuario = usuario;
     this.password = password;
   }
-
+  
   public int getCodigo() {
     return codigo;
   }
