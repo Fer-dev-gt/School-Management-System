@@ -229,6 +229,9 @@
     <Component class="javax.swing.JTextField" name="actividadNombre">
     </Component>
     <Component class="javax.swing.JTextField" name="actividadPonderacion">
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="actividadPonderacionFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
@@ -262,6 +265,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Seleccionar archivo CSV"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="CargaMasivaNotasActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="peoresEstudiantesReporte">
       <Properties>

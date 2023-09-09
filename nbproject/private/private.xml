@@ -3,11 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/pantallas/profesorAgregar.java</file>
+            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/clases/ActividadesCursoSeleccionado.java</file>
+            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/clases/AlumnoCursoSeleccionado.java</file>
             <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/pantallas/moduloProfesores.java</file>
+            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/pantallas/profesorAdministrarCurso.java</file>
             <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/pantallas/moduloAdmin.java</file>
-            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/pantallas/profesorActualizarLoggedIn.java</file>
-            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/clases/Administrador.java</file>
+            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/pantallas/cursoAgregar.java</file>
+            <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/clases/SeguimientoNotasAlumno.java</file>
             <file>file:/Users/fernandoorozco/Desktop/EscuelaCursos/src/pantallas/Login.java</file>
         </group>
     </open-files>

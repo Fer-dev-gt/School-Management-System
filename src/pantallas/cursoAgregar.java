@@ -175,12 +175,7 @@ public class cursoAgregar extends javax.swing.JFrame {
   }//GEN-LAST:event_cerrarAgregarActionPerformed
 
   private void evaluarNumeroCreditos(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_evaluarNumeroCreditos
-    try {
-      int codigoUsuario = Integer.parseInt(creditosInput.getText());
-    } catch(java.lang.NumberFormatException e) {
-      creditosInput.setText("");
-      JOptionPane.showMessageDialog(null, "Ingrese un numero para los creditos!", "Alert", JOptionPane.INFORMATION_MESSAGE);
-    }
+    
   }//GEN-LAST:event_evaluarNumeroCreditos
 
   

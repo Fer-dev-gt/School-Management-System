@@ -3,6 +3,7 @@ package pantallas;
 import clases.ActividadesCursoSeleccionado;
 import clases.Administrador;
 import clases.AlumnoCursoSeleccionado;
+import clases.SeguimientoNotasAlumno;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,8 +21,11 @@ import static pantallas.moduloAdmin.persistenciaDatosCursos;
 public class profesorAdministrarCurso extends javax.swing.JFrame {
   public ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado = new ArrayList<>();
   public ArrayList<ActividadesCursoSeleccionado> arrayActividadesCurso = new ArrayList<>();
+  public ArrayList<SeguimientoNotasAlumno> arraySeguimientoNotas = new ArrayList<>();
   String nombreCursoArchivoBIN;
   int codigoCursoActual;
+  double promedioActividad = 0.0;
+  int numeroDeNotas = 0;
   
   
   public profesorAdministrarCurso(String nombreCurso, int codigoCurso) {
@@ -77,6 +81,12 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
 
     jLabel4.setText("Reportes");
 
+    actividadPonderacion.addFocusListener(new java.awt.event.FocusAdapter() {
+      public void focusLost(java.awt.event.FocusEvent evt) {
+        actividadPonderacionFocusLost(evt);
+      }
+    });
+
     jLabel5.setText("Descripción");
 
     jLabel6.setText("Ponderación");
@@ -93,6 +103,11 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     });
 
     CargaMasivaNotas.setText("Seleccionar archivo CSV");
+    CargaMasivaNotas.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        CargaMasivaNotasActionPerformed(evt);
+      }
+    });
 
     peoresEstudiantesReporte.setText("Top 5 - Estudiantes con PEOR rendimiento ");
 
@@ -368,13 +383,100 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     String nombreActividad = actividadNombre.getText();
     String descripcionActividad = actividadDescripcion.getText();
     int ponderacionActividad = Integer.parseInt(actividadPonderacion.getText());
+    double promedioFinal = promedioActividad/numeroDeNotas;
+    String promedioFinalString = String.format("%.2f", promedioFinal);
     
-    ActividadesCursoSeleccionado nuevaActividad = new ActividadesCursoSeleccionado(nombreActividad, descripcionActividad, ponderacionActividad, 7);
+    ActividadesCursoSeleccionado nuevaActividad = new ActividadesCursoSeleccionado(nombreActividad, descripcionActividad, ponderacionActividad, promedioFinalString);
     arrayActividadesCurso.add(nuevaActividad);
     
     
     mostrarListadoActividades();
   }//GEN-LAST:event_crearActividadBtnActionPerformed
+
+  private void CargaMasivaNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargaMasivaNotasActionPerformed
+    promedioActividad = 0.0;
+    numeroDeNotas = 0;
+    SeguimientoNotasAlumno notasAlumnoSeguimiento;
+    
+    
+    JFileChooser lectorDeArchivos = new JFileChooser();
+    FileNameExtensionFilter filtroArchivo = new FileNameExtensionFilter(".csv", "csv");
+    lectorDeArchivos.setFileFilter(filtroArchivo);
+    int respuestaFileChooser = lectorDeArchivos.showOpenDialog(this);                                        // Abre el menú del dialogo para subir archivos y guarda la respuesta si es archivo valido
+    
+    if (respuestaFileChooser == JFileChooser.APPROVE_OPTION) {
+      String ruta = lectorDeArchivos.getSelectedFile().getAbsolutePath();
+      
+      try {
+        BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
+        String line;
+        mybufferReader.readLine();                                                                                  // Saltamos la primera linea donde esta los nombres de las columnas
+        while ((line = mybufferReader.readLine()) != null) {                                                        // Primero guardamos el valor de linea actual del csv al ejecutar lo que esta adentro de parentesis y luego validamos si la linea es igual a 'null'
+          String[] data = line.split(",");                                                                     // Usamos el método 'split(,)' para crear un Array con los valores de cada columna que estan separador por comas
+          if (data.length == 2) {
+            int codigoEstudiante = Integer.parseInt(data[0]);
+            double notaEstudiante = Double.parseDouble(data[1]);
+            promedioActividad += notaEstudiante;
+            numeroDeNotas++;
+            boolean found = false;
+            
+            // Check if the student already has a SeguimientoNotasAlumno object
+            for (SeguimientoNotasAlumno seguimiento : arraySeguimientoNotas) {
+              if (seguimiento.getCodigo() == codigoEstudiante) {
+                seguimiento.getListaDeNotas().add(notaEstudiante);
+                found = true;
+                System.out.println("Este alumno "+codigoEstudiante+ " ya ha registrado notas");
+                break;
+              }
+            }
+
+            // If not found, create a new SeguimientoNotasAlumno object
+            if (!found) {
+              notasAlumnoSeguimiento = new SeguimientoNotasAlumno(codigoEstudiante);
+              notasAlumnoSeguimiento.getListaDeNotas().add(notaEstudiante);
+              arraySeguimientoNotas.add(notasAlumnoSeguimiento);
+              System.out.println("Nuevo seguimiento de Alumno "+codigoEstudiante);
+            }
+
+            // Add the grade to the corresponding student in arrayAlumnosCursoSeleccionado
+            for (int j = 0; j < arrayAlumnosCursoSeleccionado.size(); j++) {
+              if (arrayAlumnosCursoSeleccionado.get(j).getCodigo() == codigoEstudiante) {
+                arrayAlumnosCursoSeleccionado.get(j).setNota((int) notaEstudiante);
+                System.out.println("Nota Agregada a Alumno "+codigoEstudiante+" registrado");
+                break;
+              }
+            }
+            
+            
+            
+            
+            //System.out.println(codigoEstudiante + "//////"+ Double.toString(notaEstudiante) );
+          } else {
+            JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 4 columnas exactas ❌");
+          }
+        }
+        
+        mybufferReader.close();
+                                                                                            
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de Notas exitosa ✅");      
+      } catch (IOException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
+      } catch (NumberFormatException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "❌ Error de formato en el archivo CSV ❌");
+      }
+    }
+  }//GEN-LAST:event_CargaMasivaNotasActionPerformed
+
+  private void actividadPonderacionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_actividadPonderacionFocusLost
+    try {
+      int codigoUsuario = Integer.parseInt(actividadPonderacion.getText());
+    } catch(java.lang.NumberFormatException e) {
+      actividadPonderacion.setText("");
+      JOptionPane.showMessageDialog(null, "Ingrese un numero para la ponderacion!", "Alert", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }//GEN-LAST:event_actividadPonderacionFocusLost
 
   
   
