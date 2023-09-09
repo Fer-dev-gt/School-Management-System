@@ -2,6 +2,7 @@ package pantallas;
 
 import clases.ActividadesCursoSeleccionado;
 import clases.Administrador;
+import clases.Alumno;
 import clases.AlumnoCursoSeleccionado;
 import clases.SeguimientoNotasAlumno;
 import java.awt.event.MouseAdapter;
@@ -18,6 +19,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import static pantallas.moduloAdmin.persistenciaDatosAlumnos;
 import static pantallas.moduloAdmin.persistenciaDatosCursos;
 
 public class profesorAdministrarCurso extends javax.swing.JFrame {
@@ -347,8 +349,8 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
         String line;
         mybufferReader.readLine();                                                                                  
-        while ((line = mybufferReader.readLine()) != null) {                                                        // Primero guardamos el valor de linea actual del csv al ejecutar lo que esta adentro de parentesis y luego validamos si la linea es igual a 'null'
-          String[] data = line.split(",");                                                                     // Usamos el método 'split(,)' para crear un Array con los valores de cada columna que estan separador por comas
+        while ((line = mybufferReader.readLine()) != null) {                                                        
+          String[] data = line.split(",");                                                                     
           if (data.length == 1) {
             int codigo = Integer.parseInt(data[0]);
             String nombre="";
@@ -366,7 +368,15 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                   continue;
                 }
                 this.arrayAlumnosCursoSeleccionado.add(alumno);
-                Administrador.arrayCursos.get(indexCursoAlumnos).setAlumnos(Administrador.arrayCursos.get(indexCursoAlumnos).getAlumnos()+1);
+                Administrador.arrayCursos.get(indexCursoAlumnos).setAlumnos(arrayAlumnosCursoSeleccionado.size());
+                
+                for (Alumno alumnoLista : Administrador.arrayAlumnos) {
+                  if (alumnoLista.getCodigo() == codigo) {
+                    alumnoLista.getListaDeCursos().add(nombreCursoArchivoBIN);
+                    System.out.println("Se agrego el curso: "+nombreCursoArchivoBIN+" al listado de cursos del alumno: "+codigo);
+                  }
+                }
+                
               } 
             }
             
@@ -379,6 +389,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         mostrarListadoAlumnosCurso();     
         persistenciaDatosAlumnosCursoSeleccionado(nombreCursoArchivoBIN);
         persistenciaDatosCursos();
+        persistenciaDatosAlumnos();
         
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      
       } catch (IOException e) {
@@ -495,7 +506,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   
   
   
-  
+  // Pediente Hacer Persistencia de datos de Actividades
   
   
   
@@ -519,7 +530,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     }
     
     tablaAlumnosInscritos.setModel(model);   
-    System.out.println("Se actualizaron las filas de Alumnos de este curso");
+    System.out.println("Se actualizaron las filas de Alumnos del curso: "+nombreCursoArchivoBIN);
   }
   
   

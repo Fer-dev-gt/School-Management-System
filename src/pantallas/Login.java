@@ -17,7 +17,7 @@ public class Login extends javax.swing.JFrame {
   
   moduloAdmin pantallaAdministrador = new moduloAdmin();
   moduloProfesores pantallaProfesor;
-  moduloAlumnos pantallaEstudiante = new moduloAlumnos();
+  moduloAlumnos pantallaEstudiante;
   
   
   
@@ -133,6 +133,7 @@ public class Login extends javax.swing.JFrame {
       this.pantallaProfesor.setVisible(true);
       this.dispose();
     } else if((this.alumno.getUsuario().equals(user) && this.alumno.getPassword().equals(password)) || existeUsuarioAlumno){  
+      pantallaEstudiante = new moduloAlumnos();
       this.pantallaEstudiante.setVisible(true);
       this.dispose();
     }else{
@@ -149,7 +150,7 @@ public class Login extends javax.swing.JFrame {
     
     for (int i = 0; i < Administrador.arrayProfesores.size(); i++) {
       if (Administrador.arrayProfesores.get(i).getCodigo() == userInt && Administrador.arrayProfesores.get(i).getPassword().equals(password)){
-        System.out.println("Usuario encontrado: " + userInt);
+        System.out.println("Usuario encontrado: " + userInt+" index Array: "+ i);
         System.out.println("Nombre de usuario profesor actual: " + Administrador.arrayProfesores.get(i).getNombre());
         codigoUsuarioActualProfesor = userInt;
         indexActualProfesor = i;
@@ -165,7 +166,7 @@ public class Login extends javax.swing.JFrame {
     
     for (int i = 0; i < Administrador.arrayAlumnos.size(); i++) {
       if (Administrador.arrayAlumnos.get(i).getCodigo() == userInt && Administrador.arrayAlumnos.get(i).getPassword().equals(password)){
-        System.out.println("Usario encontrado: " + userInt);
+        System.out.println("Usario encontrado: " + userInt +" index Array: "+ i);
         System.out.println("Nombre de usuario alumno actual: " + Administrador.arrayAlumnos.get(i).getNombre());
         codigoUsuarioActualAlumno = userInt;
         indexActualAlumno = i;
@@ -198,7 +199,7 @@ public class Login extends javax.swing.JFrame {
       archivoBinario.close();
       objetoInput.close();
     } catch (IOException | ClassNotFoundException e) {
-      System.out.println("Error al recuperar alumnos: " + e.getMessage());
+      System.out.println("Error al recuperar Profesores: " + e.getMessage());
     }
   }
   
@@ -207,7 +208,9 @@ public class Login extends javax.swing.JFrame {
     try {
       FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/Registros_Alumnos.bin");
       ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
-      ArrayList<Alumno> alumnosDelArchivo = (ArrayList<Alumno>) objetoInput.readObject();
+      System.out.println("33");
+      ArrayList<Alumno> alumnosDelArchivo = (ArrayList<Alumno>) objetoInput.readObject();          //aaaaaa
+      System.out.println("44");
       System.out.println("Se recuperaron: " + alumnosDelArchivo.size() + " registros de Alumnos");
       
       for (Alumno alumnoRegistro : alumnosDelArchivo) {
@@ -224,7 +227,7 @@ public class Login extends javax.swing.JFrame {
       archivoBinario.close();
       objetoInput.close();
     } catch (IOException | ClassNotFoundException e) {
-      System.out.println("Error al recuperar alumnos: " + e.getMessage());
+      System.out.println("Error al recuperar alumnos aaaaaaaaa: " + e.getMessage());
     }
   }
   

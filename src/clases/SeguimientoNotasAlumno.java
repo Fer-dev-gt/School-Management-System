@@ -1,8 +1,9 @@
 package clases;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SeguimientoNotasAlumno {
+public class SeguimientoNotasAlumno implements Serializable{
   private int codigo;
   private ArrayList<Double> listaDeNotas = new ArrayList<>();
 

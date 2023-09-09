@@ -9,6 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import static pantallas.moduloAdmin.persistenciaDatosCursos;
 
 public class alumnoMasInformacion extends javax.swing.JFrame {
   String correoAlumno = "";
@@ -190,10 +191,15 @@ public class alumnoMasInformacion extends javax.swing.JFrame {
     listadoDeAlumnos.remove(indexAlumnoEliminar);
     System.out.println("Se elimino alumno: "+codigoAlumnoEliminar+" index: "+ indexAlumnoEliminar);
     
-    Administrador.arrayCursos.get(indexCursoAlumnos).setAlumnos(Administrador.arrayCursos.get(indexCursoAlumnos).getAlumnos()-1);
-    
+    Administrador.arrayCursos.get(indexCursoAlumnos).setAlumnos(listadoDeAlumnos.size());
+    System.out.println("El tamaño de alumnos es ahora de: " + listadoDeAlumnos.size());
     try {
       persistenciaDatosAlumnosCursoSeleccionado(nombreCursoArchivoBIN);
+    } catch (IOException ex) {
+      Logger.getLogger(alumnoMasInformacion.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    try {
+      persistenciaDatosCursos();
     } catch (IOException ex) {
       Logger.getLogger(alumnoMasInformacion.class.getName()).log(Level.SEVERE, null, ex);
     }

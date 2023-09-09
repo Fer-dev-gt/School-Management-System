@@ -1,10 +1,21 @@
 package pantallas;
 
+import clases.Administrador;
+import clases.Curso;
+import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import static pantallas.Login.codigoUsuarioActualAlumno;
+import static pantallas.Login.indexActualAlumno;
+
 public class moduloAlumnos extends javax.swing.JFrame {
   alumnoActualizar alumnoActualizarPantalla;
+  alumnoInformacionCurso alumnoInfoDelCursoPantalla;
   
   public moduloAlumnos() {
     initComponents();
+    agregarBotonesProfesor();
   }
 
   @SuppressWarnings("unchecked")
@@ -103,6 +114,52 @@ public class moduloAlumnos extends javax.swing.JFrame {
     alumnoActualizarPantalla.setVisible(true);
   }//GEN-LAST:event_actualizarDatosAlumnoActionPerformed
 
+  
+  
+  private void agregarBotonesProfesor() {    
+    if (indexActualAlumno < Administrador.arrayAlumnos.size()) {
+      ArrayList<String> listaDeCursos = Administrador.arrayAlumnos.get(indexActualAlumno).getListaDeCursos();
+      int posicionX = 100;
+      for (Curso curso : Administrador.arrayCursos) {
+        if (listaDeCursos != null && !listaDeCursos.isEmpty() && listaDeCursos.contains(curso.getNombre())) {
+          System.out.println("Boton agregado para clase: " + curso.getNombre());
+        
+          JButton botonDeCurso = new JButton(curso.getNombre());
+          botonDeCurso.setBounds(posicionX,100,100,50);
+          botonDeCurso.setText(curso.getNombre());
+
+          botonDeCurso.addActionListener((ActionEvent evt) -> {
+            System.out.println("Curso: " + curso.getNombre());
+            alumnoInfoDelCursoPantalla = new alumnoInformacionCurso(curso.getNombre(), curso.getCodigo());
+            this.alumnoInfoDelCursoPantalla.setVisible(true);
+          });
+
+          JLabel alumnosLabel = new JLabel(String.valueOf(curso.getAlumnos() + " Alumnos"));
+          alumnosLabel.setBounds(posicionX + 15,140,100,50);
+
+          panelBotones.add(botonDeCurso);
+          panelBotones.add(alumnosLabel);
+          posicionX += 100;
+        } else {
+          System.out.println("no tiene asignado " + curso.getNombre());
+        }
+      }
+      
+      System.out.println("El alumno tiene: "+listaDeCursos.size()+" Cursos");
+        panelBotones.revalidate();
+        panelBotones.repaint();
+    } else {
+        System.out.println("No se generaron botones para estudiantes");
+    }
+  }
+  
+  
+
+  
+  
+  
+  
+  
   
   
   

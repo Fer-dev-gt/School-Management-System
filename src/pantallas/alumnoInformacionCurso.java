@@ -2,8 +2,12 @@ package pantallas;
 
 public class alumnoInformacionCurso extends javax.swing.JFrame {
 
-  public alumnoInformacionCurso() {
+  public alumnoInformacionCurso(String nombreCurso, int codigoCurso) {
     initComponents();
+  }
+
+  private alumnoInformacionCurso() {
+    throw new UnsupportedOperationException("Not supported yet."); 
   }
 
   @SuppressWarnings("unchecked")
