@@ -4,6 +4,8 @@ import clases.ActividadesCursoSeleccionado;
 import clases.Administrador;
 import clases.AlumnoCursoSeleccionado;
 import clases.SeguimientoNotasAlumno;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -26,6 +28,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   int codigoCursoActual;
   double promedioActividad = 0.0;
   int numeroDeNotas = 0;
+  int ponderadoAcumulado = 0;
   
   
   public profesorAdministrarCurso(String nombreCurso, int codigoCurso) {
@@ -70,6 +73,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     cerrarVentana = new javax.swing.JButton();
     cargaMasivaAlumnos = new javax.swing.JButton();
     refrescarTablaProfesores = new javax.swing.JButton();
+    acumaldoPuntosActividades = new javax.swing.JLabel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -168,6 +172,8 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       }
     });
 
+    acumaldoPuntosActividades.setText("0");
+
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
@@ -209,9 +215,14 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                   .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(42, 42, 42)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                  .addComponent(actividadNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
-                  .addComponent(actividadDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                  .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(actividadDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(actividadNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                  .addGroup(layout.createSequentialGroup()
+                    .addComponent(acumaldoPuntosActividades, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(promedioNotasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))))
               .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
         .addGap(58, 58, 58))
       .addGroup(layout.createSequentialGroup()
@@ -232,9 +243,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addGap(0, 0, Short.MAX_VALUE)
         .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
-        .addComponent(promedioNotasLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(83, 83, 83))
+        .addGap(182, 182, 182))
       .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
         .addGroup(layout.createSequentialGroup()
           .addGap(33, 33, 33)
@@ -260,6 +269,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         .addGap(27, 27, 27)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel10)
+          .addComponent(acumaldoPuntosActividades)
           .addComponent(promedioNotasLabel))
         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -315,6 +325,8 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   private void refrescarTablaProfesoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescarTablaProfesoresActionPerformed
     mostrarListadoAlumnosCurso();
     mostrarListadoActividades();
+    habilitarClickEnAcciones();
+    
   }//GEN-LAST:event_refrescarTablaProfesoresActionPerformed
 
   private void cargaMasivaAlumnosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cargaMasivaAlumnosActionPerformed
@@ -386,9 +398,15 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     double promedioFinal = promedioActividad/numeroDeNotas;
     String promedioFinalString = String.format("%.2f", promedioFinal);
     
+    ponderadoAcumulado = ponderadoAcumulado + ponderacionActividad;
+    if (ponderadoAcumulado > 100) {
+      JOptionPane.showMessageDialog(null, "❌ La ponderación de puntos supera el limite de 100 puntos ❌", "Alert", JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
+    
     ActividadesCursoSeleccionado nuevaActividad = new ActividadesCursoSeleccionado(nombreActividad, descripcionActividad, ponderacionActividad, promedioFinalString);
     arrayActividadesCurso.add(nuevaActividad);
-    
+    acumaldoPuntosActividades.setText(String.valueOf(ponderadoAcumulado));
     
     mostrarListadoActividades();
   }//GEN-LAST:event_crearActividadBtnActionPerformed
@@ -442,13 +460,10 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
             for (int j = 0; j < arrayAlumnosCursoSeleccionado.size(); j++) {
               if (arrayAlumnosCursoSeleccionado.get(j).getCodigo() == codigoEstudiante) {
                 arrayAlumnosCursoSeleccionado.get(j).setNota((int) notaEstudiante);
-                System.out.println("Nota Agregada a Alumno "+codigoEstudiante+" registrado");
+                System.out.println("Nota Agregada a Alumno "+codigoEstudiante+" registrado\n");
                 break;
               }
             }
-            
-            
-            
             
             //System.out.println(codigoEstudiante + "//////"+ Double.toString(notaEstudiante) );
           } else {
@@ -460,10 +475,8 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                                                                                             
         JOptionPane.showMessageDialog(this, "✅ Carga masiva de Notas exitosa ✅");      
       } catch (IOException e) {
-        e.printStackTrace();
         JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
       } catch (NumberFormatException e) {
-        e.printStackTrace();
         JOptionPane.showMessageDialog(this, "❌ Error de formato en el archivo CSV ❌");
       }
     }
@@ -478,7 +491,6 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     }
   }//GEN-LAST:event_actividadPonderacionFocusLost
 
-  
   
   
   
@@ -506,7 +518,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       model.addRow(rowData);
     }
     
-    tablaAlumnosInscritos.setModel(model);                                                          
+    tablaAlumnosInscritos.setModel(model);   
     System.out.println("Se actualizaron las filas de Alumnos de este curso");
   }
   
@@ -514,7 +526,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   public void mostrarListadoActividades() {
     tablaActividadesCurso.setAutoCreateRowSorter(true); 
     DefaultTableModel model = new DefaultTableModel();                                  
-    model.setColumnIdentifiers(new String[] {"Código", "Decripción", "Ponderación", "Premedio"});
+    model.setColumnIdentifiers(new String[] {"Código", "Decripción", "Ponderación", "Promedio"});
     
     for (ActividadesCursoSeleccionado actividad : arrayActividadesCurso) {                                         
       Object[] rowData = new Object[] {
@@ -532,7 +544,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   
   
   public void persistenciaDatosAlumnosCursoSeleccionado(String nombreCurso) throws IOException {
-    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+".bin");
+    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+"_AlumnosRegistrados.bin");
     ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
     objectoOutput.writeObject(arrayAlumnosCursoSeleccionado);
     archivoDeSalida.close();
@@ -543,7 +555,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   
   public void recuperarAlumnos(String nombreCurso) {
     try {
-      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+".bin");
+      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+"_AlumnosRegistrados.bin");
       ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
       ArrayList<AlumnoCursoSeleccionado> alumnosCursoSeleccionadoDelArchivo = (ArrayList<AlumnoCursoSeleccionado>) objetoInput.readObject();
       System.out.println("Se recuperaron: " + alumnosCursoSeleccionadoDelArchivo.size() + " registros de Alumnos del curso: " + nombreCurso);
@@ -572,6 +584,29 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       if (alumno.getCodigo() == codigoUsuario) return true;                     
     }
     return false;                                                               
+  }
+  
+  
+  public void habilitarClickEnAcciones(){
+    tablaAlumnosInscritos.addMouseListener(new MouseAdapter() {
+    @Override
+      public void mouseClicked(MouseEvent e) {
+        int column = tablaAlumnosInscritos.getColumnModel().getColumnIndex("Acciones");
+        int row = tablaAlumnosInscritos.getSelectedRow();
+
+        if (column != -1 && row != -1) {                                        
+          if (e.getClickCount() == 1) {
+            int selectedRow = tablaAlumnosInscritos.getSelectedRow();  
+            int codigoAlumno = (int) tablaAlumnosInscritos.getValueAt(selectedRow, 0); 
+            String nombreAlumno = (String) tablaAlumnosInscritos.getValueAt(selectedRow, 1); 
+            String apellidoAlumno = (String) tablaAlumnosInscritos.getValueAt(selectedRow, 2); 
+            System.out.println("Clicked on Acciones de: " +nombreAlumno+ " " +apellidoAlumno);
+            alumnoMasInformacion alumnoMasInfoPantalla = new alumnoMasInformacion(nombreAlumno, apellidoAlumno, codigoAlumno, arrayAlumnosCursoSeleccionado, nombreCursoArchivoBIN, codigoCursoActual);
+            alumnoMasInfoPantalla.setVisible(true);
+          }
+        }
+      }
+    });
   }
   
   
@@ -622,6 +657,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   private javax.swing.JTextField actividadDescripcion;
   private javax.swing.JTextField actividadNombre;
   private javax.swing.JTextField actividadPonderacion;
+  private javax.swing.JLabel acumaldoPuntosActividades;
   private javax.swing.JButton cargaMasivaAlumnos;
   private javax.swing.JButton cerrarVentana;
   private javax.swing.JButton crearActividadBtn;
