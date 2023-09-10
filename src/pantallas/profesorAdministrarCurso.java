@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -37,9 +39,15 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     initComponents();
     mostrarListadoAlumnosCurso();
     recuperarAlumnos(nombreCurso);
+    recuperarActividades(nombreCurso);
     nombreCursoLabel.setText(nombreCurso);
     nombreCursoArchivoBIN = nombreCurso;
     codigoCursoActual = codigoCurso;
+    
+    for (ActividadesCursoSeleccionado actividadNotaAcumalada : arrayActividadesCurso) {
+      ponderadoAcumulado += actividadNotaAcumalada.getPonderacion();
+    }
+    acumaldoPuntosActividades.setText(Integer.toString(ponderadoAcumulado));
   }
 
   private profesorAdministrarCurso() {
@@ -167,7 +175,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       }
     });
 
-    refrescarTablaProfesores.setText("Refrescar Datos de Tabla");
+    refrescarTablaProfesores.setText("Refrescar Datos de Tablas");
     refrescarTablaProfesores.addActionListener(new java.awt.event.ActionListener() {
       public void actionPerformed(java.awt.event.ActionEvent evt) {
         refrescarTablaProfesoresActionPerformed(evt);
@@ -364,7 +372,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                 
                 boolean isRepeated = checkearCodigoRepetidoAlumnoCursoSeleccionado(codigo);
                 if(isRepeated) {
-                  System.out.println("No se Registro dato repetido Carga Masiva");
+                  System.out.println("No se Registro dato repetido del alumno "+ codigo +"Carga Masiva");
                   continue;
                 }
                 this.arrayAlumnosCursoSeleccionado.add(alumno);
@@ -409,17 +417,26 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     double promedioFinal = promedioActividad/numeroDeNotas;
     String promedioFinalString = String.format("%.2f", promedioFinal);
     
-    ponderadoAcumulado = ponderadoAcumulado + ponderacionActividad;
-    if (ponderadoAcumulado > 100) {
+    if (ponderadoAcumulado < 100 && (ponderacionActividad + ponderadoAcumulado <= 100)) {
+      ponderadoAcumulado = ponderadoAcumulado + ponderacionActividad;
+      ActividadesCursoSeleccionado nuevaActividad = new ActividadesCursoSeleccionado(nombreActividad, descripcionActividad, ponderacionActividad, promedioFinalString);
+      arrayActividadesCurso.add(nuevaActividad);
+      acumaldoPuntosActividades.setText(String.valueOf(ponderadoAcumulado));
+
+      mostrarListadoActividades();
+      actividadNombre.setText("");
+      actividadDescripcion.setText("");
+      actividadPonderacion.setText("");
+      
+      try {
+        persistenciaActividadesCursoSeleccionado(nombreCursoArchivoBIN);
+      } catch (IOException ex) {
+        Logger.getLogger(profesorAdministrarCurso.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    }else{
       JOptionPane.showMessageDialog(null, "❌ La ponderación de puntos supera el limite de 100 puntos ❌", "Alert", JOptionPane.INFORMATION_MESSAGE);
       return;
     }
-    
-    ActividadesCursoSeleccionado nuevaActividad = new ActividadesCursoSeleccionado(nombreActividad, descripcionActividad, ponderacionActividad, promedioFinalString);
-    arrayActividadesCurso.add(nuevaActividad);
-    acumaldoPuntosActividades.setText(String.valueOf(ponderadoAcumulado));
-    
-    mostrarListadoActividades();
   }//GEN-LAST:event_crearActividadBtnActionPerformed
 
   private void CargaMasivaNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargaMasivaNotasActionPerformed
@@ -505,15 +522,6 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   
   
   
-  
-  // Pediente Hacer Persistencia de datos de Actividades
-  
-  
-  
-  
-  
-  
-  
   public void mostrarListadoAlumnosCurso() {
     tablaAlumnosInscritos.setAutoCreateRowSorter(true); 
     DefaultTableModel model = new DefaultTableModel();                                  
@@ -537,7 +545,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   public void mostrarListadoActividades() {
     tablaActividadesCurso.setAutoCreateRowSorter(true); 
     DefaultTableModel model = new DefaultTableModel();                                  
-    model.setColumnIdentifiers(new String[] {"Código", "Decripción", "Ponderación", "Promedio"});
+    model.setColumnIdentifiers(new String[] {"Nombre", "Decripción", "Ponderación", "Promedio"});
     
     for (ActividadesCursoSeleccionado actividad : arrayActividadesCurso) {                                         
       Object[] rowData = new Object[] {
@@ -561,6 +569,16 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     archivoDeSalida.close();
     objectoOutput.close();
     System.out.println("Se hizo PERSISTENCIA de Datos Alumnos del Curso: " + nombreCurso);
+  }
+  
+  
+  public void persistenciaActividadesCursoSeleccionado(String nombreCurso) throws IOException {
+    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+"_ActividadesRegistradas.bin");
+    ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
+    objectoOutput.writeObject(arrayActividadesCurso);
+    archivoDeSalida.close();
+    objectoOutput.close();
+    System.out.println("Se hizo PERSISTENCIA de las Actividades del Curso: " + nombreCurso);
   }
   
   
@@ -590,9 +608,43 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   }
   
   
+  public void recuperarActividades(String nombreCurso) {
+    try {
+      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+"_ActividadesRegistradas.bin");
+      ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
+      ArrayList<ActividadesCursoSeleccionado> actividadesDelCurso = (ArrayList<ActividadesCursoSeleccionado>) objetoInput.readObject();
+      System.out.println("Se recuperaron: " + actividadesDelCurso.size() + " Actividades del curso: " + nombreCurso);
+      
+      for (ActividadesCursoSeleccionado actividad : actividadesDelCurso) {
+        String nombreActividad = actividad.getNombre();
+        boolean isRepeated = checkearActividadRepetida(nombreActividad);
+        if(isRepeated) {
+          System.out.println("No se Registro dato repetido");
+          continue;
+        }
+        System.out.println(actividad.getNombre());
+        arrayActividadesCurso.add(actividad);
+      }
+      
+      archivoBinario.close();
+      objetoInput.close();
+    } catch (IOException | ClassNotFoundException e) {
+      System.out.println("Error al recuperar alumnos: " + e.getMessage());
+    }
+  }
+  
+  
   public boolean checkearCodigoRepetidoAlumnoCursoSeleccionado(int codigoUsuario) {
     for (AlumnoCursoSeleccionado alumno : arrayAlumnosCursoSeleccionado) {
       if (alumno.getCodigo() == codigoUsuario) return true;                     
+    }
+    return false;                                                               
+  }
+  
+  
+  public boolean checkearActividadRepetida(String nombreActividad) {
+    for (ActividadesCursoSeleccionado actividadRegistrada : arrayActividadesCurso) {
+      if (actividadRegistrada.getNombre().equals(nombreActividad)) return true;                     
     }
     return false;                                                               
   }

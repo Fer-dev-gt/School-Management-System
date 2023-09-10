@@ -25,6 +25,8 @@ public class Login extends javax.swing.JFrame {
   public static int indexActualProfesor;
   public static int codigoUsuarioActualAlumno;
   public static int indexActualAlumno;
+  public static String nombreUsuarioActual;
+  public static String nombreProfesorActual;
 
   
   public Login() {
@@ -129,11 +131,11 @@ public class Login extends javax.swing.JFrame {
       this.pantallaAdministrador.setVisible(true);
       this.dispose();
     } else if((this.profesor.getUsuario().equals(user) && this.profesor.getPassword().equals(password)) || existeUsuarioProfesor){  
-      pantallaProfesor = new moduloProfesores();
+      pantallaProfesor = new moduloProfesores(nombreProfesorActual);
       this.pantallaProfesor.setVisible(true);
       this.dispose();
     } else if((this.alumno.getUsuario().equals(user) && this.alumno.getPassword().equals(password)) || existeUsuarioAlumno){  
-      pantallaEstudiante = new moduloAlumnos(codigoUsuarioActualAlumno, indexActualAlumno);
+      pantallaEstudiante = new moduloAlumnos(codigoUsuarioActualAlumno, indexActualAlumno, nombreUsuarioActual);
       this.pantallaEstudiante.setVisible(true);
       this.dispose();
     }else{
@@ -154,6 +156,7 @@ public class Login extends javax.swing.JFrame {
         System.out.println("Nombre de usuario profesor actual: " + Administrador.arrayProfesores.get(i).getNombre());
         codigoUsuarioActualProfesor = userInt;
         indexActualProfesor = i;
+        nombreProfesorActual = Administrador.arrayProfesores.get(i).getNombre();
         return true;
       } 
     }
@@ -170,6 +173,7 @@ public class Login extends javax.swing.JFrame {
         System.out.println("Nombre de usuario alumno actual: " + Administrador.arrayAlumnos.get(i).getNombre());
         codigoUsuarioActualAlumno = userInt;
         indexActualAlumno = i;
+        nombreUsuarioActual = Administrador.arrayAlumnos.get(i).getNombre();
         return true;
       } 
     }

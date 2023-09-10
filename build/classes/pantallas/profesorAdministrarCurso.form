@@ -364,7 +364,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="refrescarTablaProfesores">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Refrescar Datos de Tabla"/>
+        <Property name="text" type="java.lang.String" value="Refrescar Datos de Tablas"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="refrescarTablaProfesoresActionPerformed"/>

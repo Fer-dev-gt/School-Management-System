@@ -215,7 +215,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="imagenLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Foto"/>
+        <Property name="text" type="java.lang.String" value="Usario no ha subido foto"/>
       </Properties>
     </Component>
   </SubComponents>

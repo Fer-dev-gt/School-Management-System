@@ -24,6 +24,10 @@ public class alumnoActualizar extends javax.swing.JFrame {
       if (alumnoFoto.getCodigo() == codigoActualAlumno) {
         iconoGuardado = alumnoFoto.getFoto();
         System.out.println("Se recupero la FOTO");
+        nombreInput.setText(alumnoFoto.getNombre());
+        apellidoInput.setText(alumnoFoto.getApellido());
+        correoInput.setText(alumnoFoto.getCorreo());
+        passwordInput.setText(alumnoFoto.getPassword());
       }
     }
     imagenLabel.setIcon(iconoGuardado);
@@ -91,7 +95,7 @@ public class alumnoActualizar extends javax.swing.JFrame {
       }
     });
 
-    imagenLabel.setText("Foto");
+    imagenLabel.setText("Usario no ha subido foto");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);

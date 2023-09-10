@@ -97,7 +97,7 @@ public class alumnoMasInformacion extends javax.swing.JFrame {
     nombreCursoLabel.setFont(new java.awt.Font("Silom", 1, 20)); // NOI18N
     nombreCursoLabel.setText("Ver más información");
 
-    imagenLabel.setText("Foto");
+    imagenLabel.setText("Alumno no ha subido foto");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);

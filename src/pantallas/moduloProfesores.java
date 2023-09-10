@@ -11,9 +11,14 @@ public class moduloProfesores extends javax.swing.JFrame {
   profesorActualizarLoggedIn actualizarProfesorPantallaLoggedIn;
   profesorAdministrarCurso administrarCursoPantalla;
   
-  public moduloProfesores() {
+  public moduloProfesores(String nombreProfesorActual) {
     initComponents();
     agregarBotonesProfesor();
+    maduloProfesorLabel.setText("MODULO PROFESOR: "+nombreProfesorActual);
+  }
+
+  private moduloProfesores() {
+    throw new UnsupportedOperationException("Not supported yet."); 
   }
   
   
@@ -54,7 +59,7 @@ public class moduloProfesores extends javax.swing.JFrame {
     actualizarDatosProfesorActual = new javax.swing.JButton();
     jLabel1 = new javax.swing.JLabel();
     cerrarSesion = new javax.swing.JButton();
-    jLabel2 = new javax.swing.JLabel();
+    maduloProfesorLabel = new javax.swing.JLabel();
     panelBotones = new javax.swing.JPanel();
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -75,8 +80,8 @@ public class moduloProfesores extends javax.swing.JFrame {
       }
     });
 
-    jLabel2.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
-    jLabel2.setText("MODULO PROFESOR");
+    maduloProfesorLabel.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
+    maduloProfesorLabel.setText("MODULO PROFESOR");
 
     panelBotones.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
@@ -95,10 +100,6 @@ public class moduloProfesores extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(layout.createSequentialGroup()
-        .addGap(229, 229, 229)
-        .addComponent(jLabel2)
-        .addContainerGap(260, Short.MAX_VALUE))
       .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
           .addGroup(layout.createSequentialGroup()
@@ -111,15 +112,20 @@ public class moduloProfesores extends javax.swing.JFrame {
             .addComponent(actualizarDatosProfesorActual)))
         .addGap(63, 63, 63))
       .addGroup(layout.createSequentialGroup()
-        .addGap(283, 283, 283)
-        .addComponent(cerrarSesion)
-        .addGap(107, 304, Short.MAX_VALUE))
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+          .addGroup(layout.createSequentialGroup()
+            .addGap(283, 283, 283)
+            .addComponent(cerrarSesion))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(172, 172, 172)
+            .addComponent(maduloProfesorLabel)))
+        .addContainerGap(304, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addGap(25, 25, 25)
-        .addComponent(jLabel2)
+        .addComponent(maduloProfesorLabel)
         .addGap(18, 18, 18)
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
           .addComponent(jLabel1)
@@ -189,7 +195,7 @@ public class moduloProfesores extends javax.swing.JFrame {
   private javax.swing.JButton actualizarDatosProfesorActual;
   private javax.swing.JButton cerrarSesion;
   private javax.swing.JLabel jLabel1;
-  private javax.swing.JLabel jLabel2;
+  private javax.swing.JLabel maduloProfesorLabel;
   private javax.swing.JPanel panelBotones;
   // End of variables declaration//GEN-END:variables
 }
