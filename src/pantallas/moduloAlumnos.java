@@ -12,10 +12,18 @@ import static pantallas.Login.indexActualAlumno;
 public class moduloAlumnos extends javax.swing.JFrame {
   alumnoActualizar alumnoActualizarPantalla;
   alumnoInformacionCurso alumnoInfoDelCursoPantalla;
+  int codigoActualAlumno;
+  int indexActualAlumno;
   
-  public moduloAlumnos() {
+  public moduloAlumnos(int codigoUsuarioActualAlumno, int indexActualAlumno) {
     initComponents();
     agregarBotonesProfesor();
+    codigoActualAlumno = codigoUsuarioActualAlumno;
+    indexActualAlumno = indexActualAlumno;
+  }
+
+  private moduloAlumnos() {
+    throw new UnsupportedOperationException("Not supported yet."); 
   }
 
   @SuppressWarnings("unchecked")
@@ -110,7 +118,7 @@ public class moduloAlumnos extends javax.swing.JFrame {
   }//GEN-LAST:event_cerrarSesionActionPerformed
 
   private void actualizarDatosAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosAlumnoActionPerformed
-    alumnoActualizarPantalla = new alumnoActualizar();
+    alumnoActualizarPantalla = new alumnoActualizar(codigoActualAlumno, indexActualAlumno);
     alumnoActualizarPantalla.setVisible(true);
   }//GEN-LAST:event_actualizarDatosAlumnoActionPerformed
 
@@ -130,16 +138,16 @@ public class moduloAlumnos extends javax.swing.JFrame {
 
           botonDeCurso.addActionListener((ActionEvent evt) -> {
             System.out.println("Curso: " + curso.getNombre());
-            alumnoInfoDelCursoPantalla = new alumnoInformacionCurso(curso.getNombre(), curso.getCodigo());
+            alumnoInfoDelCursoPantalla = new alumnoInformacionCurso(curso.getNombre(), curso.getCodigo(), curso.getProfesor());
             this.alumnoInfoDelCursoPantalla.setVisible(true);
           });
 
-          JLabel alumnosLabel = new JLabel(String.valueOf(curso.getAlumnos() + " Alumnos"));
-          alumnosLabel.setBounds(posicionX + 15,140,100,50);
+          JLabel nombreProfesorDelCurso = new JLabel(curso.getProfesor());
+          nombreProfesorDelCurso.setBounds(posicionX + 5,140,100,50);
 
           panelBotones.add(botonDeCurso);
-          panelBotones.add(alumnosLabel);
-          posicionX += 100;
+          panelBotones.add(nombreProfesorDelCurso);
+          posicionX += 125;
         } else {
           System.out.println("no tiene asignado " + curso.getNombre());
         }

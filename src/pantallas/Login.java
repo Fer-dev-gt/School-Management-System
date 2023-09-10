@@ -133,7 +133,7 @@ public class Login extends javax.swing.JFrame {
       this.pantallaProfesor.setVisible(true);
       this.dispose();
     } else if((this.alumno.getUsuario().equals(user) && this.alumno.getPassword().equals(password)) || existeUsuarioAlumno){  
-      pantallaEstudiante = new moduloAlumnos();
+      pantallaEstudiante = new moduloAlumnos(codigoUsuarioActualAlumno, indexActualAlumno);
       this.pantallaEstudiante.setVisible(true);
       this.dispose();
     }else{
@@ -230,7 +230,7 @@ public class Login extends javax.swing.JFrame {
       System.out.println("Error al recuperar alumnos aaaaaaaaa: " + e.getMessage());
     }
   }
-  
+ 
   
   public void recuperarCursos() {
     try {
