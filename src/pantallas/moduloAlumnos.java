@@ -21,6 +21,7 @@ public class moduloAlumnos extends javax.swing.JFrame {
     codigoActualAlumno = codigoUsuarioActualAlumno;
     indexActualAlumno = indexActualAlumno;
     moduloAlumnoLabel.setText("MODULO ESTUDIANTE DE: "+nombreUsuarioActual);
+    profesorAdministrarCurso.recuperarSeguimientoNotas();
   }
 
   private moduloAlumnos() {
@@ -75,12 +76,6 @@ public class moduloAlumnos extends javax.swing.JFrame {
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-        .addGap(97, 97, 97)
-        .addComponent(moduloAlumnoLabel)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        .addComponent(actualizarDatosAlumno)
-        .addGap(25, 25, 25))
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
@@ -92,6 +87,12 @@ public class moduloAlumnos extends javax.swing.JFrame {
               .addComponent(panelBotones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
               .addComponent(jLabel1))))
         .addGap(67, 67, 67))
+      .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+        .addGap(97, 97, 97)
+        .addComponent(moduloAlumnoLabel)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(actualizarDatosAlumno)
+        .addGap(25, 25, 25))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -139,7 +140,7 @@ public class moduloAlumnos extends javax.swing.JFrame {
 
           botonDeCurso.addActionListener((ActionEvent evt) -> {
             System.out.println("Curso: " + curso.getNombre());
-            alumnoInfoDelCursoPantalla = new alumnoInformacionCurso(curso.getNombre(), curso.getCodigo(), curso.getProfesor());
+            alumnoInfoDelCursoPantalla = new alumnoInformacionCurso(curso.getNombre(), curso.getCodigo(), curso.getProfesor(), codigoActualAlumno);
             this.alumnoInfoDelCursoPantalla.setVisible(true);
           });
 

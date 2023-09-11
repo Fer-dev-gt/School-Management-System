@@ -11,6 +11,7 @@ import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
 
 public class PlantillaPDF {
   String nombre;
@@ -207,6 +208,72 @@ public class PlantillaPDF {
     }catch(FileNotFoundException | DocumentException e){
       System.err.println(e.getMessage());
     }
+  }
+  
+  
+  public void crearPlantillaMejoresAlumnos(String nombreCurso, ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado) throws DocumentException {
+    try {
+      archivo = new FileOutputStream("Mejores Alumnos Clase "+nombreCurso+".pdf");
+      PdfWriter.getInstance(documento, archivo);
+      documento.open();
+      titulo = new Paragraph("Mejores 5 alumnos");
+      titulo.setAlignment(1);
+      
+      documento.add(titulo);
+      documento.add(new Paragraph("Nombre: " + nombre));
+      documento.add(new Paragraph("Apellido: " + apellido));
+      documento.add(Chunk.NEWLINE);
+      
+      documento.add(Chunk.NEWLINE);
+      
+      documento.add(new Paragraph("Fecha: " + fecha));
+      documento.add(Chunk.NEWLINE);
+      
+      
+      PdfPTable tabla = new PdfPTable(5);
+      tabla.setWidthPercentage(100);
+      
+      PdfPCell posicion = new PdfPCell(new Phrase("posición"));
+      posicion.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell codigo = new PdfPCell(new Phrase("código"));
+      codigo.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell nombre = new PdfPCell(new Phrase("nombre"));
+      nombre.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell apellido = new PdfPCell(new Phrase("apellido"));
+      apellido.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell correo = new PdfPCell(new Phrase("correo"));
+      correo.setBackgroundColor(BaseColor.ORANGE);
+      
+      tabla.addCell(posicion);
+      tabla.addCell(codigo);
+      tabla.addCell(nombre);
+      tabla.addCell(apellido);
+      tabla.addCell(correo);
+      
+      for(AlumnoCursoSeleccionado alumnoDeEstaClase : arrayAlumnosCursoSeleccionado){
+        tabla.addCell("1");
+        tabla.addCell(String.valueOf(alumnoDeEstaClase.getCodigo()));
+        tabla.addCell(alumnoDeEstaClase.getNombre());
+        tabla.addCell(alumnoDeEstaClase.getApellido());
+        tabla.addCell(alumnoDeEstaClase.getCorreo());
+        
+      }
+      
+      documento.add(tabla);
+      documento.add(Chunk.NEWLINE);
+      documento.add(new Paragraph("Archivo guardado como 'Lista de Alumnos.pdf'"));
+      documento.close();
+      System.out.println("Archivo creado exitosamente");
+      
+      
+    }catch(FileNotFoundException | DocumentException e){
+      System.err.println(e.getMessage());
+    }
+  }
+  
+  
+  public void crearPlantillaPeoresAlumnos(String nombreCurso, ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado) throws DocumentException {
+    
   }
   
 }

@@ -1,6 +1,7 @@
 package clases;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Curso implements Serializable{
   private int codigo;
@@ -8,6 +9,7 @@ public class Curso implements Serializable{
   private int creditos;
   private int Alumnos;
   private String Profesor;
+  public ArrayList<ActividadesCursoSeleccionado> actividadesDelCurso = new ArrayList<>();
 
   
   public Curso(int codigo, String nombre, int creditos, int Alumnos, String Profesor) {
@@ -27,6 +29,14 @@ public class Curso implements Serializable{
 
   public int getCodigo() {
     return codigo;
+  }
+
+  public ArrayList<ActividadesCursoSeleccionado> getActividadesDelCurso() {
+    return actividadesDelCurso;
+  }
+
+  public void setActividadesDelCurso(ArrayList<ActividadesCursoSeleccionado> actividadesDelCurso) {
+    this.actividadesDelCurso = actividadesDelCurso;
   }
 
   public void setCodigo(int codigo) {

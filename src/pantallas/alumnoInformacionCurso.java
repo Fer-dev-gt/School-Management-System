@@ -1,10 +1,24 @@
 package pantallas;
 
-public class alumnoInformacionCurso extends javax.swing.JFrame {
+import clases.ActividadesCursoSeleccionado;
+import clases.Administrador;
+import clases.Curso;
+import clases.SeguimientoNotasAlumno;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 
-  public alumnoInformacionCurso(String nombreCurso, int codigoCurso, String nombreProfesor) {
+public class alumnoInformacionCurso extends javax.swing.JFrame {
+  int codigoCursoActual = 0;
+  int codigoAlumnoActual = 0;
+  String nombreCursoActual;
+  ArrayList<Double> variableLista; 
+  
+  public alumnoInformacionCurso(String nombreCurso, int codigoCurso, String nombreProfesor, int codigoActualAlumno) {
     initComponents();
     nombreCursoLabel.setText(nombreCurso);
+    codigoCursoActual = codigoCurso;
+    nombreCursoActual = nombreCurso;
+    codigoAlumnoActual = codigoActualAlumno;
   }
 
   private alumnoInformacionCurso() {
@@ -15,12 +29,16 @@ public class alumnoInformacionCurso extends javax.swing.JFrame {
   // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
   private void initComponents() {
 
+    jButton1 = new javax.swing.JButton();
     nombreCursoLabel = new javax.swing.JLabel();
     jLabel1 = new javax.swing.JLabel();
     cerrarVentana = new javax.swing.JButton();
     jPanel1 = new javax.swing.JPanel();
     jScrollPane1 = new javax.swing.JScrollPane();
-    jTable1 = new javax.swing.JTable();
+    tablaActividadesNotas = new javax.swing.JTable();
+    refrescarDatosTablaGrafica = new javax.swing.JButton();
+
+    jButton1.setText("Refrescar Tabla y Gráfica");
 
     setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,7 +67,7 @@ public class alumnoInformacionCurso extends javax.swing.JFrame {
       .addGap(0, 300, Short.MAX_VALUE)
     );
 
-    jTable1.setModel(new javax.swing.table.DefaultTableModel(
+    tablaActividadesNotas.setModel(new javax.swing.table.DefaultTableModel(
       new Object [][] {
         {null, null, null, null},
         {null, null, null, null},
@@ -60,12 +78,25 @@ public class alumnoInformacionCurso extends javax.swing.JFrame {
         "Nombre", "Descripción", "Ponderación", "Nota Obtenida"
       }
     ));
-    jScrollPane1.setViewportView(jTable1);
+    jScrollPane1.setViewportView(tablaActividadesNotas);
+
+    refrescarDatosTablaGrafica.setText("Refrescar Tabla y Gráfica");
+    refrescarDatosTablaGrafica.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        refrescarDatosTablaGraficaActionPerformed(evt);
+      }
+    });
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
     layout.setHorizontalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+      .addGroup(layout.createSequentialGroup()
+        .addGap(37, 37, 37)
+        .addComponent(nombreCursoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        .addComponent(cerrarVentana)
+        .addGap(40, 40, 40))
       .addGroup(layout.createSequentialGroup()
         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
           .addGroup(layout.createSequentialGroup()
@@ -74,33 +105,29 @@ public class alumnoInformacionCurso extends javax.swing.JFrame {
               .addComponent(jLabel1)
               .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 745, javax.swing.GroupLayout.PREFERRED_SIZE)))
           .addGroup(layout.createSequentialGroup()
-            .addGap(169, 169, 169)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(158, 158, 158)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+          .addGroup(layout.createSequentialGroup()
+            .addGap(297, 297, 297)
+            .addComponent(refrescarDatosTablaGrafica)))
         .addContainerGap(56, Short.MAX_VALUE))
-      .addGroup(layout.createSequentialGroup()
-        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-          .addGroup(layout.createSequentialGroup()
-            .addGap(37, 37, 37)
-            .addComponent(nombreCursoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-          .addGroup(layout.createSequentialGroup()
-            .addGap(339, 339, 339)
-            .addComponent(cerrarVentana)))
-        .addGap(0, 0, Short.MAX_VALUE))
     );
     layout.setVerticalGroup(
       layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
       .addGroup(layout.createSequentialGroup()
         .addGap(19, 19, 19)
-        .addComponent(nombreCursoLabel)
+        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+          .addComponent(nombreCursoLabel)
+          .addComponent(cerrarVentana))
         .addGap(26, 26, 26)
         .addComponent(jLabel1)
         .addGap(26, 26, 26)
         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        .addGap(18, 18, 18)
-        .addComponent(cerrarVentana)
-        .addGap(43, 43, 43))
+        .addGap(41, 41, 41)
+        .addComponent(refrescarDatosTablaGrafica)
+        .addGap(54, 54, 54))
     );
 
     pack();
@@ -108,18 +135,59 @@ public class alumnoInformacionCurso extends javax.swing.JFrame {
 
   private void cerrarVentanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarVentanaActionPerformed
     this.dispose();
+    
   }//GEN-LAST:event_cerrarVentanaActionPerformed
 
+  private void refrescarDatosTablaGraficaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refrescarDatosTablaGraficaActionPerformed
+    mostrarActividadesTabla();
+  }//GEN-LAST:event_refrescarDatosTablaGraficaActionPerformed
+
+  public void mostrarActividadesTabla(){
+    for (SeguimientoNotasAlumno seguir : profesorAdministrarCurso.arraySeguimientoNotas) {
+      if((seguir.getCodigo() == codigoAlumnoActual) && (seguir.getNombreCurso().equals(nombreCursoActual))){
+        variableLista = seguir.getListaDeNotas();
+        System.out.println("MATCH con CODIGO ALUMNO y NOMBRE CURSO: " + nombreCursoActual);
+        System.out.println(variableLista.size());
+        System.out.println(variableLista.get(0));
+      }
+    }
+    
+        
+    for (Curso curso : Administrador.arrayCursos) {
+      if(curso.getCodigo() == codigoCursoActual){
+        System.out.println("Mostrando actividades en Tabla" );
+        mostrarListadoActividades(curso.getActividadesDelCurso(), variableLista);
+        System.out.println("Número de calificaciones que ha recibido: "+curso.getActividadesDelCurso().size());
+      }
+    }
+  }
   
   
+  public void mostrarListadoActividades(ArrayList<ActividadesCursoSeleccionado> arrayActividadesCursoActual, ArrayList<Double> arraySeguimientoNotas) {
+    tablaActividadesNotas.setAutoCreateRowSorter(true); 
+    DefaultTableModel model = new DefaultTableModel();                                  
+    model.setColumnIdentifiers(new String[] {"Nombre", "Decripción", "Ponderación", "Nota Obtenidad"});
+    System.out.println("Número de actividades en el curso "+nombreCursoActual+": " +arrayActividadesCursoActual.size());
+    int nota = 0;
+    
+    for (ActividadesCursoSeleccionado actividad : arrayActividadesCursoActual) {                    
+      System.out.println("Haber:" +arraySeguimientoNotas.get(nota));
+      Object[] rowData = new Object[] {
+        actividad.getNombre(),
+        actividad.getDescripcion(),
+        actividad.getPonderacion(),
+        arraySeguimientoNotas.get(nota)
+      };
+      model.addRow(rowData);
+      nota++;
+    }
+    
+    tablaActividadesNotas.setModel(model);                                                          
+    System.out.println("Se actualizaron las filas de Actividades del curso: "+nombreCursoActual);
+  }
   
   
-  
-  
-  
-  
-  
-  
+
   
   
   
@@ -157,10 +225,12 @@ public class alumnoInformacionCurso extends javax.swing.JFrame {
 
   // Variables declaration - do not modify//GEN-BEGIN:variables
   private javax.swing.JButton cerrarVentana;
+  private javax.swing.JButton jButton1;
   private javax.swing.JLabel jLabel1;
   private javax.swing.JPanel jPanel1;
   private javax.swing.JScrollPane jScrollPane1;
-  private javax.swing.JTable jTable1;
   private javax.swing.JLabel nombreCursoLabel;
+  private javax.swing.JButton refrescarDatosTablaGrafica;
+  private javax.swing.JTable tablaActividadesNotas;
   // End of variables declaration//GEN-END:variables
 }

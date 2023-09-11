@@ -212,9 +212,7 @@ public class Login extends javax.swing.JFrame {
     try {
       FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/Registros_Alumnos.bin");
       ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
-      System.out.println("33");
-      ArrayList<Alumno> alumnosDelArchivo = (ArrayList<Alumno>) objetoInput.readObject();          //aaaaaa
-      System.out.println("44");
+      ArrayList<Alumno> alumnosDelArchivo = (ArrayList<Alumno>) objetoInput.readObject();         
       System.out.println("Se recuperaron: " + alumnosDelArchivo.size() + " registros de Alumnos");
       
       for (Alumno alumnoRegistro : alumnosDelArchivo) {
@@ -231,7 +229,7 @@ public class Login extends javax.swing.JFrame {
       archivoBinario.close();
       objetoInput.close();
     } catch (IOException | ClassNotFoundException e) {
-      System.out.println("Error al recuperar alumnos aaaaaaaaa: " + e.getMessage());
+      System.out.println("Error al recuperar alumnos: " + e.getMessage());
     }
   }
  

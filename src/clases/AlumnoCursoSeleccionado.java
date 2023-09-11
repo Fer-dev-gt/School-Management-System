@@ -7,6 +7,7 @@ public class AlumnoCursoSeleccionado implements Serializable{
   private int codigo;
   private String nombre;
   private String apellido;
+  private String correo;
   private int nota;
 
   public int getCodigo() {
@@ -15,6 +16,14 @@ public class AlumnoCursoSeleccionado implements Serializable{
 
   public void setCodigo(int codigo) {
     this.codigo = codigo;
+  }
+
+  public String getCorreo() {
+    return correo;
+  }
+
+  public void setCorreo(String correo) {
+    this.correo = correo;
   }
 
   public String getNombre() {
@@ -41,11 +50,12 @@ public class AlumnoCursoSeleccionado implements Serializable{
     this.nota = nota;
   }
 
-  public AlumnoCursoSeleccionado(int codigo, String nombre, String apellido, int nota) {
+  public AlumnoCursoSeleccionado(int codigo, String nombre, String apellido, int nota, String correo) {
     this.codigo = codigo;
     this.nombre = nombre;
     this.apellido = apellido;
     this.nota = nota;
+    this.correo = correo;
   }
   
 }

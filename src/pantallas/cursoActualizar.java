@@ -43,7 +43,7 @@ public class cursoActualizar extends javax.swing.JFrame {
 
     jLabel1.setText("Código");
 
-    jLabel6.setText("ACTUALIZAR NUEVO CURSO");
+    jLabel6.setText("ACTUALIZAR CURSO");
 
     codigoInput.addFocusListener(new java.awt.event.FocusAdapter() {
       public void focusLost(java.awt.event.FocusEvent evt) {
@@ -90,15 +90,13 @@ public class cursoActualizar extends javax.swing.JFrame {
               .addGroup(layout.createSequentialGroup()
                 .addComponent(agregarCursoBtn)
                 .addGap(88, 88, 88)
-                .addComponent(cerrarAgregar)
-                .addGap(159, 159, 159))
-              .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                  .addComponent(codigoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
-                  .addComponent(nombreInput)
-                  .addComponent(creditosInput)
-                  .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(49, 49, 49))))
+                .addComponent(cerrarAgregar))
+              .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addComponent(codigoInput, javax.swing.GroupLayout.DEFAULT_SIZE, 206, Short.MAX_VALUE)
+                .addComponent(nombreInput)
+                .addComponent(creditosInput)
+                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)))
+            .addGap(159, 159, 159))
           .addGroup(layout.createSequentialGroup()
             .addComponent(cambiarProfesorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(0, 0, Short.MAX_VALUE))))

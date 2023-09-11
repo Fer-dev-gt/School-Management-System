@@ -4,10 +4,15 @@ import clases.ActividadesCursoSeleccionado;
 import clases.Administrador;
 import clases.Alumno;
 import clases.AlumnoCursoSeleccionado;
+import clases.Curso;
+import clases.PlantillaPDF;
 import clases.SeguimientoNotasAlumno;
+import com.itextpdf.text.DocumentException;
+import java.awt.Desktop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -27,7 +32,7 @@ import static pantallas.moduloAdmin.persistenciaDatosCursos;
 public class profesorAdministrarCurso extends javax.swing.JFrame {
   public ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado = new ArrayList<>();
   public ArrayList<ActividadesCursoSeleccionado> arrayActividadesCurso = new ArrayList<>();
-  public ArrayList<SeguimientoNotasAlumno> arraySeguimientoNotas = new ArrayList<>();
+  public static ArrayList<SeguimientoNotasAlumno> arraySeguimientoNotas = new ArrayList<>();
   String nombreCursoArchivoBIN;
   int codigoCursoActual;
   double promedioActividad = 0.0;
@@ -40,6 +45,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     mostrarListadoAlumnosCurso();
     recuperarAlumnos(nombreCurso);
     recuperarActividades(nombreCurso);
+    recuperarSeguimientoNotas();
     nombreCursoLabel.setText(nombreCurso);
     nombreCursoArchivoBIN = nombreCurso;
     codigoCursoActual = codigoCurso;
@@ -51,7 +57,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   }
 
   private profesorAdministrarCurso() {
-    throw new UnsupportedOperationException("Not supported yet."); 
+    // Instanciarse para acceder a metodo no estatico en metodo estatico
   }
 
   @SuppressWarnings("unchecked")
@@ -124,8 +130,18 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     });
 
     peoresEstudiantesReporte.setText("Top 5 - Estudiantes con PEOR rendimiento ");
+    peoresEstudiantesReporte.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        peoresEstudiantesReporteActionPerformed(evt);
+      }
+    });
 
     mejoresEstudiantesReporte.setText("Top 5 - Estudiantes con MEJOR rendimiento ");
+    mejoresEstudiantesReporte.addActionListener(new java.awt.event.ActionListener() {
+      public void actionPerformed(java.awt.event.ActionEvent evt) {
+        mejoresEstudiantesReporteActionPerformed(evt);
+      }
+    });
 
     nombreCursoLabel.setFont(new java.awt.Font("Silom", 1, 24)); // NOI18N
     nombreCursoLabel.setText("Curso");
@@ -290,11 +306,9 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
           .addGroup(layout.createSequentialGroup()
             .addComponent(actividadPonderacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGap(18, 18, 18)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-              .addComponent(CargaMasivaNotas)
-              .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addComponent(jLabel8)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+              .addComponent(jLabel8)
+              .addComponent(CargaMasivaNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGap(27, 27, 27)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
               .addComponent(crearActividadBtn)
@@ -363,16 +377,18 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
             int codigo = Integer.parseInt(data[0]);
             String nombre="";
             String apellido="";
+            String correo="";
             
             for (int i = 0; i < Administrador.arrayAlumnos.size(); i++) {
               if (Administrador.arrayAlumnos.get(i).getCodigo() == codigo){
                 nombre = Administrador.arrayAlumnos.get(i).getNombre();
                 apellido = Administrador.arrayAlumnos.get(i).getApellido();
-                AlumnoCursoSeleccionado alumno = new AlumnoCursoSeleccionado(codigo, nombre, apellido, 0);       
+                correo = Administrador.arrayAlumnos.get(i).getCorreo();
+                AlumnoCursoSeleccionado alumno = new AlumnoCursoSeleccionado(codigo, nombre, apellido, 0, correo);       
                 
                 boolean isRepeated = checkearCodigoRepetidoAlumnoCursoSeleccionado(codigo);
                 if(isRepeated) {
-                  System.out.println("No se Registro dato repetido del alumno "+ codigo +"Carga Masiva");
+                  System.out.println("No se Registro dato repetido del alumno "+ codigo +" Carga Masiva");
                   continue;
                 }
                 this.arrayAlumnosCursoSeleccionado.add(alumno);
@@ -399,7 +415,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
         persistenciaDatosCursos();
         persistenciaDatosAlumnos();
         
-        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de alumnos para el curso "+nombreCursoArchivoBIN+" completada ✅");      
       } catch (IOException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
@@ -428,8 +444,25 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       actividadDescripcion.setText("");
       actividadPonderacion.setText("");
       
+      for (Curso curso : Administrador.arrayCursos) {
+        if(curso.getCodigo() == codigoCursoActual){
+          curso.setActividadesDelCurso(arrayActividadesCurso);
+          System.out.println(arrayActividadesCurso.size());
+          System.out.println("Actividad agregada al curso: " + nombreCursoArchivoBIN);
+          try {
+            persistenciaDatosCursos();
+          } catch (IOException ex) {
+            Logger.getLogger(profesorAdministrarCurso.class.getName()).log(Level.SEVERE, null, ex);
+          }
+        }else{
+          System.out.println("NO SE HIZO NADA");
+        }
+        
+      }
+      
       try {
         persistenciaActividadesCursoSeleccionado(nombreCursoArchivoBIN);
+        persistenciaSeguimientoDeNotas(); 
       } catch (IOException ex) {
         Logger.getLogger(profesorAdministrarCurso.class.getName()).log(Level.SEVERE, null, ex);
       }
@@ -440,74 +473,80 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   }//GEN-LAST:event_crearActividadBtnActionPerformed
 
   private void CargaMasivaNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargaMasivaNotasActionPerformed
-    promedioActividad = 0.0;
-    numeroDeNotas = 0;
-    SeguimientoNotasAlumno notasAlumnoSeguimiento;
-    
-    
-    JFileChooser lectorDeArchivos = new JFileChooser();
-    FileNameExtensionFilter filtroArchivo = new FileNameExtensionFilter(".csv", "csv");
-    lectorDeArchivos.setFileFilter(filtroArchivo);
-    int respuestaFileChooser = lectorDeArchivos.showOpenDialog(this);                                        // Abre el menú del dialogo para subir archivos y guarda la respuesta si es archivo valido
-    
-    if (respuestaFileChooser == JFileChooser.APPROVE_OPTION) {
-      String ruta = lectorDeArchivos.getSelectedFile().getAbsolutePath();
-      
-      try {
-        BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
-        String line;
-        mybufferReader.readLine();                                                                                  // Saltamos la primera linea donde esta los nombres de las columnas
-        while ((line = mybufferReader.readLine()) != null) {                                                        // Primero guardamos el valor de linea actual del csv al ejecutar lo que esta adentro de parentesis y luego validamos si la linea es igual a 'null'
-          String[] data = line.split(",");                                                                     // Usamos el método 'split(,)' para crear un Array con los valores de cada columna que estan separador por comas
-          if (data.length == 2) {
-            int codigoEstudiante = Integer.parseInt(data[0]);
-            double notaEstudiante = Double.parseDouble(data[1]);
-            promedioActividad += notaEstudiante;
-            numeroDeNotas++;
-            boolean found = false;
-            
-            // Check if the student already has a SeguimientoNotasAlumno object
-            for (SeguimientoNotasAlumno seguimiento : arraySeguimientoNotas) {
-              if (seguimiento.getCodigo() == codigoEstudiante) {
-                seguimiento.getListaDeNotas().add(notaEstudiante);
-                found = true;
-                System.out.println("Este alumno "+codigoEstudiante+ " ya ha registrado notas");
-                break;
-              }
-            }
+    int notaActividades = (Integer.parseInt(actividadPonderacion.getText()));
+    if((notaActividades + ponderadoAcumulado) <= 100){
+      promedioActividad = 0.0;
+      numeroDeNotas = 0;
+      SeguimientoNotasAlumno notasAlumnoSeguimiento;
 
-            // If not found, create a new SeguimientoNotasAlumno object
-            if (!found) {
-              notasAlumnoSeguimiento = new SeguimientoNotasAlumno(codigoEstudiante);
-              notasAlumnoSeguimiento.getListaDeNotas().add(notaEstudiante);
-              arraySeguimientoNotas.add(notasAlumnoSeguimiento);
-              System.out.println("Nuevo seguimiento de Alumno "+codigoEstudiante);
-            }
 
-            // Add the grade to the corresponding student in arrayAlumnosCursoSeleccionado
-            for (int j = 0; j < arrayAlumnosCursoSeleccionado.size(); j++) {
-              if (arrayAlumnosCursoSeleccionado.get(j).getCodigo() == codigoEstudiante) {
-                arrayAlumnosCursoSeleccionado.get(j).setNota((int) notaEstudiante);
-                System.out.println("Nota Agregada a Alumno "+codigoEstudiante+" registrado\n");
-                break;
+      JFileChooser lectorDeArchivos = new JFileChooser();
+      FileNameExtensionFilter filtroArchivo = new FileNameExtensionFilter(".csv", "csv");
+      lectorDeArchivos.setFileFilter(filtroArchivo);
+      int respuestaFileChooser = lectorDeArchivos.showOpenDialog(this);                                        // Abre el menú del dialogo para subir archivos y guarda la respuesta si es archivo valido
+
+      if (respuestaFileChooser == JFileChooser.APPROVE_OPTION) {
+        String ruta = lectorDeArchivos.getSelectedFile().getAbsolutePath();
+
+        try {
+          BufferedReader mybufferReader = new BufferedReader(new FileReader(ruta));
+          String line;
+          mybufferReader.readLine();                                                                                  // Saltamos la primera linea donde esta los nombres de las columnas
+          while ((line = mybufferReader.readLine()) != null) {                                                        // Primero guardamos el valor de linea actual del csv al ejecutar lo que esta adentro de parentesis y luego validamos si la linea es igual a 'null'
+            String[] data = line.split(",");                                                                     // Usamos el método 'split(,)' para crear un Array con los valores de cada columna que estan separador por comas
+            if (data.length == 2) {
+              int codigoEstudiante = Integer.parseInt(data[0]);
+              double notaEstudiante = Double.parseDouble(data[1]);
+              promedioActividad += notaEstudiante;
+              numeroDeNotas++;
+              boolean found = false;
+
+              // Check if the student already has a SeguimientoNotasAlumno object
+              for (SeguimientoNotasAlumno seguimiento : arraySeguimientoNotas) {
+                if (seguimiento.getCodigo() == codigoEstudiante) {
+                  seguimiento.getListaDeNotas().add(notaEstudiante);
+                  found = true;
+                  System.out.println("Este alumno "+codigoEstudiante+ " ya ha registrado notas");
+                  break;
+                }
               }
+
+              // If not found, create a new SeguimientoNotasAlumno object
+              if (!found) {
+                notasAlumnoSeguimiento = new SeguimientoNotasAlumno(codigoEstudiante, nombreCursoArchivoBIN);
+                notasAlumnoSeguimiento.getListaDeNotas().add(notaEstudiante);
+                arraySeguimientoNotas.add(notasAlumnoSeguimiento);
+                System.out.println("Nuevo seguimiento de Alumno "+codigoEstudiante);
+              }
+
+              // Add the grade to the corresponding student in arrayAlumnosCursoSeleccionado
+              for (int j = 0; j < arrayAlumnosCursoSeleccionado.size(); j++) {
+                if (arrayAlumnosCursoSeleccionado.get(j).getCodigo() == codigoEstudiante) {
+                  arrayAlumnosCursoSeleccionado.get(j).setNota((int) notaEstudiante);
+                  System.out.println("Nota Agregada a Alumno "+codigoEstudiante+" registrado\n");
+                  break;
+                }
+              }
+
+              //System.out.println(codigoEstudiante + "//////"+ Double.toString(notaEstudiante) );
+            } else {
+              JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 4 columnas exactas ❌");
             }
-            
-            //System.out.println(codigoEstudiante + "//////"+ Double.toString(notaEstudiante) );
-          } else {
-            JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 4 columnas exactas ❌");
           }
+
+          mybufferReader.close();
+
+          JOptionPane.showMessageDialog(this, "✅ Carga masiva de Notas exitosa ✅");      
+        } catch (IOException e) {
+          JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
+        } catch (NumberFormatException e) {
+          JOptionPane.showMessageDialog(this, "❌ Error de formato en el archivo CSV ❌");
         }
-        
-        mybufferReader.close();
-                                                                                            
-        JOptionPane.showMessageDialog(this, "✅ Carga masiva de Notas exitosa ✅");      
-      } catch (IOException e) {
-        JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
-      } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "❌ Error de formato en el archivo CSV ❌");
       }
+    }else{
+      JOptionPane.showMessageDialog(this, "Ya no se pueden agregar más notas (Se llegaron a los 100 puntos)");
     }
+   
   }//GEN-LAST:event_CargaMasivaNotasActionPerformed
 
   private void actividadPonderacionFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_actividadPonderacionFocusLost
@@ -518,6 +557,26 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       JOptionPane.showMessageDialog(null, "Ingrese un numero para la ponderacion!", "Alert", JOptionPane.INFORMATION_MESSAGE);
     }
   }//GEN-LAST:event_actividadPonderacionFocusLost
+
+  private void mejoresEstudiantesReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mejoresEstudiantesReporteActionPerformed
+    PlantillaPDF miPlantillaMejoresAlumnos = new PlantillaPDF("Fernando", "Jose", "22/22/22");
+    try {
+      miPlantillaMejoresAlumnos.crearPlantillaMejoresAlumnos(nombreCursoArchivoBIN, arrayAlumnosCursoSeleccionado);
+    } catch (DocumentException ex) {
+      Logger.getLogger(moduloAdmin.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    try{
+      File path = new File("Mejores Alumnos Clase "+nombreCursoArchivoBIN+".pdf");
+      Desktop.getDesktop().open(path);
+    }catch (Exception ex){
+      JOptionPane.showMessageDialog(null, ex, "Atención", 2);
+    }
+  }//GEN-LAST:event_mejoresEstudiantesReporteActionPerformed
+
+  private void peoresEstudiantesReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peoresEstudiantesReporteActionPerformed
+    // TODO add your handling code here:
+  }//GEN-LAST:event_peoresEstudiantesReporteActionPerformed
 
   
   
@@ -582,6 +641,16 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   }
   
   
+  public static void persistenciaSeguimientoDeNotas() throws IOException {
+    FileOutputStream archivoDeSalida = new FileOutputStream("/Users/fernandoorozco/Desktop/seguimiento_de_notas.bin");
+    ObjectOutputStream objectoOutput = new ObjectOutputStream(archivoDeSalida);
+    objectoOutput.writeObject(arraySeguimientoNotas);
+    archivoDeSalida.close();
+    objectoOutput.close();
+    System.out.println("Se hizo PERSISTENCIA de Seguimiento de Notas");
+  }
+  
+   
   public void recuperarAlumnos(String nombreCurso) {
     try {
       FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/"+nombreCurso+"_AlumnosRegistrados.bin");
@@ -629,6 +698,38 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       archivoBinario.close();
       objetoInput.close();
     } catch (IOException | ClassNotFoundException e) {
+      System.out.println("Error al recuperar actividades del curso: " + e.getMessage());
+    }
+  }
+  
+  
+  public static void recuperarSeguimientoNotas() {
+    try {
+      FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/seguimiento_de_notas.bin");
+      ObjectInputStream objetoInput = new ObjectInputStream(archivoBinario);
+      ArrayList<SeguimientoNotasAlumno> seguimientoNotas = (ArrayList<SeguimientoNotasAlumno>) objetoInput.readObject();
+      System.out.println("Alumnos con notas recuperadas: " + seguimientoNotas.size() );
+      
+      for (SeguimientoNotasAlumno notasAlumno : seguimientoNotas) {
+        int codigoUsuario = notasAlumno.getCodigo();
+        
+        profesorAdministrarCurso instance = new profesorAdministrarCurso(); // Create an instance
+        boolean isRepeated = instance.checkearCodigoRepetidoAlumnoCursoSeleccionado(codigoUsuario);
+        instance.dispose();
+        //boolean isRepeated = checkearCodigoRepetidoAlumnoCursoSeleccionado(codigoUsuario);
+        System.out.println("Se creo una instania para acceder a método no estatico en contexto estatico");
+        
+        if(isRepeated) {
+          System.out.println("No se Registro dato repetido");
+          continue;
+        }
+        System.out.println(notasAlumno.getNombreCurso());
+        arraySeguimientoNotas.add(notasAlumno);
+      }
+      
+      archivoBinario.close();
+      objetoInput.close();
+    } catch (IOException | ClassNotFoundException e) {
       System.out.println("Error al recuperar alumnos: " + e.getMessage());
     }
   }
@@ -671,6 +772,9 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       }
     });
   }
+  
+  
+ 
   
   
   
