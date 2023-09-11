@@ -6,22 +6,19 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import static pantallas.Login.codigoUsuarioActualAlumno;
-import static pantallas.Login.indexActualAlumno;
 
 public class moduloAlumnos extends javax.swing.JFrame {
   alumnoActualizar alumnoActualizarPantalla;
   alumnoInformacionCurso alumnoInfoDelCursoPantalla;
   int codigoActualAlumno;
-  int indexActualAlumno;
+  int actualAlumnoIndex;
   
   public moduloAlumnos(int codigoUsuarioActualAlumno, int indexActualAlumno, String nombreUsuarioActual) {
     initComponents();
     agregarBotonesProfesor();
     codigoActualAlumno = codigoUsuarioActualAlumno;
-    indexActualAlumno = indexActualAlumno;
+    actualAlumnoIndex = indexActualAlumno;
     moduloAlumnoLabel.setText("MODULO ESTUDIANTE DE: "+nombreUsuarioActual);
-    profesorAdministrarCurso.recuperarSeguimientoNotas();
   }
 
   private moduloAlumnos() {
@@ -120,15 +117,14 @@ public class moduloAlumnos extends javax.swing.JFrame {
   }//GEN-LAST:event_cerrarSesionActionPerformed
 
   private void actualizarDatosAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosAlumnoActionPerformed
-    alumnoActualizarPantalla = new alumnoActualizar(codigoActualAlumno, indexActualAlumno);
+    alumnoActualizarPantalla = new alumnoActualizar(codigoActualAlumno, actualAlumnoIndex);
     alumnoActualizarPantalla.setVisible(true);
   }//GEN-LAST:event_actualizarDatosAlumnoActionPerformed
 
   
-  
   private void agregarBotonesProfesor() {    
-    if (indexActualAlumno < Administrador.arrayAlumnos.size()) {
-      ArrayList<String> listaDeCursos = Administrador.arrayAlumnos.get(indexActualAlumno).getListaDeCursos();
+    if (actualAlumnoIndex < Administrador.arrayAlumnos.size()) {
+      ArrayList<String> listaDeCursos = Administrador.arrayAlumnos.get(actualAlumnoIndex).getListaDeCursos();
       int posicionX = 100;
       for (Curso curso : Administrador.arrayCursos) {
         if (listaDeCursos != null && !listaDeCursos.isEmpty() && listaDeCursos.contains(curso.getNombre())) {
@@ -156,8 +152,8 @@ public class moduloAlumnos extends javax.swing.JFrame {
       }
       
       System.out.println("El alumno tiene: "+listaDeCursos.size()+" Cursos");
-        panelBotones.revalidate();
-        panelBotones.repaint();
+      panelBotones.revalidate();
+      panelBotones.repaint();
     } else {
         System.out.println("No se generaron botones para estudiantes");
     }

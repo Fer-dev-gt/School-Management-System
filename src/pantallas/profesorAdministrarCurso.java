@@ -45,7 +45,6 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
     mostrarListadoAlumnosCurso();
     recuperarAlumnos(nombreCurso);
     recuperarActividades(nombreCurso);
-    recuperarSeguimientoNotas();
     nombreCursoLabel.setText(nombreCurso);
     nombreCursoArchivoBIN = nombreCurso;
     codigoCursoActual = codigoCurso;
@@ -57,7 +56,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   }
 
   private profesorAdministrarCurso() {
-    // Instanciarse para acceder a metodo no estatico en metodo estatico
+    
   }
 
   @SuppressWarnings("unchecked")
@@ -447,15 +446,15 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       for (Curso curso : Administrador.arrayCursos) {
         if(curso.getCodigo() == codigoCursoActual){
           curso.setActividadesDelCurso(arrayActividadesCurso);
-          System.out.println(arrayActividadesCurso.size());
           System.out.println("Actividad agregada al curso: " + nombreCursoArchivoBIN);
+          System.out.println("Cantidad de actividades que tiene el curso "+nombreCursoArchivoBIN+": "+arrayActividadesCurso.size());
           try {
             persistenciaDatosCursos();
           } catch (IOException ex) {
             Logger.getLogger(profesorAdministrarCurso.class.getName()).log(Level.SEVERE, null, ex);
           }
         }else{
-          System.out.println("NO SE HIZO NADA");
+          System.out.println(curso.getNombre()+" no correspondiente");
         }
         
       }
@@ -503,8 +502,9 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
 
               // Check if the student already has a SeguimientoNotasAlumno object
               for (SeguimientoNotasAlumno seguimiento : arraySeguimientoNotas) {
-                if (seguimiento.getCodigo() == codigoEstudiante) {
+                if ((seguimiento.getCodigo() == codigoEstudiante) && (seguimiento.getNombreCurso().equals(nombreCursoArchivoBIN))) {
                   seguimiento.getListaDeNotas().add(notaEstudiante);
+                  seguimiento.setNombreCurso(nombreCursoArchivoBIN);
                   found = true;
                   System.out.println("Este alumno "+codigoEstudiante+ " ya ha registrado notas");
                   break;
@@ -516,6 +516,12 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                 notasAlumnoSeguimiento = new SeguimientoNotasAlumno(codigoEstudiante, nombreCursoArchivoBIN);
                 notasAlumnoSeguimiento.getListaDeNotas().add(notaEstudiante);
                 arraySeguimientoNotas.add(notasAlumnoSeguimiento);
+                /*for (SeguimientoNotasAlumno seguimiento : arraySeguimientoNotas) {
+                  if ((seguimiento.getCodigo() == codigoEstudiante) && (seguimiento.getNombreCurso().equals(nombreCursoArchivoBIN))) {
+                    arraySeguimientoNotas.add(notasAlumnoSeguimiento);
+                  }
+                }*/
+                
                 System.out.println("Nuevo seguimiento de Alumno "+codigoEstudiante);
               }
 
@@ -711,19 +717,6 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
       System.out.println("Alumnos con notas recuperadas: " + seguimientoNotas.size() );
       
       for (SeguimientoNotasAlumno notasAlumno : seguimientoNotas) {
-        int codigoUsuario = notasAlumno.getCodigo();
-        
-        profesorAdministrarCurso instance = new profesorAdministrarCurso(); // Create an instance
-        boolean isRepeated = instance.checkearCodigoRepetidoAlumnoCursoSeleccionado(codigoUsuario);
-        instance.dispose();
-        //boolean isRepeated = checkearCodigoRepetidoAlumnoCursoSeleccionado(codigoUsuario);
-        System.out.println("Se creo una instania para acceder a método no estatico en contexto estatico");
-        
-        if(isRepeated) {
-          System.out.println("No se Registro dato repetido");
-          continue;
-        }
-        System.out.println(notasAlumno.getNombreCurso());
         arraySeguimientoNotas.add(notasAlumno);
       }
       

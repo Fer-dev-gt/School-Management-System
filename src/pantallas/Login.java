@@ -19,8 +19,6 @@ public class Login extends javax.swing.JFrame {
   moduloProfesores pantallaProfesor;
   moduloAlumnos pantallaEstudiante;
   
-  
-  
   public static int codigoUsuarioActualProfesor;
   public static int indexActualProfesor;
   public static int codigoUsuarioActualAlumno;
@@ -181,7 +179,7 @@ public class Login extends javax.swing.JFrame {
   }
   
   
-  // Función para recuperar Datos, Persistencia de Datos
+  // Funciones para recuperar Datos, Persistencia de Datos
   public void recuperarProfesores() {
     try {
       FileInputStream archivoBinario = new FileInputStream("/Users/fernandoorozco/Desktop/Registros_Profesores.bin");
