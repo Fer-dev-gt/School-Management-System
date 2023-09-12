@@ -15,9 +15,9 @@ public class moduloAlumnos extends javax.swing.JFrame {
   
   public moduloAlumnos(int codigoUsuarioActualAlumno, int indexActualAlumno, String nombreUsuarioActual) {
     initComponents();
+    actualAlumnoIndex = indexActualAlumno;
     agregarBotonesProfesor();
     codigoActualAlumno = codigoUsuarioActualAlumno;
-    actualAlumnoIndex = indexActualAlumno;
     moduloAlumnoLabel.setText("MODULO ESTUDIANTE DE: "+nombreUsuarioActual);
   }
 
@@ -117,7 +117,8 @@ public class moduloAlumnos extends javax.swing.JFrame {
   }//GEN-LAST:event_cerrarSesionActionPerformed
 
   private void actualizarDatosAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actualizarDatosAlumnoActionPerformed
-    alumnoActualizarPantalla = new alumnoActualizar(codigoActualAlumno, actualAlumnoIndex);
+    ArrayList<String> listaDeCursos = Administrador.arrayAlumnos.get(actualAlumnoIndex).getListaDeCursos();
+    alumnoActualizarPantalla = new alumnoActualizar(codigoActualAlumno, actualAlumnoIndex, listaDeCursos);
     alumnoActualizarPantalla.setVisible(true);
   }//GEN-LAST:event_actualizarDatosAlumnoActionPerformed
 

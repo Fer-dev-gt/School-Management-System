@@ -11,6 +11,10 @@ public class profesorActualizarLoggedIn extends javax.swing.JFrame {
     initComponents();
     nombreProfesorLabel.setText("ACTUALIZAR DATOS PROFESOR: " + Administrador.arrayProfesores.get(indexActualProfesor).getNombre());
     codigoProfesorActual.setText("Codigo Profesor: " + Administrador.arrayProfesores.get(indexActualProfesor).getCodigo());
+    nombreInput.setText(Administrador.arrayProfesores.get(indexActualProfesor).getNombre());
+    apellidoInput.setText(Administrador.arrayProfesores.get(indexActualProfesor).getApellido());
+    correoInput.setText(Administrador.arrayProfesores.get(indexActualProfesor).getCorreo());
+    passwordInput.setText(Administrador.arrayProfesores.get(indexActualProfesor).getPassword());
   }
 
   @SuppressWarnings("unchecked")

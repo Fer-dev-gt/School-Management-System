@@ -3,6 +3,7 @@ package pantallas;
 import clases.Administrador;
 import clases.Alumno;
 import java.awt.Image;
+import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -13,11 +14,13 @@ public class alumnoActualizar extends javax.swing.JFrame {
   ImageIcon fotoTemporal;
   ImageIcon iconoGuardado;
   int codigoDelAlumno;
+  ArrayList<String> arrayCursosDelAlumno;
   
   
-  public alumnoActualizar(int codigoActualAlumno, int indexActualAlumno){
+  public alumnoActualizar(int codigoActualAlumno, int indexActualAlumno, ArrayList<String> listaDeCursos){
     initComponents();
     codigoDelAlumno = codigoActualAlumno;
+    arrayCursosDelAlumno = listaDeCursos;
     System.out.println("Codigo del alumno FOTO: " + codigoDelAlumno+ " index: " +indexActualAlumno);
     
     for (Alumno alumnoFoto : Administrador.arrayAlumnos) {
@@ -95,7 +98,7 @@ public class alumnoActualizar extends javax.swing.JFrame {
       }
     });
 
-    imagenLabel.setText("Usario no ha subido foto");
+    imagenLabel.setText("Usuario no ha subido foto");
 
     javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
     getContentPane().setLayout(layout);
@@ -236,8 +239,9 @@ public class alumnoActualizar extends javax.swing.JFrame {
       if (Administrador.arrayAlumnos.get(i).getCodigo() == codigoDelAlumno) {
         Alumno nuevoAlumno = new Alumno(codigoDelAlumno, nombreUsuario, apellidoUsuario, correoUsuario, generoUsuario, passwordUsuario);
         nuevoAlumno.setFoto(foto);
+        nuevoAlumno.setListaDeCursos(arrayCursosDelAlumno);
         Administrador.arrayAlumnos.set(i, nuevoAlumno);
-        System.out.println("SE ACTUALIZO LA FOTO");
+        System.out.println("SE ACTUALIZO LA FOTO, index: " +i);
       }
     }
   }
