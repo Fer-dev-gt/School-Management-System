@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
-  Administrador admin = new Administrador("a", "a");
+  Administrador admin = new Administrador("admin", "admin");
   Profesor profesor = new Profesor("b", "b");
   Alumno alumno = new Alumno("c", "c");
   
