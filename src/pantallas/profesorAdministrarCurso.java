@@ -581,7 +581,19 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
   }//GEN-LAST:event_mejoresEstudiantesReporteActionPerformed
 
   private void peoresEstudiantesReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_peoresEstudiantesReporteActionPerformed
-    // TODO add your handling code here:
+    PlantillaPDF miPlantillaMejoresAlumnos = new PlantillaPDF("Fernando", "Jose", "22/22/22");
+    try {
+      miPlantillaMejoresAlumnos.crearPlantillaPeoresAlumnos(nombreCursoArchivoBIN, arrayAlumnosCursoSeleccionado);
+    } catch (DocumentException ex) {
+      Logger.getLogger(moduloAdmin.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    
+    try{
+      File path = new File("Peores Alumnos Clase "+nombreCursoArchivoBIN+".pdf");
+      Desktop.getDesktop().open(path);
+    }catch (Exception ex){
+      JOptionPane.showMessageDialog(null, ex, "Atención", 2);
+    }
   }//GEN-LAST:event_peoresEstudiantesReporteActionPerformed
 
   

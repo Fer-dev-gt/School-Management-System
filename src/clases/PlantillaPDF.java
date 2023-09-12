@@ -212,6 +212,9 @@ public class PlantillaPDF {
   
   
   public void crearPlantillaMejoresAlumnos(String nombreCurso, ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado) throws DocumentException {
+    ArrayList<AlumnoCursoSeleccionado> arrayCopia = arrayAlumnosCursoSeleccionado;
+    //bubbleSortMejoresAlumnos(arrayCopia);
+    
     try {
       archivo = new FileOutputStream("Mejores Alumnos Clase "+nombreCurso+".pdf");
       PdfWriter.getInstance(documento, archivo);
@@ -250,13 +253,18 @@ public class PlantillaPDF {
       tabla.addCell(apellido);
       tabla.addCell(correo);
       
+      int i = 0;
+      
       for(AlumnoCursoSeleccionado alumnoDeEstaClase : arrayAlumnosCursoSeleccionado){
-        tabla.addCell("1");
+        tabla.addCell(String.valueOf(i + 1));
         tabla.addCell(String.valueOf(alumnoDeEstaClase.getCodigo()));
         tabla.addCell(alumnoDeEstaClase.getNombre());
         tabla.addCell(alumnoDeEstaClase.getApellido());
         tabla.addCell(alumnoDeEstaClase.getCorreo());
-        
+        i++;
+        if(i==5){
+          break;
+        }
       }
       
       documento.add(tabla);
@@ -273,7 +281,90 @@ public class PlantillaPDF {
   
   
   public void crearPlantillaPeoresAlumnos(String nombreCurso, ArrayList<AlumnoCursoSeleccionado> arrayAlumnosCursoSeleccionado) throws DocumentException {
+    ArrayList<AlumnoCursoSeleccionado> arrayCopia = arrayAlumnosCursoSeleccionado;
+    //bubbleSortPeoresAlumnos(arrayCopia);
     
+    try {
+      archivo = new FileOutputStream("Peores Alumnos Clase "+nombreCurso+".pdf");
+      PdfWriter.getInstance(documento, archivo);
+      documento.open();
+      titulo = new Paragraph("Peores 5 alumnos del curso de: " +nombreCurso);
+      titulo.setAlignment(1);
+      
+      documento.add(titulo);
+      documento.add(new Paragraph("Nombre: " + nombre));
+      documento.add(new Paragraph("Apellido: " + apellido));
+      documento.add(Chunk.NEWLINE);
+      
+      documento.add(Chunk.NEWLINE);
+      
+      documento.add(new Paragraph("Fecha: " + fecha));
+      documento.add(Chunk.NEWLINE);
+      
+      
+      PdfPTable tabla = new PdfPTable(5);
+      tabla.setWidthPercentage(100);
+      
+      PdfPCell posicion = new PdfPCell(new Phrase("posición"));
+      posicion.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell codigo = new PdfPCell(new Phrase("código"));
+      codigo.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell nombre = new PdfPCell(new Phrase("nombre"));
+      nombre.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell apellido = new PdfPCell(new Phrase("apellido"));
+      apellido.setBackgroundColor(BaseColor.ORANGE);
+      PdfPCell correo = new PdfPCell(new Phrase("correo"));
+      correo.setBackgroundColor(BaseColor.ORANGE);
+      
+      tabla.addCell(posicion);
+      tabla.addCell(codigo);
+      tabla.addCell(nombre);
+      tabla.addCell(apellido);
+      tabla.addCell(correo);
+      
+      int i = 0;
+      
+      for(AlumnoCursoSeleccionado alumnoDeEstaClase : arrayAlumnosCursoSeleccionado){
+        tabla.addCell(String.valueOf(i + 1));
+        tabla.addCell(String.valueOf(alumnoDeEstaClase.getCodigo()));
+        tabla.addCell(alumnoDeEstaClase.getNombre());
+        tabla.addCell(alumnoDeEstaClase.getApellido());
+        tabla.addCell(alumnoDeEstaClase.getCorreo());
+        i++;
+        if(i==5){
+          break;
+        }
+      }
+      
+      documento.add(tabla);
+      documento.add(Chunk.NEWLINE);
+      documento.add(new Paragraph("Archivo guardado como 'Lista de Alumnos.pdf'"));
+      documento.close();
+      System.out.println("Archivo creado exitosamente");
+      
+      
+    }catch(FileNotFoundException | DocumentException e){
+      System.err.println(e.getMessage());
+    }
   }
   
+  
+  
+  /*public static void bubbleSortMejoresAlumnos(ArrayList<AlumnoCursoSeleccionado> alumnosClase) {
+    int n = alumnosClase.size();
+    for (int i = 0; i < n - 1; i++) {
+      for (int j = 0; j < n - i - 1; j++) {
+        if (cursos.get(j).getAlumnos() < cursos.get(j + 1).getAlumnos()) {
+          Curso temp = cursos.get(j);                                                                   // Swap cursos[j] and cursos[j+1]
+          cursos.set(j, cursos.get(j + 1));
+          cursos.set(j + 1, temp);
+        }
+      }
+    }
+ }*/
+  
+  
 }
+
+
+

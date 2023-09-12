@@ -1017,8 +1017,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     for (int i = 0; i < n - 1; i++) {
       for (int j = 0; j < n - i - 1; j++) {
         if (cursos.get(j).getAlumnos() < cursos.get(j + 1).getAlumnos()) {
-          // Swap cursos[j] and cursos[j+1]
-          Curso temp = cursos.get(j);
+          Curso temp = cursos.get(j);                                           // Swap cursos[j] and cursos[j+1]
           cursos.set(j, cursos.get(j + 1));
           cursos.set(j + 1, temp);
         }
