@@ -573,10 +573,10 @@ public class moduloAdmin extends javax.swing.JFrame {
   }//GEN-LAST:event_refrescarTablaCursosActionPerformed
 
   private void eliminarProfesorBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarProfesorBtnActionPerformed
-    int selectedRow = tablaProfesores.getSelectedRow();                                                       // Get the selected row index from the JTable
+    int selectedRow = tablaProfesores.getSelectedRow();                                                       // Obtenemos el index de la fila que esta siendo seleccionada
     
-    if (selectedRow >= 0) {                                                                                   // Check if a row is selected
-      int codigoUsuario = (int) tablaProfesores.getValueAt(selectedRow, 0);                        // Get the value of the "Código" column from the selected row
+    if (selectedRow >= 0) {                                                                                   // Validamos que una fila esta siendo seleccionada
+      int codigoUsuario = (int) tablaProfesores.getValueAt(selectedRow, 0);                          // Obtenemos el valor de la celda 'codigousarios' de la fila seleccionada
       System.out.println("Selected Código: " + codigoUsuario);
       boolean validCodeToDelete = profesorAgregar.checkearCodigoRepetido(codigoUsuario);
       if(validCodeToDelete) {
@@ -595,10 +595,10 @@ public class moduloAdmin extends javax.swing.JFrame {
   }//GEN-LAST:event_eliminarProfesorBtnActionPerformed
 
   private void eliminarCursoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarCursoBtnActionPerformed
-    int selectedRow = tablaCursos.getSelectedRow();                                                       // Get the selected row index from the JTable
+    int selectedRow = tablaCursos.getSelectedRow();                                                       
     
-    if (selectedRow >= 0) {                                                                                   // Check if a row is selected
-      int codigoCurso = (int) tablaCursos.getValueAt(selectedRow, 0);                        // Get the value of the "Código" column from the selected row
+    if (selectedRow >= 0) {                                                                                   
+      int codigoCurso = (int) tablaCursos.getValueAt(selectedRow, 0);                        
       System.out.println("Selected Código: " + codigoCurso);
       boolean validCodeToDelete = cursoAgregar.checkearCodigoRepetido(codigoCurso);
       if(validCodeToDelete) {
@@ -686,11 +686,11 @@ public class moduloAdmin extends javax.swing.JFrame {
         }
         
         mybufferReader.close();
-        mostrarListadoProfesores();                                                                                 // Refresh the JTable with updated data
+        mostrarListadoProfesores();                                                                                 // Vuelve a mostrar la tabla con los datos actualizados
         actualizarGraficaPastelProfesores();
         persistenciaDatosProfesores();
         
-        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      
       } catch (IOException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
@@ -723,7 +723,7 @@ public class moduloAdmin extends javax.swing.JFrame {
             String correo = data[3];
             String genero = data[4];
             
-            Alumno alumno = new Alumno(codigo, nombre, apellido, correo, genero, "1234");             // Se coloca contraseña por defecto "1234"
+            Alumno alumno = new Alumno(codigo, nombre, apellido, correo, genero, "1234");                    // Se coloca contraseña por defecto "1234"
             Administrador.arrayAlumnos.add(alumno);
           } else {
             JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 5 columnas exactas ❌");
@@ -731,11 +731,11 @@ public class moduloAdmin extends javax.swing.JFrame {
         }
         
         mybufferReader.close();
-        mostrarListadoAlumnos();                                                                                    // Refresh the JTable with updated data
+        mostrarListadoAlumnos();                                                                                    // Refrescamos la tabla
         actualizarGraficaPastelAlumnos();
         persistenciaDatosAlumnos();
         
-        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      
       } catch (IOException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
@@ -795,11 +795,11 @@ public class moduloAdmin extends javax.swing.JFrame {
         }
         
         mybufferReader.close();
-        mostrarListadoCursos();                                                                                    // Refresh the JTable with updated data
+        mostrarListadoCursos();                                                                                    
         actualizarGraficaBarrasCursos();
         persistenciaDatosCursos();
         
-        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      // Inform the user about successful loading
+        JOptionPane.showMessageDialog(this, "✅ Carga masiva de profesores completada ✅");      
       } catch (IOException e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "❌ Error al cargar el archivo CSV ❌");
@@ -963,7 +963,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     
     JFreeChart graficaPie = ChartFactory.createPieChart("Género de Profesores", pieDataset, true, true, true);
     
-    if (panelProfesoresGrafica.getComponentCount() > 0) panelProfesoresGrafica.remove(0);                                   // Remove the old chart panel
+    if (panelProfesoresGrafica.getComponentCount() > 0) panelProfesoresGrafica.remove(0);                                   // Remueve el panel antiguo
         
     ChartPanel panel = new ChartPanel(graficaPie);
     panel.setMouseWheelEnabled(true);
@@ -999,7 +999,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     
     JFreeChart graficaPie = ChartFactory.createPieChart("Género de Alumnos", pieDataset, true, true, true);
     
-    if (panelEstudiantesGrafica.getComponentCount() > 0) panelEstudiantesGrafica.remove(0);                                   // Remove the old chart panel
+    if (panelEstudiantesGrafica.getComponentCount() > 0) panelEstudiantesGrafica.remove(0);                                   // Remueve el panel antiguo
         
     ChartPanel panel = new ChartPanel(graficaPie);
     panel.setMouseWheelEnabled(true);
@@ -1017,7 +1017,7 @@ public class moduloAdmin extends javax.swing.JFrame {
     for (int i = 0; i < n - 1; i++) {
       for (int j = 0; j < n - i - 1; j++) {
         if (cursos.get(j).getAlumnos() < cursos.get(j + 1).getAlumnos()) {
-          Curso temp = cursos.get(j);                                           // Swap cursos[j] and cursos[j+1]
+          Curso temp = cursos.get(j);                                           // Intercambia las filas
           cursos.set(j, cursos.get(j + 1));
           cursos.set(j + 1, temp);
         }

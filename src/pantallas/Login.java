@@ -263,7 +263,7 @@ public class Login extends javax.swing.JFrame {
     for (Profesor profesor : Administrador.arrayProfesores) {
       if (profesor.getCodigo() == codigoUsuario) return true;                     // Se encontro un codigo repetidos en el List      
     }
-    return false;                                                               // El codigo no esta registrado en el List
+    return false;                                                                 // El codigo no esta registrado en el List
   }
   
   

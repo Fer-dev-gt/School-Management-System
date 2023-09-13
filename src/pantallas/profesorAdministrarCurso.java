@@ -500,7 +500,7 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
               numeroDeNotas++;
               boolean found = false;
 
-              // Check if the student already has a SeguimientoNotasAlumno object
+              // Validamos si el Alumno ya tiene un Objecto de Seguimiento de sus notas
               for (SeguimientoNotasAlumno seguimiento : arraySeguimientoNotas) {
                 if ((seguimiento.getCodigo() == codigoEstudiante) && (seguimiento.getNombreCurso().equals(nombreCursoArchivoBIN))) {
                   seguimiento.getListaDeNotas().add(notaEstudiante);
@@ -511,16 +511,11 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                 }
               }
 
-              // If not found, create a new SeguimientoNotasAlumno object
+              // Si no existe un Seguimiento se instancia uno nuevo con el código del estudiante
               if (!found) {
                 notasAlumnoSeguimiento = new SeguimientoNotasAlumno(codigoEstudiante, nombreCursoArchivoBIN);
                 notasAlumnoSeguimiento.getListaDeNotas().add(notaEstudiante);
                 arraySeguimientoNotas.add(notasAlumnoSeguimiento);
-                /*for (SeguimientoNotasAlumno seguimiento : arraySeguimientoNotas) {
-                  if ((seguimiento.getCodigo() == codigoEstudiante) && (seguimiento.getNombreCurso().equals(nombreCursoArchivoBIN))) {
-                    arraySeguimientoNotas.add(notasAlumnoSeguimiento);
-                  }
-                }*/
                 
                 System.out.println("Nuevo seguimiento de Alumno "+codigoEstudiante);
               }
@@ -534,7 +529,6 @@ public class profesorAdministrarCurso extends javax.swing.JFrame {
                 }
               }
 
-              //System.out.println(codigoEstudiante + "//////"+ Double.toString(notaEstudiante) );
             } else {
               JOptionPane.showMessageDialog(this, "❌ El CSV no tiene 4 columnas exactas ❌");
             }
