@@ -1,7 +1,8 @@
 <h1 align="center" id="title">🏫📚 School Management System 📚🏫</h1>
-ByteCar is a program created with Java with the goal to manage the process to rent a car for a certain number of days, it lets you log-in as either a client or an admin, if you're an admin ByteCat helps with managing your store car inventory by adding new cars, disccount for applicable number of rent days, create a see reports of most used cars and display data of the store's userbase. If you're a client you can create an acount with a simple ID and then you can rent any of the availables cars that the store has on its inventory ByteCar takes charge of creating the receipt that shows all the info of the process and the amount you'll have to pay
+<p>This java GUI app is designed to manage the internal procedures related to managing the date of teacher, students and courses. You can use to register new teachers and assigned to their respective courses they teach</p>
 
-<img width="363" alt="Screenshot 2023-08-14 at 15 46 58" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/09529d50-940c-4924-80dd-4f3e093a0800">
+
+<img width="400" alt="Screenshot 2023-09-24 at 21 54 36" src="https://github.com/Fer-dev-gt/School-Management-System/assets/119085740/d665d7f1-8cf6-4d71-975f-3f811059f46b">
 
 ## Table of Contents
 
@@ -14,21 +15,21 @@ ByteCar is a program created with Java with the goal to manage the process to re
 - [License](#license)
 - [Author](#author)
 
-## Demo and Feautures
+## Demo and Features
 <img width="307" alt="Screenshot 2023-08-25 at 16 21 39" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/18f8227d-f5dc-4962-ae17-b3de43d38dad">
-ByteCar has a basic admin/client log-in!
+<p>ByteCar has a basic admin/client log-in!</p>
 
-<img width="380" alt="Screenshot 2023-08-25 at 16 22 26" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/61454dc3-7d4c-4f8c-bfb2-dac29e04554b">
-If you don't have an account registered already you can do it easily 😎
+<img width="380" alt="Screenshot 2023-09-24 at 21 52 58" src="https://github.com/Fer-dev-gt/School-Management-System/assets/119085740/561cb1b6-138a-4147-9d54-799fdb2c396a">
+<p>ByteCar has a basic admin/client log-in!</p>
 
 <img width="400" alt="Screenshot 2023-08-25 at 16 23 03" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/4d2474d4-11e1-46e2-8e29-f1c44362ca35">
-As an admin you can register any new vehicle to inventory
+<p>ByteCar has a basic admin/client log-in!</p>
 
 <img width="363" alt="Screenshot 2023-08-14 at 15 46 58" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/09529d50-940c-4924-80dd-4f3e093a0800">
-When a client finishes the reservation process it will receive a receipt of the current bill and the amount to pay after discounts
+<p>ByteCar has a basic admin/client log-in!</p>
 
 <img width="325" alt="Screenshot 2023-08-14 at 15 46 35" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/3a185ce8-9ae8-4d01-8c24-112124224752">
-ByteCar is always generating reports of most rented cars by brand and by year!
+<p>ByteCar has a basic admin/client log-in!</p>
 
 ## Installation Steps:
 If you want to make changes to the source code you just need to:
