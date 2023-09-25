@@ -1,4 +1,4 @@
-<h1 align="center" id="title">📚🏫School Management System 🏫📚</h1>
+<h1 align="center" id="title">🏫📚 School Management System 📚🏫</h1>
 ByteCar is a program created with Java with the goal to manage the process to rent a car for a certain number of days, it lets you log-in as either a client or an admin, if you're an admin ByteCat helps with managing your store car inventory by adding new cars, disccount for applicable number of rent days, create a see reports of most used cars and display data of the store's userbase. If you're a client you can create an acount with a simple ID and then you can rent any of the availables cars that the store has on its inventory ByteCar takes charge of creating the receipt that shows all the info of the process and the amount you'll have to pay
 
 <img width="363" alt="Screenshot 2023-08-14 at 15 46 58" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/09529d50-940c-4924-80dd-4f3e093a0800">
@@ -16,19 +16,19 @@ ByteCar is a program created with Java with the goal to manage the process to re
 
 ## Demo and Feautures
 <img width="307" alt="Screenshot 2023-08-25 at 16 21 39" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/18f8227d-f5dc-4962-ae17-b3de43d38dad">
-<p>ByteCar has a basic admin/client log-in!</p>
+ByteCar has a basic admin/client log-in!
 
 <img width="380" alt="Screenshot 2023-08-25 at 16 22 26" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/61454dc3-7d4c-4f8c-bfb2-dac29e04554b">
-<p>If you don't have an account registered already you can do it easily 😎</p>
+If you don't have an account registered already you can do it easily 😎
 
 <img width="400" alt="Screenshot 2023-08-25 at 16 23 03" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/4d2474d4-11e1-46e2-8e29-f1c44362ca35">
-<p>As an admin you can register any new vehicle to inventory</p>
+As an admin you can register any new vehicle to inventory
 
 <img width="363" alt="Screenshot 2023-08-14 at 15 46 58" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/09529d50-940c-4924-80dd-4f3e093a0800">
-<p>When a client finishes the reservation process it will receive a receipt of the current bill and the amount to pay after discounts</p>
+When a client finishes the reservation process it will receive a receipt of the current bill and the amount to pay after discounts
 
 <img width="325" alt="Screenshot 2023-08-14 at 15 46 35" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/3a185ce8-9ae8-4d01-8c24-112124224752">
-<p>ByteCar is always generating reports of most rented cars by brand and by year!</p>
+ByteCar is always generating reports of most rented cars by brand and by year!
 
 ## Installation Steps:
 If you want to make changes to the source code you just need to:
@@ -46,7 +46,7 @@ Technologies used in the project:
 
 *   java SE 19.0.2
 *   NetBeans IDE 15
-*   Java GUI
+*   java GUI
 *   iOS 13.4.1
 
 ### Structure
