@@ -20,16 +20,16 @@
 <p>ByteCar has a basic admin/client log-in!</p>
 
 <img width="380" alt="Screenshot 2023-09-24 at 21 52 58" src="https://github.com/Fer-dev-gt/School-Management-System/assets/119085740/561cb1b6-138a-4147-9d54-799fdb2c396a">
-<p>ByteCar has a basic admin/client log-in!</p>
+<p>You can do load your data by bulk with just selecting an existing .CSV file that has the information of either your teacher, courses or sturdents</p>
 
-<img width="400" alt="Screenshot 2023-08-25 at 16 23 03" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/4d2474d4-11e1-46e2-8e29-f1c44362ca35">
-<p>ByteCar has a basic admin/client log-in!</p>
+<img width="500" alt="Screenshot 2023-09-24 at 22 03 29" src="https://github.com/Fer-dev-gt/School-Management-System/assets/119085740/50aa63f7-6523-4c71-b63b-c6163880d041">
+<p>You can create and export a pdf file with a table that has information of all registered students, also it displays a pie chart with the percentages of male and female students!</p>
 
-<img width="363" alt="Screenshot 2023-08-14 at 15 46 58" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/09529d50-940c-4924-80dd-4f3e093a0800">
-<p>ByteCar has a basic admin/client log-in!</p>
+<img width="368" alt="Screenshot 2023-09-24 at 22 08 29" src="https://github.com/Fer-dev-gt/School-Management-System/assets/119085740/34811568-1192-4ec8-afce-70529444dccd">
+<p>When a new teacher or student is created a new account is also created with the teacher/student code and a default password (1234), when a teacher or student logs in a new window will be displayed with X amount of button depending of how many classes they teach or receive</p>
 
-<img width="325" alt="Screenshot 2023-08-14 at 15 46 35" src="https://github.com/Fer-dev-gt/ByteCar-Car-Rental-Service/assets/119085740/3a185ce8-9ae8-4d01-8c24-112124224752">
-<p>ByteCar has a basic admin/client log-in!</p>
+<img width="325" alt="Screenshot 2023-09-24 at 22 00 32" src="https://github.com/Fer-dev-gt/School-Management-System/assets/119085740/d2988c5d-53f9-4f8a-81ea-a9cad9b0ffa1">
+<p>You can update a teacher's data to change their email or password</p>
 
 ## Installation Steps:
 If you want to make changes to the source code you just need to:
